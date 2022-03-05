@@ -1,7 +1,7 @@
 import { Html, Head, Main, NextScript } from 'next/document'
 
 const Document = () => (
-  <Html>
+  <Html lang="en">
     <Head>
       <link
         href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
