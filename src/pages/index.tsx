@@ -57,8 +57,8 @@ const Page: NextPage<PageProps> = ({ content }) => (
       <title>Nico Bachner – CS Student</title>
     </Head>
 
-    <main className="snap-y snap-mandatory px-6">
-      <section className="flex h-screen flex-col justify-center md:text-center">
+    <main className="h-screen snap-y snap-mandatory overflow-auto px-6">
+      <section className="flex h-screen snap-center snap-always flex-col justify-center md:text-center">
         <h1 className="text-6xl font-black tracking-tighter md:text-7xl lg:text-8xl xl:text-9xl">
           Nico Bachner
         </h1>
