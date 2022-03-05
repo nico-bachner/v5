@@ -1,3 +1,8 @@
 {
-  "prettier.configPath": "./prettier.config.js"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.configPath": "./prettier.config.js",
+
+  "[mdx]": {
+    "editor.wordWrap": "wordWrapColumn"
+  }
 }
