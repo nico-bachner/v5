@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.6",
     "@react-three/fiber": "^7.0.26",
+    "gray-matter": "^4.0.3",
     "inspx": "^0.0.1-alpha.6",
     "next": "12.1.0",
     "next-mdx-remote": "^4.0.0",

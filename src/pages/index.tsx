@@ -2,9 +2,10 @@ import Head from "next/head";
 import { MDX } from "components/MDX";
 
 import { fetchFile } from "lib/fs";
-import { fetchMDXContent, MDXContent } from "lib/mdx";
+import { fetchMDXContent } from "lib/mdx";
 
 import type { NextPage, GetStaticProps } from "next";
+import type { MDXContent } from "lib/mdx";
 
 type PageProps = {
   content: {
@@ -17,28 +18,28 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
     about: await fetchMDXContent(
       await fetchFile({
         basePath: ["content", "sections"],
-        path: ["about"],
+        path: ["home", "about"],
         extension: "mdx",
       })
     ),
     projects: await fetchMDXContent(
       await fetchFile({
         basePath: ["content", "sections"],
-        path: ["projects"],
+        path: ["home", "projects"],
         extension: "mdx",
       })
     ),
     writing: await fetchMDXContent(
       await fetchFile({
         basePath: ["content", "sections"],
-        path: ["writing"],
+        path: ["home", "writing"],
         extension: "mdx",
       })
     ),
     contact: await fetchMDXContent(
       await fetchFile({
         basePath: ["content", "sections"],
-        path: ["contact"],
+        path: ["home", "contact"],
         extension: "mdx",
       })
     ),
@@ -54,7 +55,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
 const Page: NextPage<PageProps> = ({ content }) => (
   <>
     <Head>
-      <title>Nico Bachner – CS Student</title>
+      <title>Nico Bachner</title>
     </Head>
 
     <main className="h-screen snap-y snap-mandatory overflow-auto px-6">

@@ -7,7 +7,7 @@ import {
 import { NavItem } from "./NavItem";
 
 export const Nav: React.VFC = () => (
-  <nav className="fixed bottom-8 left-0 right-0 mx-auto flex w-fit gap-3 rounded-xl border border-white/20 bg-white/25 p-2 shadow-lg backdrop-blur-sm">
+  <nav className="fixed bottom-8 left-0 right-0 z-50 mx-auto flex w-fit gap-3 rounded-xl border border-white/20 bg-white/25 p-2 shadow-lg backdrop-blur-sm">
     <NavItem href="/">
       <HomeIcon />
     </NavItem>

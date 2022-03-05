@@ -1,6 +1,5 @@
 import { serialize } from "next-mdx-remote/serialize";
-
-// @ts-ignore
+import matter from "gray-matter";
 
 // remark plugins
 // @ts-ignore
@@ -33,10 +32,12 @@ export const fetchMDXContent: Fetch<string, MDXContent> = async (file) =>
     },
   });
 
-export type MDXData = Record<string, string> | undefined;
+type MDXData = {
+  [key: string]: any;
+};
 
-export const getMDXData: Fetch<string, MDXData> = async (file) => {
-  const { frontmatter } = await serialize(file);
+export const getMDXData: Get<string, MDXData> = (file) => {
+  const { data } = matter(file);
 
-  return frontmatter;
+  return data;
 };
