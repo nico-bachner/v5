@@ -58,7 +58,7 @@ const Page: NextPage<PageProps> = ({ content }) => (
     </Head>
 
     <main className="h-screen snap-y snap-mandatory overflow-auto px-6">
-      <section className="flex h-screen snap-center snap-always flex-col justify-center md:text-center">
+      <section className="flex h-screen snap-start flex-col justify-center md:text-center">
         <h1 className="text-6xl font-black tracking-tighter md:text-7xl lg:text-8xl xl:text-9xl">
           Nico Bachner
         </h1>
@@ -67,24 +67,24 @@ const Page: NextPage<PageProps> = ({ content }) => (
         </p>
       </section>
 
-      <section className="mx-auto flex min-h-screen max-w-2xl snap-center snap-always flex-col justify-center">
+      <section className="mx-auto flex min-h-screen max-w-2xl snap-start flex-col justify-center">
         <h2 className="mb-6 text-5xl font-extrabold tracking-tight">About</h2>
         <MDX content={content.about} />
       </section>
 
-      <section className="mx-auto flex min-h-screen max-w-2xl snap-center snap-always flex-col justify-center">
+      <section className="mx-auto flex min-h-screen max-w-2xl snap-start flex-col justify-center">
         <h2 className="mb-6 text-5xl font-extrabold tracking-tight">
           Projects
         </h2>
         <MDX content={content.projects} />
       </section>
 
-      <section className="mx-auto flex min-h-screen max-w-2xl snap-center snap-always flex-col justify-center">
+      <section className="mx-auto flex min-h-screen max-w-2xl snap-start flex-col justify-center">
         <h2 className="mb-6 text-5xl font-extrabold tracking-tight">Writing</h2>
         <MDX content={content.writing} />
       </section>
 
-      <section className="mx-auto flex min-h-screen max-w-2xl snap-center snap-always flex-col justify-center">
+      <section className="mx-auto flex min-h-screen max-w-2xl snap-start flex-col justify-center">
         <h2 className="mb-6 text-5xl font-extrabold tracking-tight">Contact</h2>
         <MDX content={content.contact} />
       </section>
