@@ -1,15 +1,121 @@
 import Head from 'next/head'
+import { MDX } from 'components/MDX'
+import { ArticleCard } from 'components/ArticleCard'
+import { SearchIcon } from '@heroicons/react/outline'
 
-import type { NextPage } from 'next'
+import { useState } from 'react'
+import { fetchFile } from 'lib/fs'
+import { fetchMDXContent } from 'lib/mdx'
+import { fetchArticlesData } from 'lib/data/articles'
 
-const Page: NextPage = () => (
-  <main>
-    <Head>
-      <title></title>
-    </Head>
+import type { NextPage, GetStaticProps } from 'next'
+import type { MDXContent } from 'lib/mdx'
+import type { ArticleData } from 'lib/data/types'
 
-    <></>
-  </main>
-)
+type PageProps = {
+  articles: ArticleData[]
+  content: MDXContent
+}
+
+export const getStaticProps: GetStaticProps<PageProps> = async () => {
+  const articles = await fetchArticlesData()
+
+  const content = await fetchMDXContent(
+    await fetchFile({
+      basePath: ['content', 'sections'],
+      path: ['writing'],
+      extension: 'mdx',
+    })
+  )
+
+  return {
+    props: {
+      articles,
+      content,
+    },
+  }
+}
+
+const Page: NextPage<PageProps> = ({ articles, content }) => {
+  const [query, setQuery] = useState<string | undefined>(undefined)
+  const [focused, setFocused] = useState(false)
+
+  const filteredArticles = query
+    ? articles.filter((article) =>
+        article.title.toLowerCase().includes(query.toLowerCase())
+      )
+    : articles
+
+  return (
+    <>
+      <Head>
+        <title>Writing | Nico Bachner</title>
+      </Head>
+
+      <main className="px-6 pb-40 pt-20 md:pt-24 lg:pt-28">
+        <div className="mx-auto mb-12 max-w-2xl">
+          <h1 className="mb-12 text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
+            Writing
+          </h1>
+
+          <MDX content={content} />
+
+          <div
+            className={[
+              'mt-8 flex h-10 w-full rounded-lg border md:h-12',
+              focused ? 'border-slate-500' : 'border-slate-300',
+            ].join(' ')}
+          >
+            <div className="h-full p-2.5 md:p-3">
+              <SearchIcon
+                className={[
+                  focused ? 'text-slate-500' : 'text-slate-300',
+                  'h-full transition placeholder:text-slate-300',
+                ].join(' ')}
+              />
+            </div>
+
+            <input
+              type="search"
+              spellCheck="false"
+              placeholder="Search"
+              value={query}
+              onChange={({ target }) => {
+                setQuery(target.value)
+              }}
+              onFocus={() => {
+                setFocused(true)
+              }}
+              onBlur={() => {
+                setFocused(false)
+              }}
+              className="w-full rounded-lg pr-2.5 text-sm outline-none md:pr-3 md:text-base"
+            />
+          </div>
+
+          {query && query.length > 0 ? (
+            <p className="mt-6 text-center text-slate-600">
+              {filteredArticles.length} result(s) found
+            </p>
+          ) : null}
+        </div>
+
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 lg:gap-x-40">
+          {(query
+            ? articles.filter((article) =>
+                article.title.toLowerCase().includes(query.toLowerCase())
+              )
+            : articles
+          ).map((article) => (
+            <ArticleCard
+              key={article.path[article.path.length - 1]}
+              {...article}
+            />
+          ))}
+        </div>
+      </main>
+    </>
+  )
+}
 
 export default Page

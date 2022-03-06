@@ -1,4 +1,4 @@
-import { InfoCard } from './InfoCard'
+import { InfoCard } from 'components/InfoCard'
 
 import type { ProjectData } from 'lib/data/types'
 
