@@ -59,7 +59,7 @@ const Page: NextPage<PageProps> = ({ content }) => (
     </Head>
 
     <main className="h-screen snap-y snap-mandatory overflow-auto px-6">
-      <section className="flex min-h-screen snap-start flex-col justify-start py-20 md:justify-center md:text-center">
+      <section className="flex min-h-screen snap-start flex-col justify-start py-20 md:justify-center md:py-24 md:text-center lg:py-28">
         <h1 className="text-6xl font-black tracking-tighter md:text-7xl lg:text-8xl xl:text-9xl">
           Nico Bachner
         </h1>

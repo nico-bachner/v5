@@ -21,7 +21,7 @@ export type MDXContent = {
 }
 
 export const fetchMDXContent: Fetch<string, MDXContent> = async (file) =>
-  await serialize(file, {
+  await serialize(matter(file).content, {
     mdxOptions: {
       remarkPlugins: [
         [remarkBreaks],

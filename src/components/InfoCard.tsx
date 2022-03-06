@@ -22,7 +22,9 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
       </p>
       <p className="prose prose-slate md:prose-lg lg:prose-xl">{body}</p>
       <div className="flex justify-between md:text-lg lg:text-xl">
-        <p className="text-blue-500">{cta} →</p>
+        <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text text-transparent">
+          {cta} {'->'}
+        </p>
         <p className="text-slate-400">{info}</p>
       </div>
     </a>

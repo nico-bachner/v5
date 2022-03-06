@@ -1,5 +1,7 @@
 import { MDXRemote } from 'next-mdx-remote'
 
+import Image from 'next/image'
+
 import type { MDXContent } from 'lib/mdx'
 
 export type MDXProps = {
@@ -17,6 +19,7 @@ export const MDX: React.VFC<MDXProps> = ({ content, components }) => (
           {children}
         </div>
       ),
+      Image,
 
       ...components,
     }}
