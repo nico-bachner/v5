@@ -1,0 +1,233 @@
+---
+title: Mac Setup
+description: The procedure I refer to when performing a clean (re)install on an Apple Macintosh
+---
+
+This is the procedure I refer to when performing a clean (re)install on an Apple Macintosh
+
+## System Settings
+
+When the initial setup procedure is done, the first thing I do is to customise the trackpad settings (`System Preferences > View > Trackpad`).
+
+In the _Point & Click_ tab:
+
+1. Turn on _tap to click_
+2. Set _click strength_ to light
+3. Set _tracking speed_ to the maximum value
+4. Turn on _silent clicking_
+
+<Image
+  src="/images/macos-trackpad-settings-1.png"
+  alt="Trackpad Settings"
+  width={1560}
+  height={1248}
+/>
+
+In the _More Gestures_ tab:
+
+1. disable the _swipe between pages_ functionality.
+
+<Image
+  src="/images/macos-trackpad-settings-2.png"
+  alt="Trackpad Settings"
+  width={1560}
+  height={1248}
+/>
+
+Then I move on to the Dock settings (`View > Dock & Menu Bar`):
+
+1. Automatically hide & show the Dock
+2. Do not show recent applications in Dock
+
+<Image
+  src="/images/macos-dock-settings.png"
+  alt="Dock Settings"
+  width={1560}
+  height={1300}
+/>
+
+Then there are some things that require the command line:
+
+```bash
+# Don't create .DS_Store files
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# Disable auto-correct
+defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
+```
+
+## Finder Settings
+
+1. Configure _Preferences_ (`Finder > Preferences`):
+
+   - In _Sidebar_, show the _Home_ folder and hide the _Recents_ folder
+   - In Advanced, enable _Show all filename extensions_
+
+2. Adjust _Default View Options_ (`View > Show View Options`):
+
+   - Set _Sort By_ to _Kind_
+   - Enable _Show Item Info_
+
+## Safari Settings
+
+1. Adjust _Preferences_ (`Terminal > Preferences`):
+
+   - In _Search_, switch the default search engine.
+   - In _Advanced_, turn on _Show full website address_ and _Show Develop menu in menu bar_
+
+2. Show Status Bar: `View > Show Status Bar`
+
+## Command Line Setup
+
+Install the XCode Command Line Tools:
+
+```bash
+xcode-select --install
+```
+
+Install [Homebrew](https://brew.sh):
+
+```bash
+curl -fsSL "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh" | bash
+```
+
+Install Applications:
+
+```bash
+brew tap homebrew/cask
+brew install --cask google-chrome
+brew install --cask firefox
+brew install --cask discord
+```
+
+## Fonts
+
+Install [Fira Code](https://github.com/tonsky/FiraCode):
+
+```bash
+brew tap homebrew/cask-fonts
+brew install --cask font-fira-code
+```
+
+Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
+
+## Terminal Shell
+
+Install [Fish Shell](https://fishshell.com):
+
+```bash
+brew install fish
+```
+
+Set as default shell:
+
+```bash
+echo $(brew --prefix)/bin/fish | sudo tee -a /etc/shells
+chsh -s $(brew --prefix)/bin/fish
+```
+
+Since it is a new shell, Homebrew is no longer in `$PATH`, so it needs to be re-added:
+
+```bash
+fish_add_path /opt/homebrew/bin
+```
+
+When opening a new terminal window, fish shows a welcome message. To disable this, run the following:
+
+```bash
+set -U fish_greeting ""
+```
+
+To make the terminal more interactive, install [Starship](https://starship.rs):
+
+```bash
+brew install starship
+```
+
+Starship needs to be initialised on shell startup:
+
+```bash
+echo "starship init fish | source" > ~/.config/fish/config.fish
+```
+
+## Setup [Node.js](https://nodejs.org)
+
+```bash
+brew install node@14
+fish_add_path /opt/homebrew/opt/node@14/bin
+```
+
+Install [pnpm](https://pnpm.io):
+
+```bash
+npm install -g pnpm
+```
+
+Install [ni](https://github.com/antfu/ni):
+
+```bash
+pnpm add -g @antfu/ni
+```
+
+## Setup [GitHub](https://github.com)
+
+[Log in](https://github.com/login).
+
+Install the [GitHub CLI](https://cli.github.com):
+
+```bash
+brew install gh
+```
+
+Login:
+
+```bash
+gh auth login
+```
+
+## Setup [Vercel](https://vercel.com)
+
+[Log in](https://vercel.com/login).
+
+Install the [Vercel CLI](https://vercel.com/cli):
+
+```bash
+pnpm add -g vercel
+```
+
+Link project:
+
+```bash
+vercel link
+```
+
+Fetch environmental variables:
+
+```bash
+vercel env pull
+```
+
+## Setup [VS Code](https://code.visualstudio.org)
+
+Install:
+
+```bash
+brew install --cask visual-studio-code
+```
+
+Install global extensions:
+
+- [Nako](https://marketplace.visualstudio.com/items?itemName=kettanaito.nako)
+- [VSCode Icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
+- [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+## Setup Workspace
+
+Create a `projects/` directory:
+
+```bash
+mkdir ~/projects
+echo "cd projects" >> ~/.config/fish/config.fish
+```

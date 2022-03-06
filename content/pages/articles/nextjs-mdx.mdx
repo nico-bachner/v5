@@ -1,0 +1,55 @@
+---
+title: Next.js + MDX
+description: A guide to using Next.js and MDX to render markdown content with custom components from a remote source
+image: /images/next-mdx-ts.png
+published: false
+featured: true
+---
+
+<Image
+    src="/images/next-mdx-ts.png"
+    alt="Next.js + MDX + TypeScript"
+    width={1920}
+    height={800}
+/>
+
+## Table of Contents
+
+## Next.js Setup
+
+First, we need to get a project set up, otherwise we won't have anything to add mdx content to.
+
+If you already have your own Next.js project, you can skip to [MDX Setup](#mdx-setup).
+
+If not, the easiest way to get a Next.js project off the ground is using the `create-next-app` package, which scaffolds an entire project for you. You can access the package using `npx`.
+
+```
+npx create-next-app next-mdx-example
+```
+
+## MDX Setup
+
+[MDX](https://mdx-js.com) is a language that builds on the standard [Commonmark](https://commonmark.org) syntax by adding the capability to use custom components inside your markdown. These components can be [React](https://reactjs.org) components ([mdx-js/react](https://github.com/mdx-js/mdx/tree/master/packages/react)), [Vue](https://vuejs.org) components ([mdx-js/vue](https://github.com/mdx-js/mdx/tree/master/packages/vue)), or even [Svelte](https://svelte.dev) components ([MDsveX](https://mdsvex.com))
+
+There are two main methods of using MDX in a Next.js project:
+
+1. `@next/mdx`, the official MDX plugin for Next.js
+2. `next-mdx-remote`, a community package maintained by [Hashicorp](https://www.hashicorp.com) that allows you to use MDX from outside your project.
+
+While `@next/mdx` is a wonderful package, this guide uses `next-mdx-remote` for more flexibility. You can install the package using your favourite Node.js package manager (such as [npm](https://www.npmjs.com), [yarn](https://yarnpkg.com), or [pnpm](https://pnpm.io) [^1]). For the sake of simplicity, this guide will use `npm`.
+
+```
+npm install next-mdx-remote
+```
+
+## Creating Content
+
+You'll need a data source to pull your content from. This source can be a folder in your project, another GitHub repository, or an external service. Make sure the content from your data source is accessible to you past this point.
+
+## Fetching Content
+
+Now that we have a data source, it's time to fetch our content
+
+## Internationalisation (i18n)
+
+[^1]: I highly recommend pnpm — it's faster than yarn, and way faster than npm. Also, your `node_modules/` will be much more organised with pnpm, since only the packages defined in your `package.json` will be included in the root of the directory.

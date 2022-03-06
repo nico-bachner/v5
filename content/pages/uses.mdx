@@ -1,0 +1,56 @@
+---
+title: Uses
+description: A run-down of my current tech setup
+---
+
+## Text Editor
+
+My daily driver is [Visual Studio Code](https://code.visualstudio.com). Not only do I use VS Code for code, but I also write pretty much everything else in there. In comparison to word processors such as [Microsoft Word](https://products.office.com/en-us/word), VS Code doesn't allow you to format text as such, which means I have one less opportunity to procrastinate.
+
+VS Code also has an **amazing ecosystem of extensions**. Those I use are listed in my [Mac Setup](/mac-setup) process.
+
+## Browser
+
+My main browser is the MacOS default browser, [Safari](https://www.apple.com/safari/). Despite its bad reputation, it's **good-looking** and it works well with _Keychain_, Apple's built-in password manager, so there is **no need to use a 3rd party password manager**.
+
+During development, I also test on [Firefox](https://www.mozilla.org/en-US/firefox/) and [Chrome](https://www.google.com/chrome/).
+
+## Code Hosting
+
+I host all of my code on [GitHub](https://github.com). All of my code repositories are **public** and **open source**. I also use private GitHub repositories as a **backup for personal projects**, such as essays, etc.
+
+## Deployment
+
+All of my web-based projects are deployed on [Vercel](https://vercel.com). Being the creators and maintainers of [Next.js](https://nextjs.org), their platform is **specifically designed to host Next.js applications**, but they also support vanilla web hosting, [other frameworks](https://vercel.com/new/templates), and even [other languages](https://vercel.com/docs/serverless-functions/supported-languages). They also offer a [generous free tier](https://vercel.com/pricing), which is an added bonus.
+
+## Terminal
+
+I use the default MacOS Terminal. Many people use [iTerm](https://iterm2.com), but I prefer the default terminal. MacOS ships with it, and it serves its purpose. End of story.
+
+In terms of Terminal configuration, I set the font to be Fira Code (12pt) to make [Starship](#shell-prompt) render properly.
+
+## Shell
+
+My default shell is the [Fish Shell](https://fishshell.com). The **syntax highlighting** is nice, and the **inbuilt autocompletion** is a killer feature. Fish also comes with a few other small improvements, such as mapping `..` to `cd ..`.
+
+I also have my eye on [Nushell](https://www.nushell.sh), a really promising project. It reimagines some parts of the traditional shell, such as `ls` output, which is structured in Nu, making it **easy to sort and filter**. However, it's less known, so the tab completion is a bit lacking.
+
+## Shell Prompt
+
+As a shell prompt, I use [Starship](https://starship.rs). It's cool because it **shows information relevant to the current directory**, such as:
+
+- git status
+- npm version
+- the time the last command took to execute
+
+Starship is also a **cross-shell prompt**, so it integrates smoothly with both Fish and Nu.
+
+## Package Manager
+
+When it comes to installing stuff. I use [Homebrew](https://brew.sh), the go-to package manager for MacOS. It's great because it simply just works.
+
+## Fonts
+
+[Inter](https://rsms.me/inter/) is my go-to _sans-serif_ font. I came across Inter because [Vercel](https://vercel.com) uses it for their interfaces, and I really enjoy the **clean look and feel** of [their design system](https://vercel.com/design).
+
+For code (_monospace_), I use [Fira Code](https://github.com/tonsky/FiraCode) because of the **awesome ligatures** it ships with. I have it enabled both in VS Code and in the default MacOS terminal.

@@ -1,0 +1,89 @@
+---
+title: SvelteKit is now Open Source
+description: A celebration of the SvelteKit pre-beta release
+image: /images/sveltekit-design-1
+published: 2021-03-13
+---
+
+As of yesterday (March 12), [SvelteKit is Open Source](https://twitter.com/SvelteSociety/status/1370157702144348164). Hooray!
+
+While not officially in public beta yet, the [GitHub repository](https://github.com/sveltejs/kit) is now public, and I encourage anyone reading this to check it out. Give it a star while you're at it.
+
+There are obviously still many wrinkles that need to be ironed out before the release of the public beta, such as [getting TypeScript working again](https://github.com/sveltejs/kit/issues/424), but now that the source repository has been opened up to the general public, us [Sveltelowda](https://twitter.com/sveltejs/status/1226662581449953280) will most likely resolve these major bugs soon.
+
+The [reason behind the early release](https://www.reddit.com/r/sveltejs/comments/m337r7/sveltekit_repository_is_now_public_on_github/) is also rather unexpected and even quite entertaining.
+
+If you want to take SvelteKit for a spin, you can get started quickly with `npm`.
+
+```
+npm init svelte@next
+```
+
+You will run into the following notice, but don't be discouraged; you can still experiment with it freely. Just don't use it for anything serious yet.
+
+```
+█████████  ███████████    ███████    ███████████  ███
+███░░░░░███░█░░░███░░░█  ███░░░░░███ ░░███░░░░░███░███
+░███    ░░░ ░   ░███  ░  ███     ░░███ ░███    ░███░███
+░░█████████     ░███    ░███      ░███ ░██████████ ░███
+░░░░░░░░███    ░███    ░███      ░███ ░███░░░░░░  ░███
+███    ░███    ░███    ░░███     ███  ░███        ░░░
+░░█████████     █████    ░░░███████░   █████        ███
+░░░░░░░░░     ░░░░░       ░░░░░░░    ░░░░░        ░░░
+
+Pump the brakes! A little disclaimer...
+
+svelte@next is not ready for use yet. It definitely can't
+run your apps, and it might not run at all.
+
+We haven't yet started accepting community contributions,
+and we don't need people to start raising issues yet.
+
+Given these warnings, please feel free to experiment, but
+you're on your own for now. We'll have something to show
+soon.
+```
+
+When prompted to use TypeScript in Components, you should type N since the development server will still crash if you use TypeScript. (Once [Issue 424](https://github.com/sveltejs/kit/issues/424) is fixed, TypeScript should hopefully become useable again.)
+
+```
+? Use TypeScript in components? › (y/N)
+```
+
+Now you'll run into three CSS options. I use vanilla CSS, but as far as I know, all three currently work.
+
+```
+? What do you want to use for writing Styles in Svelte components? › - Use arrow-keys. Return to submit.
+❯   CSS
+    Less
+    SCSS
+```
+
+To finish, you can now install the dependencies:
+
+```
+npm i
+```
+
+That's it for the setup.
+
+To see the starter in action, start the development server.
+
+```
+npm run dev
+```
+
+Now, you can visit `localhost:3000`, where you'll be greeted with a cute little counter app.
+
+<Image
+    src="/images/sveltekit-hello-world.png"
+    alt="SvelteKit Hello World App"
+    width={2560}
+    height={1600}
+/>
+
+There are a great many things you can do with the starter. SvelteKit is only a toolkit for extra features beyond Svelte, so you can do anything you are able to do in regular Svelte, and more. The additional features are not yet well documented, if at all, so it is still the Wild West out there. What documentation exists can be found in the [GitHub monorepo](https://github.com/sveltejs/kit/tree/master/documentation/docs).
+
+In the future, though, everything SvelteKit will be available at [kit.svelte.dev](https://kit.svelte.dev), according to Rich Harris in [this GitHub issue](https://github.com/sveltejs/kit/issues/244).
+
+If you feel like you might need a refresh on Svelte, or if you want to check out new features, the [Official Svelte Guide](https://svelte.dev/tutorial/basics) is a great place to do so. The [api docs](https://svelte.dev/docs) are also a fantastic resource.
