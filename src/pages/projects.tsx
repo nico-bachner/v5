@@ -1,38 +1,38 @@
-import Head from "next/head";
-import { MDX } from "components/MDX";
-import { ProjectCard } from "components/ProjectCard";
+import Head from 'next/head'
+import { MDX } from 'components/MDX'
+import { ProjectCard } from 'components/ProjectCard'
 
-import { fetchFile } from "lib/fs";
-import { fetchMDXContent } from "lib/mdx";
-import { fetchProjectsData } from "lib/data/projects";
+import { fetchFile } from 'lib/fs'
+import { fetchMDXContent } from 'lib/mdx'
+import { fetchProjectsData } from 'lib/data/projects'
 
-import type { NextPage, GetStaticProps } from "next";
-import type { MDXContent } from "lib/mdx";
-import type { ProjectData } from "lib/data/types";
+import type { NextPage, GetStaticProps } from 'next'
+import type { MDXContent } from 'lib/mdx'
+import type { ProjectData } from 'lib/data/types'
 
 type PageProps = {
-  projects: ProjectData[];
-  content: MDXContent;
-};
+  projects: ProjectData[]
+  content: MDXContent
+}
 
 export const getStaticProps: GetStaticProps<PageProps> = async () => {
-  const projects = await fetchProjectsData();
+  const projects = await fetchProjectsData()
 
   const content = await fetchMDXContent(
     await fetchFile({
-      basePath: ["content", "sections"],
-      path: ["projects"],
-      extension: "mdx",
+      basePath: ['content', 'sections'],
+      path: ['projects'],
+      extension: 'mdx',
     })
-  );
+  )
 
   return {
     props: {
       projects,
       content,
     },
-  };
-};
+  }
+}
 
 const Page: NextPage<PageProps> = ({ projects, content }) => (
   <>
@@ -60,6 +60,6 @@ const Page: NextPage<PageProps> = ({ projects, content }) => (
       </div>
     </main>
   </>
-);
+)
 
-export default Page;
+export default Page

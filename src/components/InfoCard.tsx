@@ -1,12 +1,12 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 type InfoCardProps = {
-  href: string;
-  header: string;
-  body: string;
-  cta: string;
-  info?: string;
-};
+  href: string
+  header: string
+  body: string
+  cta: string
+  info?: string
+}
 
 export const InfoCard: React.VFC<InfoCardProps> = ({
   href,
@@ -27,4 +27,4 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
       </div>
     </a>
   </Link>
-);
+)

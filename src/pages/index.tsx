@@ -1,56 +1,56 @@
-import Head from "next/head";
-import { MDX } from "components/MDX";
+import Head from 'next/head'
+import { MDX } from 'components/MDX'
 
-import { fetchFile } from "lib/fs";
-import { fetchMDXContent } from "lib/mdx";
+import { fetchFile } from 'lib/fs'
+import { fetchMDXContent } from 'lib/mdx'
 
-import type { NextPage, GetStaticProps } from "next";
-import type { MDXContent } from "lib/mdx";
+import type { NextPage, GetStaticProps } from 'next'
+import type { MDXContent } from 'lib/mdx'
 
 type PageProps = {
   content: {
-    [key: string]: MDXContent;
-  };
-};
+    [key: string]: MDXContent
+  }
+}
 
 export const getStaticProps: GetStaticProps<PageProps> = async () => {
   const content = {
     about: await fetchMDXContent(
       await fetchFile({
-        basePath: ["content", "sections"],
-        path: ["home", "about"],
-        extension: "mdx",
+        basePath: ['content', 'sections'],
+        path: ['home', 'about'],
+        extension: 'mdx',
       })
     ),
     projects: await fetchMDXContent(
       await fetchFile({
-        basePath: ["content", "sections"],
-        path: ["home", "projects"],
-        extension: "mdx",
+        basePath: ['content', 'sections'],
+        path: ['home', 'projects'],
+        extension: 'mdx',
       })
     ),
     writing: await fetchMDXContent(
       await fetchFile({
-        basePath: ["content", "sections"],
-        path: ["home", "writing"],
-        extension: "mdx",
+        basePath: ['content', 'sections'],
+        path: ['home', 'writing'],
+        extension: 'mdx',
       })
     ),
     contact: await fetchMDXContent(
       await fetchFile({
-        basePath: ["content", "sections"],
-        path: ["home", "contact"],
-        extension: "mdx",
+        basePath: ['content', 'sections'],
+        path: ['home', 'contact'],
+        extension: 'mdx',
       })
     ),
-  };
+  }
 
   return {
     props: {
       content,
     },
-  };
-};
+  }
+}
 
 const Page: NextPage<PageProps> = ({ content }) => (
   <>
@@ -97,6 +97,6 @@ const Page: NextPage<PageProps> = ({ content }) => (
       </section>
     </main>
   </>
-);
+)
 
-export default Page;
+export default Page

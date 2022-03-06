@@ -1,6 +1,6 @@
-import Head from "next/head";
+import Head from 'next/head'
 
-import type { NextPage } from "next";
+import type { NextPage } from 'next'
 
 const Page: NextPage = () => (
   <main>
@@ -10,6 +10,6 @@ const Page: NextPage = () => (
 
     <></>
   </main>
-);
+)
 
-export default Page;
+export default Page

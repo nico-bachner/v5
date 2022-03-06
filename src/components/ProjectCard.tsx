@@ -1,22 +1,26 @@
-import { InfoCard } from "./InfoCard";
+import { InfoCard } from './InfoCard'
 
-import type { ProjectData } from "lib/data/types";
+import type { ProjectData } from 'lib/data/types'
 
 const getPeriod = (from: number, to: number | null) => {
-  const from_year = new Date(from).getFullYear();
+  const from_year = new Date(from).getFullYear()
 
   if (to) {
-    const to_year = new Date(to).getFullYear();
+    const to_year = new Date(to).getFullYear()
 
     if (to_year == from_year) {
-      return `${to_year}`;
+      return to_year.toString()
     }
 
-    return `${from_year} – ${to_year}`;
+    if (to_year - from_year == 1) {
+      return [from_year, to_year].join('/')
+    }
+
+    return [from_year, to_year].join(' – ')
   }
 
-  return `${from_year} – Present`;
-};
+  return `${from_year} – Now`
+}
 
 export const ProjectCard: React.VFC<ProjectData> = ({
   path,
@@ -27,11 +31,11 @@ export const ProjectCard: React.VFC<ProjectData> = ({
 }) => {
   return (
     <InfoCard
-      href={"/" + path.join("/")}
+      href={'/' + path.join('/')}
       header={title}
       body={description}
       cta="More Information"
       info={getPeriod(from, to)}
     />
-  );
-};
+  )
+}

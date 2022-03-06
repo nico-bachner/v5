@@ -1,8 +1,8 @@
-import Link from "next/link";
+import Link from 'next/link'
 
 type NavItemProps = {
-  href: string;
-};
+  href: string
+}
 
 export const NavItem: React.FC<NavItemProps> = ({ children, href }) => (
   <Link href={href}>
@@ -10,4 +10,4 @@ export const NavItem: React.FC<NavItemProps> = ({ children, href }) => (
       {children}
     </a>
   </Link>
-);
+)

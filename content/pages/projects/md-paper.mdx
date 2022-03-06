@@ -30,14 +30,14 @@ For those unfamiliar with the command line:
 
 #### Installing
 
--   With [Homebrew](https://brew.sh):
+- With [Homebrew](https://brew.sh):
 
 ```bash
 brew tap nico-bachner/formulae
 brew install md-paper
 ```
 
--   With `curl`:
+- With `curl`:
 
 ```bash
 curl https://md-paper.vercel.app/install.sh | sh
@@ -85,8 +85,8 @@ It calls the `md-paper` program.
 
 This base command can be extended by adding one or more of the following arguments:
 
--   `--log`: basic logs
--   `--aux`: auxiliary files (essentially logs for each small part of your document, e.g. table of contents)
+- `--log`: basic logs
+- `--aux`: auxiliary files (essentially logs for each small part of your document, e.g. table of contents)
 
 For example, the following would keep all the logs generated while building the pdf:
 
@@ -115,8 +115,8 @@ Customisation can be done in a YAML header which is an extra section above the c
 
 #### Document types
 
--   For articles and short reports: `document-type: article`
--   For longer reports: `document-type: report`
+- For articles and short reports: `document-type: article`
+- For longer reports: `document-type: report`
 
 #### Title, Author, Date
 
@@ -125,8 +125,8 @@ These are essential parts of any standalone document:
 ```yml
 title: 'YOUR DOCUMENT TITLE'
 authors:
-    - 'YOUR NAME'
-    - "CO-PUBLISHER'S NAME"
+  - 'YOUR NAME'
+  - "CO-PUBLISHER'S NAME"
 date: \today # or write out a specific date in parentheses
 ```
 
@@ -136,10 +136,10 @@ LaTeX defines margins that are quite generous by default. If you should want to 
 
 ```yml
 margins:
-    top: 3cm
-    bottom: 1in
-    left: 20pt
-    right: 3em
+  top: 3cm
+  bottom: 1in
+  left: 20pt
+  right: 3em
 ```
 
 Adjust values as needed.
@@ -150,8 +150,8 @@ For specialised functionality, external packages may need to be imported:
 
 ```yml
 packages:
-    - package1
-    - package2
+  - package1
+  - package2
 ```
 
 If your TeX distribution doesn't include the full CTAN archive, non-standard packages will have to be downloaded individually before building:

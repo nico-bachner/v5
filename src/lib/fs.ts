@@ -1,35 +1,35 @@
-import { readFile, readdir } from "fs/promises";
+import { readFile, readdir } from 'fs/promises'
 
 type Props = {
-  basePath: string[];
-  path: string[];
-  extension?: string;
-};
+  basePath: string[]
+  path: string[]
+  extension?: string
+}
 
 const fetchFile: Fetch<Props, string> = async ({
   basePath,
   path,
   extension,
 }) => {
-  const fullPath = [...basePath, ...path].join("/");
+  const fullPath = [...basePath, ...path].join('/')
 
-  const fullFilePath = [fullPath, extension].join(".");
+  const fullFilePath = [fullPath, extension].join('.')
 
-  const file = await readFile(fullFilePath, "utf-8");
+  const file = await readFile(fullFilePath, 'utf-8')
 
-  return file;
-};
+  return file
+}
 
 const fetchDirs: Fetch<Props, string[][]> = async ({ basePath, path }) => {
   const files = await readdir(
-    [process.cwd(), ...basePath, ...path].join("/"),
-    "utf-8"
-  );
+    [process.cwd(), ...basePath, ...path].join('/'),
+    'utf-8'
+  )
 
   return files
-    .filter((file) => file.split(".").length == 1)
-    .map((file) => [...path, file]);
-};
+    .filter((file) => file.split('.').length == 1)
+    .map((file) => [...path, file])
+}
 
 const fetchPaths: Fetch<Props, string[][]> = async ({
   basePath,
@@ -37,26 +37,26 @@ const fetchPaths: Fetch<Props, string[][]> = async ({
   extension,
 }) => {
   const files = await readdir(
-    [process.cwd(), ...basePath, ...path].join("/"),
-    "utf-8"
-  );
+    [process.cwd(), ...basePath, ...path].join('/'),
+    'utf-8'
+  )
 
   if (extension) {
     return files
       .filter((file) => file.includes(extension))
       .map((file) => {
-        const [slug] = file.split(".");
+        const [slug] = file.split('.')
 
-        return [...path, slug as string];
-      });
+        return [...path, slug as string]
+      })
   }
 
   return files.map((file) => {
-    const [slug] = file.split(".");
+    const [slug] = file.split('.')
 
-    return [...path, slug as string];
-  });
-};
+    return [...path, slug as string]
+  })
+}
 
 const fetchRecursivePaths: Fetch<Props, string[][]> = async ({
   basePath,
@@ -67,15 +67,15 @@ const fetchRecursivePaths: Fetch<Props, string[][]> = async ({
     basePath,
     path,
     extension,
-  });
+  })
 
   const dirs = await fetchDirs({
     basePath,
     path,
-  });
+  })
 
   if (!dirs.length) {
-    return paths;
+    return paths
   }
 
   const restPaths = await Promise.all(
@@ -87,9 +87,9 @@ const fetchRecursivePaths: Fetch<Props, string[][]> = async ({
           extension,
         })
     )
-  );
+  )
 
-  return [paths, ...restPaths].flat();
-};
+  return [paths, ...restPaths].flat()
+}
 
-export { fetchFile, fetchPaths, fetchRecursivePaths };
+export { fetchFile, fetchPaths, fetchRecursivePaths }
