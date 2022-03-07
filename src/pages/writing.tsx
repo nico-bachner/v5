@@ -62,15 +62,15 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
 
           <div
             className={[
-              'mt-8 flex h-10 w-full rounded-lg border md:h-12',
-              focused ? 'border-slate-500' : 'border-slate-300',
+              'mt-8 flex h-12 w-full rounded-lg border',
+              focused ? 'border-slate-600' : 'border-slate-300',
             ].join(' ')}
           >
-            <div className="h-full p-2.5 md:p-3">
+            <div className="h-full p-3">
               <SearchIcon
                 className={[
-                  focused ? 'text-slate-500' : 'text-slate-300',
-                  'h-full transition placeholder:text-slate-300',
+                  focused ? 'text-slate-500' : 'text-slate-400',
+                  'h-full transition',
                 ].join(' ')}
               />
             </div>
@@ -89,7 +89,7 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
               onBlur={() => {
                 setFocused(false)
               }}
-              className="w-full rounded-lg pr-2.5 text-sm outline-none md:pr-3 md:text-base"
+              className="w-full rounded-lg pr-3 text-base text-slate-600 outline-none placeholder:text-slate-400"
             />
           </div>
 
