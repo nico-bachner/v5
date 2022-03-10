@@ -66,17 +66,21 @@ export const CommandMenu: React.VFC = () => {
 
       // internal navigation
       if (ctrlKey && key == '1') {
+        event.preventDefault()
         router.push('/')
       }
       if (ctrlKey && key == '2') {
+        event.preventDefault()
         router.push('/projects')
       }
       if (ctrlKey && key == '3') {
+        event.preventDefault()
         router.push('/writing')
       }
 
       // external navigation
       if ((metaKey || ctrlKey) && key == 'u') {
+        event.preventDefault()
         window.location.href = 'https://github.com/nico-bachner/v5'
       }
     }
