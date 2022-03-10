@@ -2,8 +2,11 @@ import { useState, useEffect, Fragment } from 'react'
 import { useRouter } from 'next/router'
 import { Dialog, Combobox, Transition } from '@headlessui/react'
 import {
+  AtSymbolIcon,
+  CodeIcon,
   CollectionIcon,
   HomeIcon,
+  IdentificationIcon,
   PencilIcon,
   SearchIcon,
 } from '@heroicons/react/outline'
@@ -12,13 +15,29 @@ const options = [
   { Icon: HomeIcon, title: 'Home', href: '/' },
   { Icon: CollectionIcon, title: 'Projects', href: '/projects' },
   { Icon: PencilIcon, title: 'Writing', href: '/writing' },
+  {
+    Icon: IdentificationIcon,
+    title: 'Curriculum Vitae',
+    href: 'https://read.cv/nico_bachner',
+  },
+  {
+    Icon: AtSymbolIcon,
+    title: 'Email',
+    href: 'mailto:mail@nbac.me',
+  },
+  {
+    Icon: CodeIcon,
+    title: 'Source Code',
+    href: 'https://github.com/nico-bachner/v5',
+  },
 ]
 
-export const CommandMenu: React.VFC = ({}) => {
+export const CommandMenu: React.VFC = () => {
   const router = useRouter()
 
   const [isOpen, setIsOpen] = useState(false)
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState<string | undefined>(undefined)
+  const [selectedOption, setSelectedOption] = useState(options[0])
 
   useEffect(() => {
     const handleKeydown = ({ key, metaKey, ctrlKey }: KeyboardEvent) => {
@@ -39,7 +58,7 @@ export const CommandMenu: React.VFC = ({}) => {
       show={isOpen}
       as={Fragment}
       afterLeave={() => {
-        setQuery('')
+        setQuery(undefined)
       }}
     >
       <Dialog
@@ -68,10 +87,17 @@ export const CommandMenu: React.VFC = ({}) => {
         >
           <Combobox
             as="div"
-            value=""
-            onChange={(value: string) => {
+            value={selectedOption}
+            onChange={(option) => {
+              setSelectedOption(option)
               setIsOpen(false)
-              router.push(value)
+
+              const href = option.href
+              if (href.startsWith('/')) {
+                router.push(href)
+              } else {
+                window.location.href = href
+              }
             }}
             className="relative mx-auto w-full max-w-xl rounded-xl border border-white/20 bg-white/90 shadow-xl backdrop-blur-sm"
           >
@@ -98,14 +124,18 @@ export const CommandMenu: React.VFC = ({}) => {
               static
               className="flex max-h-80 flex-col gap-2.5 overflow-auto py-2.5"
             >
-              {options
-                .filter(({ title }) =>
-                  title.toLowerCase().includes(query.toLowerCase())
-                )
-                .map(({ Icon, title, href }) => (
+              {(query
+                ? options.filter(({ title }) =>
+                    title.toLowerCase().includes(query.toLowerCase())
+                  )
+                : options
+              ).map((option) => {
+                const { Icon, title } = option
+
+                return (
                   <Combobox.Option
                     key={title}
-                    value={href}
+                    value={option}
                     className="focus:outline-none"
                   >
                     {({ active }) => (
@@ -122,7 +152,8 @@ export const CommandMenu: React.VFC = ({}) => {
                       </div>
                     )}
                   </Combobox.Option>
-                ))}
+                )
+              })}
             </Combobox.Options>
           </Combobox>
         </Transition.Child>
