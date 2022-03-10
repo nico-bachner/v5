@@ -51,13 +51,13 @@ We can now use the Svelte Store we created in our theme switch component.
 ```html
 <!-- src/lib/components/ThemeSwitch.svelte -->
 <script lang="ts">
-    import { theme } from '$lib/stores'
+  import { theme } from '$lib/stores'
 </script>
 
 <select bind:value="{$theme}">
-    <option value="system">System</option>
-    <option value="light">Light</option>
-    <option value="dark">Dark</option>
+  <option value="system">System</option>
+  <option value="light">Light</option>
+  <option value="dark">Dark</option>
 </select>
 ```
 
@@ -78,12 +78,12 @@ The way I went about this is swapping stylesheets in the `<head>` of the generat
 ```html
 <!-- src/routes/__layout.svelte -->
 <script lang="ts">
-    import { theme } from '$lib/stores'
+  import { theme } from '$lib/stores'
 </script>
 
 <svelte:head>
-    <meta name="color-scheme" content={$theme == 'system' ? 'light dark' :
-    $theme} /> <link rel="stylesheet" href={`/theme/${$theme}.css`} />
+  <meta name="color-scheme" content={$theme == 'system' ? 'light dark' : $theme}
+  /> <link rel="stylesheet" href={`/theme/${$theme}.css`} />
 </svelte:head>
 
 <slot />
@@ -93,8 +93,8 @@ What's happening here is that we are loading a CSS stylesheet dynamically based 
 
 ```html
 <head>
-    <meta name="color-scheme" content="light dark" />
-    <link rel="stylesheet" href="/theme/system.css" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="stylesheet" href="/theme/system.css" />
 </head>
 ```
 
@@ -102,8 +102,8 @@ And if the user then changes the theme to `'light'`, the head changes accordingl
 
 ```html
 <head>
-    <meta name="color-scheme" content="light dark" />
-    <link rel="stylesheet" href="/theme/light.css" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="stylesheet" href="/theme/light.css" />
 </head>
 ```
 
@@ -126,12 +126,12 @@ In `light.css` and `dark.css` (or whatever you choose to call you themes), we st
 ```css
 /* light.css */
 :root {
-    --color-lightest: hsl(0deg, 0%, 100%);
-    --color-lighter: hsl(0deg, 0%, 80%);
-    --color-light: hsl(0deg, 0%, 60%);
-    --color-strong: hsl(0deg, 0%, 40%);
-    --color-stronger: hsl(0deg, 0%, 20%);
-    --color-strongest: hsl(0deg, 0%, 0%);
+  --color-lightest: hsl(0deg, 0%, 100%);
+  --color-lighter: hsl(0deg, 0%, 80%);
+  --color-light: hsl(0deg, 0%, 60%);
+  --color-strong: hsl(0deg, 0%, 40%);
+  --color-stronger: hsl(0deg, 0%, 20%);
+  --color-strongest: hsl(0deg, 0%, 0%);
 }
 ```
 
@@ -140,25 +140,25 @@ While these are straightforward, the file `system.css` requires more attention, 
 ```css
 /* system.css */
 @media (prefers-color-scheme: light) {
-    :root {
-        --color-lightest: hsl(0deg, 0%, 100%);
-        --color-lighter: hsl(0deg, 0%, 80%);
-        --color-light: hsl(0deg, 0%, 60%);
-        --color-strong: hsl(0deg, 0%, 40%);
-        --color-stronger: hsl(0deg, 0%, 20%);
-        --color-strongest: hsl(0deg, 0%, 0%);
-    }
+  :root {
+    --color-lightest: hsl(0deg, 0%, 100%);
+    --color-lighter: hsl(0deg, 0%, 80%);
+    --color-light: hsl(0deg, 0%, 60%);
+    --color-strong: hsl(0deg, 0%, 40%);
+    --color-stronger: hsl(0deg, 0%, 20%);
+    --color-strongest: hsl(0deg, 0%, 0%);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --color-lightest: hsl(0deg, 0%, 0%);
-        --color-lighter: hsl(0deg, 0%, 20%);
-        --color-light: hsl(0deg, 0%, 40%);
-        --color-strong: hsl(0deg, 0%, 60%);
-        --color-stronger: hsl(0deg, 0%, 80%);
-        --color-strongest: hsl(0deg, 0%, 100%);
-    }
+  :root {
+    --color-lightest: hsl(0deg, 0%, 0%);
+    --color-lighter: hsl(0deg, 0%, 20%);
+    --color-light: hsl(0deg, 0%, 40%);
+    --color-strong: hsl(0deg, 0%, 60%);
+    --color-stronger: hsl(0deg, 0%, 80%);
+    --color-strongest: hsl(0deg, 0%, 100%);
+  }
 }
 ```
 

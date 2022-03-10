@@ -1,0 +1,34 @@
+---
+title: CSS Scroll Snap
+description: How to use the CSS Scroll Snap property for page-level vertical scrolling
+published: 2022-03-10
+---
+
+The CSS Scroll Snap property allows you to adjust the scrolling behaviour of the browser to better align with your content.
+
+The desired effect can be seen here: [v5.nbac.me](https://v5.nbac.me)
+
+The way this is achieved is by wrapping the page content in a containing element. In the example, `<main>` is used. Next, you need to apply the following two sets of styles to the container and the child element, respectively:
+
+```css
+/* the container element */
+main {
+  /* make the container overflow vertically */
+  height: 100vh;
+  overflow: auto;
+
+  /* define scroll snap behaviour */
+  scroll-snap-type: y mandatory;
+}
+
+/* the child element */
+main > * {
+  /* adjust based on desired behaviour */
+  scroll-snap-align: start; /* start or center or end */
+
+  /* add for a slideshow-like feel */
+  height: 100vh;
+}
+```
+
+Bear in mind that you should exercise caution when modifying the scroll behaviour of your page, as it can lead to some unintended side effects, such as the user not being able to scroll to certain parts of your page, a behaviour which [CSS Tricks](https://css-tricks.com/practical-css-scroll-snapping/#aa-scroll-snap-type-mandatory-vs-proximity) explains well.
