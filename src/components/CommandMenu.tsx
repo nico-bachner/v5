@@ -12,9 +12,24 @@ import {
 } from '@heroicons/react/outline'
 
 const options = [
-  { Icon: HomeIcon, title: 'Home', href: '/' },
-  { Icon: CollectionIcon, title: 'Projects', href: '/projects' },
-  { Icon: PencilIcon, title: 'Writing', href: '/writing' },
+  {
+    Icon: HomeIcon,
+    title: 'Home',
+    href: '/',
+    shortcut: '^1',
+  },
+  {
+    Icon: CollectionIcon,
+    title: 'Projects',
+    href: '/projects',
+    shortcut: '^2',
+  },
+  {
+    Icon: PencilIcon,
+    title: 'Writing',
+    href: '/writing',
+    shortcut: '^3',
+  },
   {
     Icon: IdentificationIcon,
     title: 'Curriculum Vitae',
@@ -29,6 +44,7 @@ const options = [
     Icon: CodeIcon,
     title: 'Source Code',
     href: 'https://github.com/nico-bachner/v5',
+    shortcut: '⌘U',
   },
 ]
 
@@ -40,9 +56,28 @@ export const CommandMenu: React.VFC = () => {
   const [selectedOption, setSelectedOption] = useState(options[0])
 
   useEffect(() => {
-    const handleKeydown = ({ key, metaKey, ctrlKey }: KeyboardEvent) => {
-      if (key == 'k' && (metaKey || ctrlKey)) {
+    const handleKeydown = (event: KeyboardEvent) => {
+      const { key, ctrlKey, altKey, metaKey } = event
+
+      if ((metaKey || ctrlKey) && key == 'k') {
+        event.preventDefault()
         setIsOpen(!isOpen)
+      }
+
+      // internal navigation
+      if (ctrlKey && key == '1') {
+        router.push('/')
+      }
+      if (ctrlKey && key == '2') {
+        router.push('/projects')
+      }
+      if (ctrlKey && key == '3') {
+        router.push('/writing')
+      }
+
+      // external navigation
+      if ((metaKey || ctrlKey) && key == 'u') {
+        window.location.href = 'https://github.com/nico-bachner/v5'
       }
     }
 
@@ -51,7 +86,7 @@ export const CommandMenu: React.VFC = () => {
     return () => {
       window.removeEventListener('keydown', handleKeydown)
     }
-  }, [isOpen])
+  }, [isOpen, router])
 
   return (
     <Transition
@@ -130,7 +165,7 @@ export const CommandMenu: React.VFC = () => {
                   )
                 : options
               ).map((option) => {
-                const { Icon, title } = option
+                const { Icon, title, shortcut } = option
 
                 return (
                   <Combobox.Option
@@ -149,6 +184,9 @@ export const CommandMenu: React.VFC = () => {
                       >
                         <Icon className="box-content h-6 w-6 py-4" />
                         <span className="flex-grow py-4 text-lg">{title}</span>
+                        <kbd className="py-4 font-sans text-slate-400">
+                          {shortcut}
+                        </kbd>
                       </div>
                     )}
                   </Combobox.Option>
