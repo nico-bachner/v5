@@ -81,7 +81,7 @@ export const CommandMenu: React.VFC = () => {
       // external navigation
       if ((metaKey || ctrlKey) && key == 'u') {
         event.preventDefault()
-        window.location.href = 'https://github.com/nico-bachner/v5'
+        window.open('https://github.com/nico-bachner/v5')
       }
     }
 
@@ -135,7 +135,7 @@ export const CommandMenu: React.VFC = () => {
               if (href.startsWith('/')) {
                 router.push(href)
               } else {
-                window.location.href = href
+                window.open(href)
               }
             }}
             className="relative mx-auto w-full max-w-xl rounded-xl border border-white/20 bg-white/90 shadow-xl backdrop-blur-sm"
