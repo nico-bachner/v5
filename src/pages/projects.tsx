@@ -45,6 +45,7 @@ const Page: NextPage<PageProps> = ({ projects, content }) => (
         <h1 className="mb-12 text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
           Projects
         </h1>
+
         <MDX content={content} />
       </div>
 

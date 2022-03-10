@@ -1,6 +1,7 @@
 import { fetchMDXContent, getMDXData } from 'lib/mdx'
 import { fetchFile, fetchRecursivePaths } from 'lib/fs'
 import { fetchDateUpdated, getEditUrl } from 'lib/github'
+import { config } from 'config'
 
 import Head from 'next/head'
 import { MDX } from 'components/MDX'
@@ -17,12 +18,6 @@ type PageProps = {
   content: MDXContent
   updated: number | null
   edit_url: string
-}
-
-const github = {
-  user: 'nico-bachner',
-  repo: 'v5',
-  baseBranch: 'main',
 }
 
 const basePath = ['content', 'pages']
@@ -90,7 +85,7 @@ const getStaticProps: GetStaticProps<PageProps> = async ({ params }) => {
   }
 
   const updated = await fetchDateUpdated({
-    ...github,
+    ...config.repo,
     basePath,
     path,
     extension,
@@ -104,7 +99,7 @@ const getStaticProps: GetStaticProps<PageProps> = async ({ params }) => {
     index: published == false ? false : true,
     content: await fetchMDXContent(file),
     updated: updated?.getTime() ?? null,
-    edit_url: getEditUrl({ ...github, basePath, path, extension }),
+    edit_url: getEditUrl({ ...config.repo, basePath, path, extension }),
   }
 
   return { props }

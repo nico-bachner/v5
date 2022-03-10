@@ -17,12 +17,13 @@ type GitHubProps = {
   extension: string
 }
 
-const fetchDateUpdated: Fetch<GitHubProps, Date | undefined> = async ({
+const basePath = ['content', 'pages']
+const extension = 'mdx'
+
+export const fetchDateUpdated: Fetch<GitHubProps, Date | undefined> = async ({
   user,
   repo,
-  basePath,
   path,
-  extension,
 }) => {
   const fullPath = [...basePath, ...path].join('/')
   const fullFilePath = [fullPath, extension].join('.')
@@ -43,7 +44,7 @@ const fetchDateUpdated: Fetch<GitHubProps, Date | undefined> = async ({
   }
 }
 
-const getEditUrl: Get<GitHubProps, string> = ({
+export const getEditUrl: Get<GitHubProps, string> = ({
   user,
   repo,
   baseBranch,
@@ -66,4 +67,10 @@ const getEditUrl: Get<GitHubProps, string> = ({
   return editUrl
 }
 
-export { fetchDateUpdated, getEditUrl }
+export const getNewUrl: Get<GitHubProps, string> = ({
+  user,
+  repo,
+  baseBranch,
+  basePath,
+}) =>
+  ['https://github.com', user, repo, 'new', baseBranch, ...basePath].join('/')
