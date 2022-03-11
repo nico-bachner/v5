@@ -9,6 +9,7 @@ import {
   IdentificationIcon,
   PencilIcon,
   SearchIcon,
+  TerminalIcon,
 } from '@heroicons/react/outline'
 
 const options = [
@@ -31,6 +32,12 @@ const options = [
     shortcut: '^3',
   },
   {
+    Icon: TerminalIcon,
+    title: 'Uses',
+    href: '/uses',
+    shortcut: '^4',
+  },
+  {
     Icon: IdentificationIcon,
     title: 'Curriculum Vitae',
     href: 'https://read.cv/nico_bachner',
@@ -44,7 +51,7 @@ const options = [
     Icon: CodeIcon,
     title: 'Source Code',
     href: 'https://github.com/nico-bachner/v5',
-    shortcut: '⌘U',
+    shortcut: '⌥⌘U',
   },
 ]
 
@@ -77,9 +84,13 @@ export const CommandMenu: React.VFC = () => {
         event.preventDefault()
         router.push('/writing')
       }
+      if (ctrlKey && key == '4') {
+        event.preventDefault()
+        router.push('/uses')
+      }
 
       // external navigation
-      if ((metaKey || ctrlKey) && key == 'u') {
+      if (((altKey && metaKey) || ctrlKey) && key == 'u') {
         event.preventDefault()
         window.open('https://github.com/nico-bachner/v5')
       }
