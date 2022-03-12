@@ -15,7 +15,7 @@ export const MDX: React.VFC<MDXProps> = ({ content, components }) => (
     {...content}
     components={{
       wrapper: ({ children }) => (
-        <div className="prose prose-slate md:prose-lg lg:prose-xl">
+        <div className="prose prose-zinc dark:prose-invert md:prose-lg lg:prose-xl">
           {children}
         </div>
       ),

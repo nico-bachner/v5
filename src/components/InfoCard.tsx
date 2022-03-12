@@ -16,11 +16,13 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
   info,
 }) => (
   <Link href={href}>
-    <a className="flex transform flex-col gap-2 rounded-lg border border-white/20 bg-white/25 p-6 shadow-lg backdrop-blur-sm md:gap-4 md:p-10 md:transition md:duration-300 md:hover:scale-105 md:hover:shadow-xl lg:gap-6 lg:p-12">
+    <a className="flex transform flex-col gap-2 rounded-lg border border-white/20 bg-white/25 p-6 shadow-lg backdrop-blur-sm dark:border-white/10 dark:bg-white/5 md:gap-4 md:p-10 md:transition md:duration-300 md:hover:scale-105 md:hover:shadow-xl lg:gap-6 lg:p-12">
       <p className="text-2xl font-extrabold md:text-3xl md:tracking-tight lg:text-4xl">
         <strong>{header}</strong>
       </p>
-      <p className="prose prose-slate md:prose-lg lg:prose-xl">{body}</p>
+      <p className="prose prose-slate dark:prose-invert md:prose-lg lg:prose-xl">
+        {body}
+      </p>
       <div className="flex justify-between md:text-lg lg:text-xl">
         <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text text-transparent">
           {cta} {'->'}

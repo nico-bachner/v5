@@ -63,12 +63,16 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
           <div
             className={[
               'mt-8 flex w-full rounded-lg border transition duration-100',
-              focused ? 'border-slate-600' : 'border-slate-300',
+              focused
+                ? 'border-zinc-600 dark:border-zinc-400'
+                : 'border-zinc-300 dark:border-zinc-700',
             ].join(' ')}
           >
             <SearchIcon
               className={[
-                focused ? 'text-slate-500' : 'text-slate-400',
+                focused
+                  ? 'text-zinc-600 dark:text-zinc-400'
+                  : 'text-zinc-400 dark:text-zinc-600',
                 'box-content h-6 w-6 p-3 transition duration-100',
               ].join(' ')}
             />
@@ -87,12 +91,12 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
               onBlur={() => {
                 setFocused(false)
               }}
-              className="w-full rounded-lg pr-2 text-base text-slate-600 outline-none placeholder:text-slate-400"
+              className="w-full rounded-lg bg-transparent pr-2 text-base text-zinc-700 outline-none placeholder:text-zinc-400 dark:text-zinc-300 dark:placeholder:text-zinc-600"
             />
           </div>
 
           {query && query.length > 0 ? (
-            <p className="mt-6 text-center text-slate-600">
+            <p className="mt-6 text-center text-zinc-600 dark:text-zinc-400">
               {filteredArticles.length} result(s) found
             </p>
           ) : null}

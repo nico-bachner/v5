@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply bg-white dark:bg-black;
+}
+
+.prose pre {
+  @apply border border-zinc-700;
+}
+
 .hljs-comment {
-  @apply text-slate-400;
+  @apply text-zinc-500;
 }

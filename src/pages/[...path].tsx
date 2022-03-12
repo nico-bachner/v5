@@ -133,7 +133,7 @@ const Page: NextPage<PageProps> = ({
       </article>
 
       <div className="mx-auto mt-24 flex max-w-2xl justify-between">
-        <p className="text-slate-600 md:text-lg lg:text-xl">
+        <p className="text-zinc-500 md:text-lg lg:text-xl">
           Last Updated:{' '}
           {updated ? new Date(updated).toLocaleDateString() : 'N/A'}
         </p>
