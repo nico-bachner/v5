@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
 import { useAtom } from 'jotai'
 import { isCommandMenuOpen } from 'store'
-import { Dialog, Combobox, Transition } from '@headlessui/react'
+import { Combobox } from '@headlessui/react'
 import {
   AtSymbolIcon,
   CodeIcon,
@@ -17,6 +17,7 @@ import {
   SunIcon,
   TerminalIcon,
 } from '@heroicons/react/outline'
+import { Dialog } from 'components/Dialog'
 
 export const CommandMenu: React.VFC = () => {
   const router = useRouter()
@@ -26,6 +27,7 @@ export const CommandMenu: React.VFC = () => {
     {
       Icon: HomeIcon,
       title: 'Home',
+      type: 'page',
       shortcut: '^1',
       action: () => {
         router.push('/')
@@ -34,6 +36,7 @@ export const CommandMenu: React.VFC = () => {
     {
       Icon: CollectionIcon,
       title: 'Projects',
+      type: 'page',
       shortcut: '^2',
       action: () => {
         router.push('/projects')
@@ -42,6 +45,7 @@ export const CommandMenu: React.VFC = () => {
     {
       Icon: PencilIcon,
       title: 'Writing',
+      type: 'page',
       shortcut: '^3',
       action: () => {
         router.push('/writing')
@@ -50,6 +54,7 @@ export const CommandMenu: React.VFC = () => {
     {
       Icon: TerminalIcon,
       title: 'Uses',
+      type: 'page',
       shortcut: '^4',
       action: () => {
         router.push('/uses')
@@ -58,6 +63,7 @@ export const CommandMenu: React.VFC = () => {
     {
       Icon: SunIcon,
       title: 'Change Theme to Light',
+      type: 'general',
       action: () => {
         setTheme('light')
       },
@@ -65,6 +71,7 @@ export const CommandMenu: React.VFC = () => {
     {
       Icon: MoonIcon,
       title: 'Change Theme to Dark',
+      type: 'general',
       action: () => {
         setTheme('dark')
       },
@@ -72,6 +79,7 @@ export const CommandMenu: React.VFC = () => {
     {
       Icon: DesktopComputerIcon,
       title: 'Change Theme to System',
+      type: 'general',
       action: () => {
         setTheme('system')
       },
@@ -79,6 +87,7 @@ export const CommandMenu: React.VFC = () => {
     {
       Icon: IdentificationIcon,
       title: 'Curriculum Vitae',
+      type: 'link',
       action: () => {
         window.open('https://read.cv/nico_bachner')
       },
@@ -86,6 +95,7 @@ export const CommandMenu: React.VFC = () => {
     {
       Icon: AtSymbolIcon,
       title: 'Email',
+      type: 'link',
       action: () => {
         window.open('mailto:mail@nbac.me')
       },
@@ -93,6 +103,7 @@ export const CommandMenu: React.VFC = () => {
     {
       Icon: CodeIcon,
       title: 'Source Code',
+      type: 'link',
       shortcut: '⌥⌘U',
       action: () => {
         window.open('https://github.com/nico-bachner/v5')
@@ -146,111 +157,87 @@ export const CommandMenu: React.VFC = () => {
   }, [isOpen, setIsOpen, router])
 
   return (
-    <Transition
-      show={isOpen}
-      as={Fragment}
-      afterLeave={() => {
+    <Dialog
+      open={isOpen}
+      onClose={() => {
+        setIsOpen(false)
+      }}
+      afterClose={() => {
         setQuery(undefined)
       }}
     >
-      <Dialog
-        onClose={() => {
+      <Combobox
+        as="div"
+        value={selectedOption}
+        onChange={(option) => {
+          setSelectedOption(option)
           setIsOpen(false)
+          option.action()
         }}
-        className="fixed inset-0 z-50 flex h-screen w-screen flex-col justify-center p-6"
+        className="relative mx-auto w-full max-w-xl rounded-xl border border-white/20 bg-white/75 shadow-xl backdrop-blur-lg dark:border-zinc-700 dark:bg-black/75"
       >
-        <Transition.Child
-          enter="duration-200 ease-out"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="duration-150 ease-in"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <Dialog.Overlay className="fixed inset-0 bg-white/50 backdrop-blur-sm dark:bg-black/50" />
-        </Transition.Child>
-        <Transition.Child
-          enter="duration-200 ease-out"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="duration-200 ease-in"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
-        >
-          <Combobox
-            as="div"
-            value={selectedOption}
-            onChange={(option) => {
-              setSelectedOption(option)
-              setIsOpen(false)
-              option.action()
+        <div className="mx-2 flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
+          <SearchIcon className="box-content h-6 w-6 p-4" />
+          <Combobox.Input
+            type="search"
+            spellCheck="false"
+            placeholder="Search"
+            value={query}
+            onChange={({ target }) => {
+              setQuery(target.value)
             }}
-            className="relative mx-auto w-full max-w-xl rounded-xl border border-white/20 bg-white/75 shadow-xl backdrop-blur-lg dark:border-zinc-700 dark:bg-black/75"
-          >
-            <div className="mx-2 flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
-              <SearchIcon className="box-content h-6 w-6 p-4" />
-              <Combobox.Input
-                type="search"
-                spellCheck="false"
-                placeholder="Search"
-                value={query}
-                onChange={({ target }) => {
-                  setQuery(target.value)
-                }}
-                className="w-full rounded-lg bg-transparent text-base outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
-              />
-            </div>
+            className="w-full rounded-lg bg-transparent text-base outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+          />
+        </div>
 
-            <hr className="border-zinc-200 dark:border-zinc-700" />
+        <hr className="border-zinc-200 dark:border-zinc-700" />
 
-            <Combobox.Options
-              static
-              className="flex max-h-80 flex-col overflow-auto py-2"
-            >
-              {(query
-                ? options.filter(({ title }) =>
-                    title.toLowerCase().includes(query.toLowerCase())
-                  )
-                : options
-              ).map((option) => {
-                const { Icon, title, shortcut } = option
+        <Combobox.Options
+          static
+          className="flex max-h-80 flex-col overflow-auto py-2"
+        >
+          {(query
+            ? options.filter(({ title }) =>
+                title.toLowerCase().includes(query.toLowerCase())
+              )
+            : options
+          ).map((option) => {
+            const { Icon, title, shortcut } = option
 
-                return (
-                  <Combobox.Option
-                    key={title}
-                    value={option}
-                    className="focus:outline-none"
+            return (
+              <Combobox.Option
+                key={title}
+                value={option}
+                className="focus:outline-none"
+              >
+                {({ active }) => (
+                  <div
+                    className={[
+                      'mx-2 flex cursor-pointer items-center gap-2 rounded-lg transition',
+                      active
+                        ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white'
+                        : 'text-zinc-700 dark:text-zinc-300',
+                    ].join(' ')}
                   >
-                    {({ active }) => (
-                      <div
-                        className={[
-                          'mx-2 flex cursor-pointer items-center gap-2 rounded-lg transition',
-                          active
-                            ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white'
-                            : 'text-zinc-700 dark:text-zinc-300',
-                        ].join(' ')}
-                      >
-                        <Icon className="box-content h-6 w-6 p-4" />
-                        <span className="flex-grow text-lg">{title}</span>
-                        <kbd
-                          className={[
-                            'p-4 font-sans transition',
-                            active
-                              ? 'text-zinc-500 dark:text-zinc-400'
-                              : 'text-zinc-400 dark:text-zinc-500',
-                          ].join(' ')}
-                        >
-                          {shortcut}
-                        </kbd>
-                      </div>
-                    )}
-                  </Combobox.Option>
-                )
-              })}
-            </Combobox.Options>
-          </Combobox>
-        </Transition.Child>
-      </Dialog>
-    </Transition>
+                    <Icon className="box-content h-6 w-6 p-4" />
+                    <span className="flex-grow text-lg">{title}</span>
+                    <kbd
+                      className={[
+                        'p-4 font-sans transition',
+                        active
+                          ? 'text-zinc-500 dark:text-zinc-400'
+                          : 'text-zinc-400 dark:text-zinc-500',
+                      ].join(' ')}
+                    >
+                      {shortcut}
+                    </kbd>
+                  </div>
+                )}
+              </Combobox.Option>
+            )
+          })}
+        </Combobox.Options>
+      </Combobox>
+    </Dialog>
   )
 }
