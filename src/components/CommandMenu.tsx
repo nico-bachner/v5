@@ -1,10 +1,11 @@
-import { useState, useEffect, Fragment } from 'react'
+import { useState, useEffect, Fragment, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
 import { useAtom } from 'jotai'
 import { isCommandMenuOpen } from 'store'
 import { Combobox } from '@headlessui/react'
 import {
+  AdjustmentsIcon,
   AtSymbolIcon,
   CodeIcon,
   CollectionIcon,
@@ -18,143 +19,122 @@ import {
   TerminalIcon,
 } from '@heroicons/react/outline'
 import { Dialog } from 'components/Dialog'
+import { useKeyboardShortcuts } from 'hooks/useKeyboardShortcut'
 
 export const CommandMenu: React.VFC = () => {
   const router = useRouter()
   const { theme, setTheme } = useTheme()
-
-  const options = [
-    {
-      Icon: HomeIcon,
-      title: 'Home',
-      type: 'page',
-      shortcut: '^1',
-      action: () => {
-        router.push('/')
-      },
-    },
-    {
-      Icon: CollectionIcon,
-      title: 'Projects',
-      type: 'page',
-      shortcut: '^2',
-      action: () => {
-        router.push('/projects')
-      },
-    },
-    {
-      Icon: PencilIcon,
-      title: 'Writing',
-      type: 'page',
-      shortcut: '^3',
-      action: () => {
-        router.push('/writing')
-      },
-    },
-    {
-      Icon: TerminalIcon,
-      title: 'Uses',
-      type: 'page',
-      shortcut: '^4',
-      action: () => {
-        router.push('/uses')
-      },
-    },
-    {
-      Icon: SunIcon,
-      title: 'Change Theme to Light',
-      type: 'general',
-      action: () => {
-        setTheme('light')
-      },
-    },
-    {
-      Icon: MoonIcon,
-      title: 'Change Theme to Dark',
-      type: 'general',
-      action: () => {
-        setTheme('dark')
-      },
-    },
-    {
-      Icon: DesktopComputerIcon,
-      title: 'Change Theme to System',
-      type: 'general',
-      action: () => {
-        setTheme('system')
-      },
-    },
-    {
-      Icon: IdentificationIcon,
-      title: 'Curriculum Vitae',
-      type: 'link',
-      action: () => {
-        window.open('https://read.cv/nico_bachner')
-      },
-    },
-    {
-      Icon: AtSymbolIcon,
-      title: 'Email',
-      type: 'link',
-      action: () => {
-        window.open('mailto:mail@nbac.me')
-      },
-    },
-    {
-      Icon: CodeIcon,
-      title: 'Source Code',
-      type: 'link',
-      shortcut: '⌥⌘U',
-      action: () => {
-        window.open('https://github.com/nico-bachner/v5')
-      },
-    },
-  ]
-
   const [isOpen, setIsOpen] = useAtom(isCommandMenuOpen)
+
+  const options = useMemo(
+    () => [
+      {
+        Icon: AdjustmentsIcon,
+        title: 'Open Command Menu',
+        type: 'general',
+        shortcut: '⌘K',
+        action: () => {
+          setIsOpen(!isOpen)
+        },
+      },
+      {
+        Icon: SunIcon,
+        title: 'Change Theme to Light',
+        type: 'general',
+        action: () => {
+          setTheme('light')
+        },
+      },
+      {
+        Icon: MoonIcon,
+        title: 'Change Theme to Dark',
+        type: 'general',
+        action: () => {
+          setTheme('dark')
+        },
+      },
+      {
+        Icon: DesktopComputerIcon,
+        title: 'Change Theme to System',
+        type: 'general',
+        action: () => {
+          setTheme('system')
+        },
+      },
+      {
+        Icon: HomeIcon,
+        title: 'Home',
+        type: 'page',
+        shortcut: '^1',
+        action: () => {
+          router.push('/')
+        },
+      },
+      {
+        Icon: CollectionIcon,
+        title: 'Projects',
+        type: 'page',
+        shortcut: '^2',
+        action: () => {
+          router.push('/projects')
+        },
+      },
+      {
+        Icon: PencilIcon,
+        title: 'Writing',
+        type: 'page',
+        shortcut: '^3',
+        action: () => {
+          router.push('/writing')
+        },
+      },
+      {
+        Icon: TerminalIcon,
+        title: 'Uses',
+        type: 'page',
+        shortcut: '^4',
+        action: () => {
+          router.push('/uses')
+        },
+      },
+      {
+        Icon: IdentificationIcon,
+        title: 'Curriculum Vitae',
+        type: 'link',
+        action: () => {
+          window.open('https://read.cv/nico_bachner')
+        },
+      },
+      {
+        Icon: AtSymbolIcon,
+        title: 'Email',
+        type: 'link',
+        action: () => {
+          window.open('mailto:mail@nbac.me')
+        },
+      },
+      {
+        Icon: CodeIcon,
+        title: 'Source Code',
+        type: 'link',
+        shortcut: '⌥⌘U',
+        action: () => {
+          window.open('https://github.com/nico-bachner/v5')
+        },
+      },
+    ],
+    [router, isOpen, setIsOpen, setTheme]
+  )
+
   const [query, setQuery] = useState<string | undefined>(undefined)
   const [selectedOption, setSelectedOption] = useState(options[0])
 
-  useEffect(() => {
-    const handleKeydown = (event: KeyboardEvent) => {
-      const { key, ctrlKey, altKey, metaKey } = event
-
-      if ((metaKey || ctrlKey) && key == 'k') {
-        event.preventDefault()
-        setIsOpen(!isOpen)
-      }
-
-      // internal navigation
-      if (ctrlKey && key == '1') {
-        event.preventDefault()
-        router.push('/')
-      }
-      if (ctrlKey && key == '2') {
-        event.preventDefault()
-        router.push('/projects')
-      }
-      if (ctrlKey && key == '3') {
-        event.preventDefault()
-        router.push('/writing')
-      }
-      if (ctrlKey && key == '4') {
-        event.preventDefault()
-        router.push('/uses')
-      }
-
-      // external navigation
-      if (((altKey && metaKey) || ctrlKey) && key == 'u') {
-        event.preventDefault()
-        window.open('https://github.com/nico-bachner/v5')
-      }
-    }
-
-    window.addEventListener('keydown', handleKeydown)
-
-    return () => {
-      window.removeEventListener('keydown', handleKeydown)
-    }
-  }, [isOpen, setIsOpen, router])
+  useKeyboardShortcuts(
+    options.map(({ shortcut, action }) => ({
+      keys: shortcut,
+      action,
+    }))
+  )
 
   return (
     <Dialog
