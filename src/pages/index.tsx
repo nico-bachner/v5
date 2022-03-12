@@ -91,7 +91,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
           <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
             About
           </h2>
-          <UserIcon className="h-12 w-12 md:h-14 md:w-14" />
+          <UserIcon className="h-12 w-12 md:h-16 md:w-16" />
         </div>
         <MDX content={content.about} />
       </section>
@@ -101,7 +101,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
           <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
             Projects
           </h2>
-          <CollectionIcon className="h-12 w-12 md:h-14 md:w-14" />
+          <CollectionIcon className="h-12 w-12 md:h-16 md:w-16" />
         </div>
         <MDX content={content.projects} />
 
@@ -120,7 +120,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
           <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
             Writing
           </h2>
-          <PencilIcon className="h-12 w-12 md:h-14 md:w-14" />
+          <PencilIcon className="h-12 w-12 md:h-16 md:w-16" />
         </div>
         <MDX content={content.writing} />
         <div className="mt-6 flex flex-col gap-8">
@@ -138,7 +138,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
           <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
             Contact
           </h2>
-          <AtSymbolIcon className="h-12 w-12 md:h-14 md:w-14" />
+          <AtSymbolIcon className="h-12 w-12 md:h-16 md:w-16" />
         </div>
         <MDX content={content.contact} />
       </section>
