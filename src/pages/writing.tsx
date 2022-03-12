@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { MDX } from 'components/MDX'
 import { ArticleCard } from 'components/ArticleCard'
-import { SearchIcon } from '@heroicons/react/outline'
+import { PencilIcon, SearchIcon } from '@heroicons/react/outline'
 
 import { useState } from 'react'
 import { fetchFile } from 'lib/fs'
@@ -54,9 +54,12 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
 
       <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
         <div className="mx-auto mb-12 max-w-2xl">
-          <h1 className="mb-12 text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
-            Writing
-          </h1>
+          <div className="mb-12 flex items-center justify-between gap-4">
+            <h1 className="text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
+              Writing
+            </h1>
+            <PencilIcon className="h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20" />
+          </div>
 
           <MDX content={content} />
 
