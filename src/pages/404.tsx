@@ -47,7 +47,7 @@ const Page: NextPage<PageProps> = ({ content }) => {
         <title>404 | Nico Bachner</title>
       </Head>
 
-      <main className="px-6 pb-40 pt-20 md:pt-24 lg:pt-28">
+      <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
         <div className="mx-auto mb-20 max-w-2xl">
           <h1 className="text-center text-6xl font-black tracking-tight md:text-7xl lg:text-8xl">
             404

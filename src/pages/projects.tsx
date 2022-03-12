@@ -40,7 +40,7 @@ const Page: NextPage<PageProps> = ({ projects, content }) => (
       <title>Projects | Nico Bachner</title>
     </Head>
 
-    <main className="px-6 pb-40 pt-20 md:pt-24 lg:pt-28">
+    <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
       <div className="mx-auto mb-20 max-w-2xl">
         <h1 className="mb-12 text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
           Projects

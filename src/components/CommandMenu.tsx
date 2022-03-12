@@ -151,11 +151,8 @@ export const CommandMenu: React.VFC = () => {
             }}
             className="relative mx-auto w-full max-w-xl rounded-xl border border-white/20 bg-white/90 shadow-xl backdrop-blur-sm"
           >
-            <div className="flex w-full px-2 text-slate-600">
-              <div className="box-content h-6 w-6 p-4">
-                <SearchIcon className="h-full" />
-              </div>
-
+            <div className="mx-2 flex items-center gap-4 p-4 text-slate-600">
+              <SearchIcon className="h-6 w-6" />
               <Combobox.Input
                 type="search"
                 spellCheck="false"
@@ -164,7 +161,7 @@ export const CommandMenu: React.VFC = () => {
                 onChange={({ target }) => {
                   setQuery(target.value)
                 }}
-                className="w-full rounded-lg bg-transparent pr-2 text-base outline-none placeholder:text-slate-400"
+                className="w-full rounded-lg bg-transparent text-base outline-none placeholder:text-slate-400"
               />
             </div>
 
@@ -191,15 +188,15 @@ export const CommandMenu: React.VFC = () => {
                     {({ active }) => (
                       <div
                         className={[
-                          'mx-2 flex cursor-pointer gap-4 rounded-lg px-4 align-middle transition duration-300',
+                          'mx-2 flex cursor-pointer items-center gap-4 rounded-lg p-4 transition duration-300',
                           active
                             ? 'text-slate-800 shadow-lg'
                             : 'text-slate-600 shadow-sm',
                         ].join(' ')}
                       >
-                        <Icon className="box-content h-6 w-6 py-4" />
-                        <span className="flex-grow py-4 text-lg">{title}</span>
-                        <kbd className="py-4 font-sans text-slate-400">
+                        <Icon className="h-6 w-6" />
+                        <span className="flex-grow text-lg">{title}</span>
+                        <kbd className="font-sans text-slate-400">
                           {shortcut}
                         </kbd>
                       </div>

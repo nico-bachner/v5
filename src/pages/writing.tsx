@@ -52,7 +52,7 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
         <title>Writing | Nico Bachner</title>
       </Head>
 
-      <main className="px-6 pb-40 pt-20 md:pt-24 lg:pt-28">
+      <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
         <div className="mx-auto mb-12 max-w-2xl">
           <h1 className="mb-12 text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
             Writing
@@ -62,18 +62,16 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
 
           <div
             className={[
-              'mt-8 flex h-12 w-full rounded-lg border',
+              'mt-8 flex w-full rounded-lg border transition duration-100',
               focused ? 'border-slate-600' : 'border-slate-300',
             ].join(' ')}
           >
-            <div className="h-full p-3">
-              <SearchIcon
-                className={[
-                  focused ? 'text-slate-500' : 'text-slate-400',
-                  'h-full transition',
-                ].join(' ')}
-              />
-            </div>
+            <SearchIcon
+              className={[
+                focused ? 'text-slate-500' : 'text-slate-400',
+                'box-content h-6 w-6 p-3 transition duration-100',
+              ].join(' ')}
+            />
 
             <input
               type="search"
@@ -89,7 +87,7 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
               onBlur={() => {
                 setFocused(false)
               }}
-              className="w-full rounded-lg pr-3 text-base text-slate-600 outline-none placeholder:text-slate-400"
+              className="w-full rounded-lg pr-2 text-base text-slate-600 outline-none placeholder:text-slate-400"
             />
           </div>
 
