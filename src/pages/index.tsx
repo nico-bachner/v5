@@ -16,7 +16,7 @@ import {
   CollectionIcon,
   PencilIcon,
   UserIcon,
-} from '@heroicons/react/solid'
+} from '@heroicons/react/outline'
 
 type PageProps = {
   content: {
@@ -87,21 +87,21 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
       </section>
 
       <section className="mx-auto flex max-w-2xl flex-col py-20 md:snap-start md:justify-center">
-        <div className="mb-6 flex items-center gap-4">
-          <UserIcon className="h-12 w-12 md:h-14 md:w-14" />
+        <div className="mb-6 flex items-center justify-between gap-4">
           <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
             About
           </h2>
+          <UserIcon className="h-12 w-12 md:h-14 md:w-14" />
         </div>
         <MDX content={content.about} />
       </section>
 
       <section className="mx-auto flex max-w-2xl flex-col py-20 md:snap-start md:justify-center">
-        <div className="mb-6 flex items-center gap-4">
-          <CollectionIcon className="h-12 w-12 md:h-14 md:w-14" />
+        <div className="mb-6 flex items-center justify-between gap-4">
           <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
             Projects
           </h2>
+          <CollectionIcon className="h-12 w-12 md:h-14 md:w-14" />
         </div>
         <MDX content={content.projects} />
 
@@ -116,11 +116,11 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
       </section>
 
       <section className="mx-auto flex max-w-2xl flex-col py-20 md:snap-start md:justify-center">
-        <div className="mb-6 flex items-center gap-4">
-          <PencilIcon className="h-12 w-12 md:h-14 md:w-14" />
+        <div className="mb-6 flex items-center justify-between gap-4">
           <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
             Writing
           </h2>
+          <PencilIcon className="h-12 w-12 md:h-14 md:w-14" />
         </div>
         <MDX content={content.writing} />
         <div className="mt-6 flex flex-col gap-8">
@@ -134,11 +134,11 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
       </section>
 
       <section className="mx-auto flex max-w-2xl flex-col py-20 md:snap-start md:justify-center">
-        <div className="mb-6 flex items-center gap-4">
-          <AtSymbolIcon className="h-12 w-12 md:h-14 md:w-14" />
+        <div className="mb-6 flex items-center justify-between gap-4">
           <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
             Contact
           </h2>
+          <AtSymbolIcon className="h-12 w-12 md:h-14 md:w-14" />
         </div>
         <MDX content={content.contact} />
       </section>
