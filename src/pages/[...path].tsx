@@ -1,10 +1,10 @@
+import { Head } from 'components/Head'
+import { MDX } from 'components/MDX'
+
 import { fetchMDXContent, getMDXData } from 'lib/mdx'
 import { fetchFile, fetchRecursivePaths } from 'lib/fs'
 import { fetchDateUpdated, getEditUrl } from 'lib/github'
 import { config } from 'config'
-
-import Head from 'next/head'
-import { MDX } from 'components/MDX'
 
 import type { NextPage, GetStaticPaths, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
@@ -116,8 +116,8 @@ const Page: NextPage<PageProps> = ({
   edit_url,
 }) => (
   <>
-    <Head>
-      <title>{title} | Nico Bachner</title>
+    <Head title={['Nico Bachner', title].join(' – ')} description={description}>
+      {image ? <meta property="og:image" content={image} /> : null}
     </Head>
 
     <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">

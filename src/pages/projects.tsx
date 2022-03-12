@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 import { ProjectCard } from 'components/ProjectCard'
 import { CollectionIcon } from '@heroicons/react/outline'
@@ -37,9 +37,10 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
 
 const Page: NextPage<PageProps> = ({ projects, content }) => (
   <>
-    <Head>
-      <title>Projects | Nico Bachner</title>
-    </Head>
+    <Head
+      title="Nico Bachner – Projects"
+      description="Nico Bachner's projects"
+    />
 
     <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
       <div className="mx-auto mb-20 max-w-2xl">

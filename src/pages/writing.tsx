@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 import { ArticleCard } from 'components/ArticleCard'
 import { PencilIcon, SearchIcon } from '@heroicons/react/outline'
@@ -48,9 +48,10 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
 
   return (
     <>
-      <Head>
-        <title>Writing | Nico Bachner</title>
-      </Head>
+      <Head
+        title="Nico Bachner – Writing"
+        description="Nico Bachner's written pieces about Web Development and Design"
+      />
 
       <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
         <div className="mx-auto mb-12 max-w-2xl">
