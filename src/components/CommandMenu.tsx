@@ -1,6 +1,8 @@
 import { useState, useEffect, Fragment } from 'react'
 import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
+import { useAtom } from 'jotai'
+import { isCommandMenuOpen } from 'store'
 import { Dialog, Combobox, Transition } from '@headlessui/react'
 import {
   AtSymbolIcon,
@@ -98,7 +100,7 @@ export const CommandMenu: React.VFC = () => {
     },
   ]
 
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useAtom(isCommandMenuOpen)
   const [query, setQuery] = useState<string | undefined>(undefined)
   const [selectedOption, setSelectedOption] = useState(options[0])
 
@@ -141,7 +143,7 @@ export const CommandMenu: React.VFC = () => {
     return () => {
       window.removeEventListener('keydown', handleKeydown)
     }
-  }, [isOpen, router])
+  }, [isOpen, setIsOpen, router])
 
   return (
     <Transition
