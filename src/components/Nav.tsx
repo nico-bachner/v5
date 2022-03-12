@@ -33,7 +33,7 @@ export const Nav: React.VFC = () => {
         onClick={() => {
           setIsOpen(!isOpen)
         }}
-        className="transform rounded-lg border border-white/20 bg-white/25 p-3 shadow-lg backdrop-blur-sm transition hover:scale-105 dark:border-zinc-600/20 dark:bg-zinc-600/25"
+        className="transform cursor-pointer rounded-lg border border-white/20 bg-white/25 p-3 shadow-lg backdrop-blur-sm transition hover:scale-105 dark:border-zinc-600/20 dark:bg-zinc-600/25"
       >
         <AdjustmentsIcon className="h-8 w-8" />
       </div>
