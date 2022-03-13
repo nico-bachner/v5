@@ -11,6 +11,5 @@ export const Head: React.FC<HeadProps> = ({ title, description }) => (
     <meta property="og:title" content={title} />
     <meta name="description" content={description} />
     <meta property="og:description" content={description} />
-    <script async data-api="/_hive" src="/bee.js"></script>
   </NextHead>
 )
