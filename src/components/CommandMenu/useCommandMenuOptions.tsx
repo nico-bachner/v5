@@ -29,7 +29,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: AdjustmentsIcon,
         title: 'Open Command Menu',
-        type: 'general',
+        group: 'general',
         shortcut: '⌘K',
         action: () => {
           setIsOpen(!isOpen)
@@ -38,7 +38,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: ClipboardCopyIcon,
         title: 'Copy Current URL',
-        type: 'general',
+        group: 'general',
         action: () => {
           navigator.clipboard.writeText(window.location.href)
         },
@@ -46,7 +46,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: SunIcon,
         title: 'Change Theme to Light',
-        type: 'general',
+        group: 'general',
         action: () => {
           setTheme('light')
         },
@@ -54,7 +54,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: MoonIcon,
         title: 'Change Theme to Dark',
-        type: 'general',
+        group: 'general',
         action: () => {
           setTheme('dark')
         },
@@ -62,7 +62,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: DesktopComputerIcon,
         title: 'Change Theme to System',
-        type: 'general',
+        group: 'general',
         action: () => {
           setTheme('system')
         },
@@ -70,7 +70,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: HomeIcon,
         title: 'Home',
-        type: 'navigation',
+        group: 'navigation',
         shortcut: '^1',
         action: () => {
           router.push('/')
@@ -79,7 +79,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: CollectionIcon,
         title: 'Projects',
-        type: 'navigation',
+        group: 'navigation',
         shortcut: '^2',
         action: () => {
           router.push('/projects')
@@ -88,7 +88,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: PencilIcon,
         title: 'Writing',
-        type: 'navigation',
+        group: 'navigation',
         shortcut: '^3',
         action: () => {
           router.push('/writing')
@@ -97,7 +97,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: TerminalIcon,
         title: 'Uses',
-        type: 'navigation',
+        group: 'navigation',
         shortcut: '^4',
         action: () => {
           router.push('/uses')
@@ -106,7 +106,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: IdentificationIcon,
         title: 'Curriculum Vitae',
-        type: 'link',
+        group: 'links',
         action: () => {
           window.open('https://read.cv/nico_bachner')
         },
@@ -114,7 +114,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: AtSymbolIcon,
         title: 'Email',
-        type: 'link',
+        group: 'links',
         action: () => {
           window.open('mailto:mail@nbac.me')
         },
@@ -122,7 +122,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: CodeIcon,
         title: 'Source Code',
-        type: 'link',
+        group: 'links',
         shortcut: '⌥⌘U',
         action: () => {
           window.open('https://github.com/nico-bachner/v5')

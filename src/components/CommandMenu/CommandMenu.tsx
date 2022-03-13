@@ -28,15 +28,6 @@ export const CommandMenu: React.VFC = () => {
   const filteredHistory = history.filter(({ title }) =>
     title.toLowerCase().includes(query.toLowerCase())
   )
-  const filteredGeneralOptions = filteredOptions.filter(
-    ({ type }) => type == 'general'
-  )
-  const filteredNavigationOptions = filteredOptions.filter(
-    ({ type }) => type == 'navigation'
-  )
-  const filteredLinkOptions = filteredOptions.filter(
-    ({ type }) => type == 'link'
-  )
 
   return (
     <Dialog
@@ -59,30 +50,26 @@ export const CommandMenu: React.VFC = () => {
                 ))}
               </>
             ) : null}
-            {filteredGeneralOptions.length > 0 ? (
-              <>
-                <p className="mx-4 mb-2 mt-4 text-sm">General</p>
-                {filteredGeneralOptions.map((option) => (
-                  <CommandMenuOption key={option.title} {...option} />
-                ))}
-              </>
-            ) : null}
-            {filteredNavigationOptions.length > 0 ? (
-              <>
-                <p className="mx-4 mb-2 mt-4 text-sm">Navigation</p>
-                {filteredNavigationOptions.map((option) => (
-                  <CommandMenuOption key={option.title} {...option} />
-                ))}
-              </>
-            ) : null}
-            {filteredLinkOptions.length > 0 ? (
-              <>
-                <p className="mx-4 mb-2 mt-4 text-sm">Links</p>
-                {filteredLinkOptions.map((option) => (
-                  <CommandMenuOption key={option.title} {...option} />
-                ))}
-              </>
-            ) : null}
+            {['general', 'navigation', 'links'].map((group) => {
+              const filteredTypeOptions = filteredOptions.filter(
+                ({ group: optionGroup }) => optionGroup == group
+              )
+
+              return (
+                <div key={group}>
+                  {filteredTypeOptions.length > 0 ? (
+                    <>
+                      <p className="mx-4 mb-2 mt-4 text-sm capitalize">
+                        {group}
+                      </p>
+                      {filteredTypeOptions.map((option) => (
+                        <CommandMenuOption key={option.title} {...option} />
+                      ))}
+                    </>
+                  ) : null}
+                </div>
+              )
+            })}
           </>
         ) : (
           <p className="mx-4 p-2 text-zinc-500">No results found</p>
