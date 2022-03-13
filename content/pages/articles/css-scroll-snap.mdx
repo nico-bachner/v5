@@ -6,23 +6,39 @@ published: 2022-03-10
 
 The CSS Scroll Snap property allows you to adjust the scrolling behaviour of the browser to better align with your content.
 
-The desired effect can be seen here: [v5.nbac.me](https://v5.nbac.me)
+The desired effect can be seen here: [scroll-snap-demo.vercel.app](https://scroll-snap-demo.vercel.app)
 
-The way this is achieved is by wrapping the page content in a containing element. In the example, `<main>` is used. Next, you need to apply the following two sets of styles to the container and the child element, respectively:
+The most straightforward way to achieve this is to have child elements that make up the page content, along with a parent element that wraps the content.
+
+```html
+<div class="scroll-parent">
+  <div class="scroll-child">
+    <p>Child 1 Content</p>
+  </div>
+  <div class="scroll-child">
+    <p>Child 2 Content</p>
+  </div>
+  <div class="scroll-child">
+    <p>Child 3 Content</p>
+  </div>
+</div>
+```
+
+In the above example, `.scroll-parent` and `.scroll-child` are used. Next, you need to apply the following two sets of styles to the container and the child elements, respectively:
 
 ```css
 /* the container element */
-main {
+.scroll-parent {
   /* make the container overflow vertically */
   height: 100vh;
-  overflow: auto;
+  overflow-y: auto;
 
   /* define scroll snap behaviour */
   scroll-snap-type: y mandatory;
 }
 
 /* the child element */
-main > * {
+.scroll-child {
   /* adjust based on desired behaviour */
   scroll-snap-align: start; /* start or center or end */
 
@@ -31,4 +47,6 @@ main > * {
 }
 ```
 
-Bear in mind that you should exercise caution when modifying the scroll behaviour of your page, as it can lead to some unintended side effects, such as the user not being able to scroll to certain parts of your page, a behaviour which [CSS Tricks](https://css-tricks.com/practical-css-scroll-snapping/#aa-scroll-snap-type-mandatory-vs-proximity) explains well.
+You can view the source code on [GitHub](https://github.com/nico-bachner/scroll-snap-demo). Feel free to copy as much as you want.
+
+In terms of edge cases, please bear in mind that you should exercise caution when modifying the scroll behaviour of your page, as it can lead to some unintended side effects, such as the user not being able to scroll to certain parts of your page, a behaviour which [CSS Tricks](https://css-tricks.com/practical-css-scroll-snapping/#aa-scroll-snap-type-mandatory-vs-proximity) explains well.
