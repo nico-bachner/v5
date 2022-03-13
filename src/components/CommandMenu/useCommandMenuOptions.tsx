@@ -1,6 +1,7 @@
 import {
   AdjustmentsIcon,
   AtSymbolIcon,
+  ClipboardCopyIcon,
   CodeIcon,
   CollectionIcon,
   DesktopComputerIcon,
@@ -32,6 +33,14 @@ export const useCommandMenuOptions = () => {
         shortcut: '⌘K',
         action: () => {
           setIsOpen(!isOpen)
+        },
+      },
+      {
+        icon: ClipboardCopyIcon,
+        title: 'Copy Current URL',
+        type: 'general',
+        action: () => {
+          navigator.clipboard.writeText(window.location.href)
         },
       },
       {

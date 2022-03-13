@@ -4,8 +4,9 @@ import { CommandMenuOption } from './CommandMenuOption'
 
 import { useAtom } from 'jotai'
 import { commandMenuQuery, isCommandMenuOpen } from 'store'
+import { commandMenuHistory } from './history'
 import { useKeyboardShortcuts } from 'hooks/useKeyboardShortcut'
-import { useCommandMenuOptions } from 'hooks/useCommandMenuOptions'
+import { useCommandMenuOptions } from './useCommandMenuOptions'
 
 export const CommandMenu: React.VFC = () => {
   const options = useCommandMenuOptions()
@@ -17,8 +18,9 @@ export const CommandMenu: React.VFC = () => {
     }))
   )
 
-  const [isOpen, setIsOpen] = useAtom(isCommandMenuOpen)
+  const [history] = useAtom(commandMenuHistory)
   const [query, setQuery] = useAtom(commandMenuQuery)
+  const [isOpen, setIsOpen] = useAtom(isCommandMenuOpen)
 
   const filteredOptions = query
     ? options.filter(({ title }) =>
@@ -39,6 +41,14 @@ export const CommandMenu: React.VFC = () => {
       <CommandMenuSearch options={options}>
         {filteredOptions.length > 0 ? (
           <>
+            {history.length > 0 ? (
+              <>
+                <p className="mx-4 mb-2 mt-4 text-sm">Recents</p>
+                {history.map((option) => (
+                  <CommandMenuOption key={option.title} {...option} />
+                ))}
+              </>
+            ) : null}
             {filteredOptions.filter(({ type }) => type == 'general').length >
             0 ? (
               <>

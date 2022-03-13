@@ -1,18 +1,18 @@
 import '../styles/globals.css'
 
+import Script from 'next/script'
 import Inspect from 'inspx'
 import { ThemeProvider } from 'next-themes'
 import { Nav } from 'components/Nav'
-import { CommandMenu } from 'components/CommandMenu'
+import { CommandMenu } from 'components/CommandMenu/CommandMenu'
 
 import type { AppProps } from 'next/app'
-import Script from 'next/script'
 
 const App: React.VFC<AppProps> = ({ Component, pageProps }) => {
   return (
     <Inspect>
       <ThemeProvider attribute="class">
-        <Script async data-api="/_hive" src="/bee.js" />
+        <Script src="/bee.js" data-api="/_hive" strategy="afterInteractive" />
         <Nav />
         <Component {...pageProps} />
         <CommandMenu />

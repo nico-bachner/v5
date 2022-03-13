@@ -1,12 +1,6 @@
 import { Combobox } from '@headlessui/react'
 
-type CommandMenuOptionProps = {
-  icon: (props: React.SVGProps<SVGSVGElement>) => JSX.Element
-  title: string
-  type: string
-  shortcut?: string
-  action: () => void
-}
+import type { CommandMenuOption as CommandMenuOptionProps } from './types'
 
 export const CommandMenuOption: React.VFC<CommandMenuOptionProps> = (
   option
