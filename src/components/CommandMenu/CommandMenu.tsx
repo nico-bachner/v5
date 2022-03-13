@@ -27,6 +27,11 @@ export const CommandMenu: React.VFC = () => {
         title.toLowerCase().includes(query.toLowerCase())
       )
     : options
+  const filteredHistory = query
+    ? history.filter(({ title }) =>
+        title.toLowerCase().includes(query.toLowerCase())
+      )
+    : history
 
   return (
     <Dialog
@@ -41,10 +46,10 @@ export const CommandMenu: React.VFC = () => {
       <CommandMenuSearch options={options}>
         {filteredOptions.length > 0 ? (
           <>
-            {history.length > 0 ? (
+            {filteredHistory.length > 0 ? (
               <>
                 <p className="mx-4 mb-2 mt-4 text-sm">Recents</p>
-                {history.map((option) => (
+                {filteredHistory.map((option) => (
                   <CommandMenuOption key={option.title} {...option} />
                 ))}
               </>

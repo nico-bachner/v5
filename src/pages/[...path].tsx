@@ -125,7 +125,7 @@ const Page: NextPage<PageProps> = ({
         <h1 className="text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
           {title}
         </h1>
-        <p className="mt-4 mb-12 bg-gradient-to-r from-cyan-400 to-blue-400  bg-clip-text text-3xl font-bold tracking-tight text-transparent md:text-4xl lg:text-5xl">
+        <p className="mt-4 mb-16 bg-gradient-to-r from-cyan-400 to-blue-400  bg-clip-text text-3xl font-bold tracking-tight text-transparent md:text-4xl lg:text-5xl">
           {description}
         </p>
 

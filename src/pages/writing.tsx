@@ -68,15 +68,15 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
             className={[
               'mt-8 flex w-full rounded-lg border transition duration-100',
               focused
-                ? 'border-zinc-600 dark:border-zinc-400'
-                : 'border-zinc-300 dark:border-zinc-700',
+                ? 'border-zinc-700 dark:border-zinc-300'
+                : 'border-zinc-400 dark:border-zinc-600',
             ].join(' ')}
           >
             <SearchIcon
               className={[
                 focused
-                  ? 'text-zinc-600 dark:text-zinc-400'
-                  : 'text-zinc-400 dark:text-zinc-600',
+                  ? 'text-zinc-700 dark:text-zinc-300'
+                  : 'text-zinc-500 dark:text-zinc-500',
                 'box-content h-6 w-6 p-3 transition duration-100',
               ].join(' ')}
             />
@@ -95,7 +95,7 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
               onBlur={() => {
                 setFocused(false)
               }}
-              className="w-full rounded-lg bg-transparent pr-2 text-base text-zinc-700 outline-none placeholder:text-zinc-400 dark:text-zinc-300 dark:placeholder:text-zinc-600"
+              className="placeholder:text-zinc-5000 w-full rounded-lg bg-transparent pr-2 text-base text-inherit outline-none"
             />
           </div>
 

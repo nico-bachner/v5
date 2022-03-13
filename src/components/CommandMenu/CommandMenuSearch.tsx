@@ -28,8 +28,12 @@ export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
       onChange={(option) => {
         setSelectedOption(option)
         setIsOpen(false)
-        setHistory([option, ...history])
+
         option.action()
+        setHistory([
+          option,
+          ...history.filter(({ title }) => title != option.title),
+        ])
       }}
       className="relative mx-auto w-full max-w-xl rounded-xl border border-white/20 bg-white/75 shadow-xl backdrop-blur-lg dark:border-zinc-700 dark:bg-black/75"
     >
@@ -43,7 +47,7 @@ export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
           onChange={({ target }) => {
             setQuery(target.value)
           }}
-          className="w-full rounded-lg bg-transparent text-base outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
+          className="w-full rounded-lg bg-transparent text-base outline-none placeholder:text-zinc-500"
         />
       </div>
 
