@@ -12,7 +12,9 @@ const App: React.VFC<AppProps> = ({ Component, pageProps }) => {
   return (
     <Inspect>
       <ThemeProvider attribute="class">
-        <Script src="/bee.js" data-api="/_hive" strategy="afterInteractive" />
+        {process.env.VERCEL_ENV == 'production' ? (
+          <Script src="/bee.js" data-api="/_hive" strategy="afterInteractive" />
+        ) : null}
         <Nav />
         <Component {...pageProps} />
         <CommandMenu />

@@ -37,20 +37,19 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
 }
 
 const Page: NextPage<PageProps> = ({ articles, content }) => {
-  const [query, setQuery] = useState<string | undefined>(undefined)
+  const [query, setQuery] = useState<string>('')
+
   const [focused, setFocused] = useState(false)
 
-  const filteredArticles = query
-    ? articles.filter((article) =>
-        article.title.toLowerCase().includes(query.toLowerCase())
-      )
-    : articles
+  const filteredArticles = articles.filter((article) =>
+    article.title.toLowerCase().includes(query.toLowerCase())
+  )
 
   return (
     <>
       <Head
-        title="Nico Bachner – Writing"
-        description="Nico Bachner's written pieces about Web Development and Design"
+        title="Writing"
+        description="Written pieces about Web Development and Design"
       />
 
       <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
@@ -59,7 +58,7 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
             <h1 className="text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
               Writing
             </h1>
-            <PencilIcon className="h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20" />
+            <PencilIcon className="h-12 w-12 md:h-16 md:w-16" />
           </div>
 
           <MDX content={content} />
@@ -99,7 +98,7 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
             />
           </div>
 
-          {query && query.length > 0 ? (
+          {query.length > 0 ? (
             <p className="mt-6 text-center text-zinc-600 dark:text-zinc-400">
               {filteredArticles.length} result(s) found
             </p>
@@ -107,12 +106,7 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
         </div>
 
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 lg:gap-x-40">
-          {(query
-            ? articles.filter((article) =>
-                article.title.toLowerCase().includes(query.toLowerCase())
-              )
-            : articles
-          ).map((article) => (
+          {filteredArticles.map((article) => (
             <ArticleCard
               key={article.path[article.path.length - 1]}
               {...article}

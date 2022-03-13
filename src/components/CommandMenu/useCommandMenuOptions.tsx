@@ -70,7 +70,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: HomeIcon,
         title: 'Home',
-        type: 'page',
+        type: 'navigation',
         shortcut: '^1',
         action: () => {
           router.push('/')
@@ -79,7 +79,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: CollectionIcon,
         title: 'Projects',
-        type: 'page',
+        type: 'navigation',
         shortcut: '^2',
         action: () => {
           router.push('/projects')
@@ -88,7 +88,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: PencilIcon,
         title: 'Writing',
-        type: 'page',
+        type: 'navigation',
         shortcut: '^3',
         action: () => {
           router.push('/writing')
@@ -97,7 +97,7 @@ export const useCommandMenuOptions = () => {
       {
         icon: TerminalIcon,
         title: 'Uses',
-        type: 'page',
+        type: 'navigation',
         shortcut: '^4',
         action: () => {
           router.push('/uses')

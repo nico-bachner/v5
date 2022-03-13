@@ -22,16 +22,21 @@ export const CommandMenu: React.VFC = () => {
   const [query, setQuery] = useAtom(commandMenuQuery)
   const [isOpen, setIsOpen] = useAtom(isCommandMenuOpen)
 
-  const filteredOptions = query
-    ? options.filter(({ title }) =>
-        title.toLowerCase().includes(query.toLowerCase())
-      )
-    : options
-  const filteredHistory = query
-    ? history.filter(({ title }) =>
-        title.toLowerCase().includes(query.toLowerCase())
-      )
-    : history
+  const filteredOptions = options.filter(({ title }) =>
+    title.toLowerCase().includes(query.toLowerCase())
+  )
+  const filteredHistory = history.filter(({ title }) =>
+    title.toLowerCase().includes(query.toLowerCase())
+  )
+  const filteredGeneralOptions = filteredOptions.filter(
+    ({ type }) => type == 'general'
+  )
+  const filteredNavigationOptions = filteredOptions.filter(
+    ({ type }) => type == 'navigation'
+  )
+  const filteredLinkOptions = filteredOptions.filter(
+    ({ type }) => type == 'link'
+  )
 
   return (
     <Dialog
@@ -40,7 +45,7 @@ export const CommandMenu: React.VFC = () => {
         setIsOpen(false)
       }}
       afterClose={() => {
-        setQuery(undefined)
+        setQuery('')
       }}
     >
       <CommandMenuSearch options={options}>
@@ -54,35 +59,28 @@ export const CommandMenu: React.VFC = () => {
                 ))}
               </>
             ) : null}
-            {filteredOptions.filter(({ type }) => type == 'general').length >
-            0 ? (
+            {filteredGeneralOptions.length > 0 ? (
               <>
                 <p className="mx-4 mb-2 mt-4 text-sm">General</p>
-                {filteredOptions
-                  .filter(({ type }) => type == 'general')
-                  .map((option) => (
-                    <CommandMenuOption key={option.title} {...option} />
-                  ))}
+                {filteredGeneralOptions.map((option) => (
+                  <CommandMenuOption key={option.title} {...option} />
+                ))}
               </>
             ) : null}
-            {filteredOptions.filter(({ type }) => type == 'page').length > 0 ? (
+            {filteredNavigationOptions.length > 0 ? (
               <>
                 <p className="mx-4 mb-2 mt-4 text-sm">Navigation</p>
-                {filteredOptions
-                  .filter(({ type }) => type == 'page')
-                  .map((option) => (
-                    <CommandMenuOption key={option.title} {...option} />
-                  ))}
+                {filteredNavigationOptions.map((option) => (
+                  <CommandMenuOption key={option.title} {...option} />
+                ))}
               </>
             ) : null}
-            {filteredOptions.filter(({ type }) => type == 'link').length > 0 ? (
+            {filteredLinkOptions.length > 0 ? (
               <>
                 <p className="mx-4 mb-2 mt-4 text-sm">Links</p>
-                {filteredOptions
-                  .filter(({ type }) => type == 'link')
-                  .map((option) => (
-                    <CommandMenuOption key={option.title} {...option} />
-                  ))}
+                {filteredLinkOptions.map((option) => (
+                  <CommandMenuOption key={option.title} {...option} />
+                ))}
               </>
             ) : null}
           </>

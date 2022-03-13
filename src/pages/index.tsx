@@ -73,10 +73,7 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
 
 const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
   <>
-    <Head
-      title="Nico Bachner"
-      description="A University Student, self-taught Web Developer, and Aspiring Open Sourcerer"
-    />
+    <Head />
 
     <main className="px-6 pb-36">
       <section className="flex flex-col justify-center py-20 md:min-h-screen md:text-center">
