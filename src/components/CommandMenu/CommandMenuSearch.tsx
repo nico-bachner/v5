@@ -4,7 +4,11 @@ import { SearchIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 import { useAtom } from 'jotai'
 import { commandMenuQuery, isCommandMenuOpen } from 'store'
-import { commandMenuHistory } from './history'
+import {
+  commandMenuOptions,
+  commandMenuHistory,
+  showCommandMenuHistory,
+} from './store'
 
 import type { CommandMenuOption } from './types'
 
@@ -14,9 +18,10 @@ type CommandMenuSearchProps = {
 
 export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
   children,
-  options,
 }) => {
+  const [options, setOptions] = useAtom(commandMenuOptions)
   const [history, setHistory] = useAtom(commandMenuHistory)
+  const [showHistory, setShowHistory] = useAtom(showCommandMenuHistory)
   const [query, setQuery] = useAtom(commandMenuQuery)
   const [isOpen, setIsOpen] = useAtom(isCommandMenuOpen)
   const [selectedOption, setSelectedOption] = useState(options[0])
@@ -27,13 +32,22 @@ export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
       value={selectedOption}
       onChange={(option) => {
         setSelectedOption(option)
-        setIsOpen(false)
 
-        option.action()
-        setHistory([
-          option,
-          ...history.filter(({ title }) => title != option.title),
-        ])
+        if (option.children) {
+          setShowHistory(false)
+          setOptions(option.children)
+        } else {
+          setIsOpen(false)
+
+          if (option.action) {
+            option.action()
+          }
+
+          setHistory([
+            option,
+            ...history.filter(({ title }) => title != option.title),
+          ])
+        }
       }}
       className="relative mx-auto w-full max-w-xl rounded-xl border border-white/20 bg-white/75 shadow-xl backdrop-blur-lg dark:border-zinc-700 dark:bg-black/75"
     >

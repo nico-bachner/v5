@@ -4,23 +4,30 @@ import { CommandMenuOption } from './CommandMenuOption'
 
 import { useAtom } from 'jotai'
 import { commandMenuQuery, isCommandMenuOpen } from 'store'
-import { commandMenuHistory } from './history'
-import { useKeyboardShortcuts } from 'hooks/useKeyboardShortcut'
+import {
+  commandMenuOptions,
+  commandMenuHistory,
+  showCommandMenuHistory,
+} from './store'
+import { useKeyboardShortcuts } from 'hooks/useKeyboardShortcuts'
 import { useCommandMenuOptions } from './useCommandMenuOptions'
+import { useEffect } from 'react'
 
 export const CommandMenu: React.VFC = () => {
-  const options = useCommandMenuOptions()
-
-  useKeyboardShortcuts(
-    options.map(({ shortcut, action }) => ({
-      keys: shortcut,
-      action,
-    }))
-  )
-
-  const [history] = useAtom(commandMenuHistory)
-  const [query, setQuery] = useAtom(commandMenuQuery)
   const [isOpen, setIsOpen] = useAtom(isCommandMenuOpen)
+  const [query, setQuery] = useAtom(commandMenuQuery)
+  const [history] = useAtom(commandMenuHistory)
+  const [showHistory, setShowHistory] = useAtom(showCommandMenuHistory)
+  const [options, setOptions] = useAtom(commandMenuOptions)
+
+  const allOptions = useCommandMenuOptions()
+
+  useEffect(() => {
+    setOptions(allOptions)
+    setShowHistory(true)
+  }, [allOptions, setOptions, setShowHistory])
+
+  useKeyboardShortcuts(options)
 
   const filteredOptions = options.filter(({ title }) =>
     title.toLowerCase().includes(query.toLowerCase())
@@ -42,7 +49,7 @@ export const CommandMenu: React.VFC = () => {
       <CommandMenuSearch options={options}>
         {filteredOptions.length > 0 ? (
           <>
-            {filteredHistory.length > 0 ? (
+            {showHistory && filteredHistory.length > 0 ? (
               <>
                 <p className="mx-4 mb-2 mt-4 text-sm">Recents</p>
                 {filteredHistory.map((option) => (

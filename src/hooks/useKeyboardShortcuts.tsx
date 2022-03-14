@@ -1,14 +1,20 @@
 import { useEffect } from 'react'
 
 export const useKeyboardShortcuts = (
-  shortcuts: { keys?: string; action: () => void }[]
+  shortcuts: { shortcut?: string; action?: () => void }[]
 ) => {
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
-      shortcuts.forEach(({ keys, action }) => {
+      shortcuts.forEach(({ shortcut, action }) => {
+        const keys = shortcut?.split('+')
+
         if (
-          (event.ctrlKey || event.altKey || event.metaKey) &&
-          keys?.split('')?.pop()?.toLowerCase() == event.key
+          keys &&
+          event.ctrlKey == keys.includes('ctrl') &&
+          event.altKey == keys.includes('alt') &&
+          event.metaKey == keys.includes('cmd') &&
+          event.key == keys.pop() &&
+          action
         ) {
           event.preventDefault()
           action()

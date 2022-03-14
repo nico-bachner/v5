@@ -19,18 +19,20 @@ import { useTheme } from 'next-themes'
 import { useAtom } from 'jotai'
 import { isCommandMenuOpen } from 'store'
 
+import type { CommandMenuOption } from './types'
+
 export const useCommandMenuOptions = () => {
   const [isOpen, setIsOpen] = useAtom(isCommandMenuOpen)
   const { setTheme } = useTheme()
   const router = useRouter()
 
-  return useMemo(
+  return useMemo<CommandMenuOption[]>(
     () => [
       {
         icon: AdjustmentsIcon,
         title: 'Open Command Menu',
         group: 'general',
-        shortcut: '⌘K',
+        shortcut: 'cmd+k',
         action: () => {
           setIsOpen(!isOpen)
         },
@@ -44,34 +46,41 @@ export const useCommandMenuOptions = () => {
         },
       },
       {
-        icon: SunIcon,
-        title: 'Change Theme to Light',
-        group: 'general',
-        action: () => {
-          setTheme('light')
-        },
-      },
-      {
-        icon: MoonIcon,
-        title: 'Change Theme to Dark',
-        group: 'general',
-        action: () => {
-          setTheme('dark')
-        },
-      },
-      {
         icon: DesktopComputerIcon,
-        title: 'Change Theme to System',
+        title: 'Change Theme...',
         group: 'general',
-        action: () => {
-          setTheme('system')
-        },
+        children: [
+          {
+            icon: SunIcon,
+            title: 'Change Theme to Light',
+            group: 'general',
+            action: () => {
+              setTheme('light')
+            },
+          },
+          {
+            icon: MoonIcon,
+            title: 'Change Theme to Dark',
+            group: 'general',
+            action: () => {
+              setTheme('dark')
+            },
+          },
+          {
+            icon: DesktopComputerIcon,
+            title: 'Change Theme to System',
+            group: 'general',
+            action: () => {
+              setTheme('system')
+            },
+          },
+        ],
       },
       {
         icon: HomeIcon,
         title: 'Home',
         group: 'navigation',
-        shortcut: '^1',
+        shortcut: 'ctrl+1',
         action: () => {
           router.push('/')
         },
@@ -80,7 +89,7 @@ export const useCommandMenuOptions = () => {
         icon: CollectionIcon,
         title: 'Projects',
         group: 'navigation',
-        shortcut: '^2',
+        shortcut: 'ctrl+2',
         action: () => {
           router.push('/projects')
         },
@@ -89,7 +98,7 @@ export const useCommandMenuOptions = () => {
         icon: PencilIcon,
         title: 'Writing',
         group: 'navigation',
-        shortcut: '^3',
+        shortcut: 'ctrl+3',
         action: () => {
           router.push('/writing')
         },
@@ -98,7 +107,7 @@ export const useCommandMenuOptions = () => {
         icon: TerminalIcon,
         title: 'Uses',
         group: 'navigation',
-        shortcut: '^4',
+        shortcut: 'ctrl+4',
         action: () => {
           router.push('/uses')
         },
@@ -123,7 +132,7 @@ export const useCommandMenuOptions = () => {
         icon: CodeIcon,
         title: 'Source Code',
         group: 'links',
-        shortcut: '⌥⌘U',
+        shortcut: 'alt+cmd+u',
         action: () => {
           window.open('https://github.com/nico-bachner/v5')
         },

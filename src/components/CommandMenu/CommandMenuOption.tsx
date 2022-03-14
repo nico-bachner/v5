@@ -28,7 +28,13 @@ export const CommandMenuOption: React.VFC<CommandMenuOptionProps> = (
                 : 'text-zinc-400 dark:text-zinc-500',
             ].join(' ')}
           >
-            {shortcut}
+            {shortcut
+              ?.split('+')
+              .join('')
+              .replace('cmd', '⌘')
+              .replace('alt', '⌥')
+              .replace('ctrl', '^')
+              .toUpperCase()}
           </kbd>
         </div>
       )}
