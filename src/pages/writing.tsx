@@ -3,7 +3,7 @@ import { MDX } from 'components/MDX'
 import { ArticleCard } from 'components/ArticleCard'
 import { PencilIcon, SearchIcon } from '@heroicons/react/outline'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { fetchFile } from 'lib/fs'
 import { fetchMDXContent } from 'lib/mdx'
 import { fetchArticlesData } from 'lib/data/articles'
@@ -37,9 +37,24 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
 }
 
 const Page: NextPage<PageProps> = ({ articles, content }) => {
-  const [query, setQuery] = useState<string>('')
+  const ref = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.key == '/') {
+        ref.current?.focus()
+      }
+    }
+
+    window.addEventListener('keyup', handleKeydown)
+
+    return () => {
+      window.removeEventListener('keyup', handleKeydown)
+    }
+  })
 
   const [focused, setFocused] = useState(false)
+  const [query, setQuery] = useState('')
 
   const filteredArticles = articles.filter((article) =>
     article.title.toLowerCase().includes(query.toLowerCase())
@@ -65,7 +80,7 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
 
           <div
             className={[
-              'mt-8 flex w-full rounded-lg border transition duration-100',
+              'mt-8 flex w-full rounded-lg border',
               focused
                 ? 'border-zinc-700 dark:border-zinc-300'
                 : 'border-zinc-400 dark:border-zinc-600',
@@ -76,18 +91,19 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
                 focused
                   ? 'text-zinc-700 dark:text-zinc-300'
                   : 'text-zinc-500 dark:text-zinc-500',
-                'box-content h-6 w-6 p-3 transition duration-100',
+                'box-content h-6 w-6 p-3',
               ].join(' ')}
             />
 
             <input
               type="search"
               spellCheck="false"
-              placeholder="Search"
+              placeholder="Press / to search"
               value={query}
               onChange={({ target }) => {
                 setQuery(target.value)
               }}
+              ref={ref}
               onFocus={() => {
                 setFocused(true)
               }}
