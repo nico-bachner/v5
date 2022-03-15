@@ -46,7 +46,7 @@ export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
       }}
       className="relative mx-auto w-full max-w-xl rounded-xl border border-white/20 bg-white/75 shadow-xl backdrop-blur-lg dark:border-zinc-700 dark:bg-black/75"
     >
-      <div className="flex flex-col-reverse gap-2">
+      <div className="flex flex-col-reverse">
         <div className="mx-2 flex items-center gap-2 text-zinc-700 dark:text-zinc-300">
           <SearchIcon className="box-content h-6 w-6 p-4" />
           <Combobox.Input
@@ -61,7 +61,7 @@ export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
           />
         </div>
 
-        <div className="mx-4 flex gap-2">
+        <div className="mx-4 flex gap-2 pt-2">
           {tab.map((item, i) => (
             <button
               key={item}
