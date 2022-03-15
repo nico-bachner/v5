@@ -2,54 +2,64 @@ import { Dialog } from 'components/Dialog'
 import { CommandMenuSearch } from './CommandMenuSearch'
 import { CommandMenuOption } from './CommandMenuOption'
 
+import { useEffect } from 'react'
 import { useAtom } from 'jotai'
-import { commandMenuQuery, isCommandMenuOpen } from 'store'
-import {
-  commandMenuOptions,
-  commandMenuHistory,
-  showCommandMenuHistory,
-} from './store'
+import { commandMenuOpen, commandMenuTab, commandMenuQuery } from './store'
+import { commandMenuOptions, commandMenuHistory } from './store'
 import { useKeyboardShortcuts } from 'hooks/useKeyboardShortcuts'
 import { useCommandMenuOptions } from './useCommandMenuOptions'
-import { useEffect } from 'react'
 
 export const CommandMenu: React.VFC = () => {
-  const [isOpen, setIsOpen] = useAtom(isCommandMenuOpen)
+  const [open, setOpen] = useAtom(commandMenuOpen)
+  const [tab, setTab] = useAtom(commandMenuTab)
   const [query, setQuery] = useAtom(commandMenuQuery)
   const [history] = useAtom(commandMenuHistory)
-  const [showHistory, setShowHistory] = useAtom(showCommandMenuHistory)
   const [options, setOptions] = useAtom(commandMenuOptions)
 
   const allOptions = useCommandMenuOptions()
 
   useEffect(() => {
     setOptions(allOptions)
-    setShowHistory(true)
-  }, [allOptions, setOptions, setShowHistory])
+  }, [allOptions, setOptions])
 
   useKeyboardShortcuts(options)
 
-  const filteredOptions = options.filter(({ title }) =>
-    title.toLowerCase().includes(query.toLowerCase())
-  )
-  const filteredHistory = history.filter(({ title }) =>
-    title.toLowerCase().includes(query.toLowerCase())
-  )
+  const filteredOptions =
+    tab[tab.length - 1] == 'Home'
+      ? options.filter(({ title }) =>
+          title.toLowerCase().includes(query.toLowerCase())
+        )
+      : options
+          .find(({ id }) => tab[tab.length - 1] == id)
+          ?.children?.filter(({ title }) =>
+            title.toLowerCase().includes(query.toLowerCase())
+          )
+  const filteredHistory =
+    tab[tab.length - 1] == 'Home'
+      ? history.filter(({ title }) =>
+          title.toLowerCase().includes(query.toLowerCase())
+        )
+      : history
+          .find(({ id }) => tab[tab.length - 1] == id)
+          ?.children?.filter(({ title }) =>
+            title.toLowerCase().includes(query.toLowerCase())
+          )
 
   return (
     <Dialog
-      open={isOpen}
+      open={open}
       onClose={() => {
-        setIsOpen(false)
+        setOpen(false)
       }}
       afterClose={() => {
+        setTab(['Home'])
         setQuery('')
       }}
     >
       <CommandMenuSearch options={options}>
-        {filteredOptions.length > 0 ? (
+        {filteredOptions && filteredOptions.length > 0 ? (
           <>
-            {showHistory && filteredHistory.length > 0 ? (
+            {filteredHistory && filteredHistory.length > 0 ? (
               <>
                 <p className="mx-4 mb-2 mt-4 text-sm">Recents</p>
                 {filteredHistory.map((option) => (

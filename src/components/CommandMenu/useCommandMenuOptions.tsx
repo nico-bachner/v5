@@ -17,27 +17,30 @@ import { useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
 import { useAtom } from 'jotai'
-import { isCommandMenuOpen } from 'store'
+import { commandMenuOpen, commandMenuTab } from './store'
 
 import type { CommandMenuOption } from './types'
 
 export const useCommandMenuOptions = () => {
-  const [isOpen, setIsOpen] = useAtom(isCommandMenuOpen)
+  const [open, setOpen] = useAtom(commandMenuOpen)
+  const [tab, setTab] = useAtom(commandMenuTab)
   const { setTheme } = useTheme()
   const router = useRouter()
 
   return useMemo<CommandMenuOption[]>(
     () => [
       {
+        id: 'Command Menu',
         icon: AdjustmentsIcon,
         title: 'Open Command Menu',
         group: 'general',
         shortcut: 'cmd+k',
         action: () => {
-          setIsOpen(!isOpen)
+          setOpen(!open)
         },
       },
       {
+        id: 'Copy URL',
         icon: ClipboardCopyIcon,
         title: 'Copy Current URL',
         group: 'general',
@@ -46,11 +49,18 @@ export const useCommandMenuOptions = () => {
         },
       },
       {
+        id: 'Theme',
         icon: DesktopComputerIcon,
         title: 'Change Theme...',
         group: 'general',
+        shortcut: 't',
+        action: () => {
+          setOpen(true)
+          setTab(['Home', 'Theme'])
+        },
         children: [
           {
+            id: 'Light Theme',
             icon: SunIcon,
             title: 'Change Theme to Light',
             group: 'general',
@@ -59,6 +69,7 @@ export const useCommandMenuOptions = () => {
             },
           },
           {
+            id: 'Dark Theme',
             icon: MoonIcon,
             title: 'Change Theme to Dark',
             group: 'general',
@@ -67,6 +78,7 @@ export const useCommandMenuOptions = () => {
             },
           },
           {
+            id: 'System Theme',
             icon: DesktopComputerIcon,
             title: 'Change Theme to System',
             group: 'general',
@@ -77,6 +89,7 @@ export const useCommandMenuOptions = () => {
         ],
       },
       {
+        id: 'Home',
         icon: HomeIcon,
         title: 'Home',
         group: 'navigation',
@@ -86,6 +99,7 @@ export const useCommandMenuOptions = () => {
         },
       },
       {
+        id: 'Projects',
         icon: CollectionIcon,
         title: 'Projects',
         group: 'navigation',
@@ -95,6 +109,7 @@ export const useCommandMenuOptions = () => {
         },
       },
       {
+        id: 'Writing',
         icon: PencilIcon,
         title: 'Writing',
         group: 'navigation',
@@ -104,6 +119,7 @@ export const useCommandMenuOptions = () => {
         },
       },
       {
+        id: 'Uses',
         icon: TerminalIcon,
         title: 'Uses',
         group: 'navigation',
@@ -113,6 +129,7 @@ export const useCommandMenuOptions = () => {
         },
       },
       {
+        id: 'CV',
         icon: IdentificationIcon,
         title: 'Curriculum Vitae',
         group: 'links',
@@ -121,16 +138,19 @@ export const useCommandMenuOptions = () => {
         },
       },
       {
+        id: 'Email',
         icon: AtSymbolIcon,
-        title: 'Email',
+        title: 'Send me an email',
         group: 'links',
+        shortcut: '@',
         action: () => {
           window.open('mailto:mail@nbac.me')
         },
       },
       {
+        id: 'Source',
         icon: CodeIcon,
-        title: 'Source Code',
+        title: 'View Source Code',
         group: 'links',
         shortcut: 'alt+cmd+u',
         action: () => {
@@ -138,6 +158,6 @@ export const useCommandMenuOptions = () => {
         },
       },
     ],
-    [router, isOpen, setIsOpen, setTheme]
+    [open, setOpen, setTab, router, setTheme]
   )
 }

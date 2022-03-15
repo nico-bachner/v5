@@ -7,10 +7,10 @@ import {
 } from '@heroicons/react/outline'
 
 import { useAtom } from 'jotai'
-import { isCommandMenuOpen } from 'store'
+import { commandMenuOpen } from './CommandMenu/store'
 
 export const Nav: React.VFC = () => {
-  const [isOpen, setIsOpen] = useAtom(isCommandMenuOpen)
+  const [open, setOpen] = useAtom(commandMenuOpen)
 
   return (
     <nav className="fixed bottom-4 left-0 right-0 z-20 mx-auto flex w-fit gap-3 rounded-xl border border-white/20 bg-white/30 p-2 shadow-lg backdrop-blur-sm dark:border-zinc-600/20 dark:bg-zinc-600/30 md:bottom-8">
@@ -41,7 +41,7 @@ export const Nav: React.VFC = () => {
       <button
         title="Command Menu"
         onClick={() => {
-          setIsOpen(!isOpen)
+          setOpen(!open)
         }}
         className="transform cursor-pointer rounded-lg border border-white/20 bg-white/30 p-3 shadow-lg backdrop-blur-sm transition hover:scale-105 dark:border-zinc-600/20 dark:bg-zinc-600/30"
       >
