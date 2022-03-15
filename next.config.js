@@ -20,6 +20,16 @@ const nextConfig = {
         destination: '/:path*',
         permanent: true,
       },
+      {
+        source: '/de/:path*',
+        destination: '/:path*',
+        permanent: true,
+      },
+      {
+        source: '/fr/:path*',
+        destination: '/:path*',
+        permanent: true,
+      },
     ]
   },
 }
