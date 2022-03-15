@@ -63,7 +63,7 @@ const Page: NextPage<PageProps> = ({ content }) => {
             rel="noopener noreferrer"
             className="mt-8 flex flex-col"
           >
-            <button className="rounded-md border border-black bg-black px-4 py-2.5 text-white transition duration-300 hover:bg-white hover:text-black md:text-lg">
+            <button className="rounded-md border border-black bg-black px-4 py-2.5 text-white transition duration-300 hover:bg-white hover:text-black dark:border-white dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white md:text-lg">
               Create on GitHub
             </button>
           </a>
