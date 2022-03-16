@@ -4,7 +4,7 @@ import { SearchIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
 import { useAtom } from 'jotai'
 import { commandMenuOpen, commandMenuTab, commandMenuQuery } from './store'
-import { commandMenuOptions, commandMenuHistory } from './store'
+import { commandMenuOptions } from './store'
 
 import type { CommandMenuOption } from './types'
 
@@ -16,7 +16,6 @@ export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
   children,
 }) => {
   const [options, setOptions] = useAtom(commandMenuOptions)
-  const [history, setHistory] = useAtom(commandMenuHistory)
   const [open, setOpen] = useAtom(commandMenuOpen)
   const [tab, setTab] = useAtom(commandMenuTab)
   const [query, setQuery] = useAtom(commandMenuQuery)
@@ -34,9 +33,12 @@ export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
         } else {
           setOpen(false)
 
-          setHistory([
-            option,
-            ...history.filter(({ title }) => title != option.title),
+          setOptions([
+            { ...option, group: 'recents' },
+            ...options
+              .filter(({ group }) => group == 'recents')
+              .filter(({ title }) => title != option.title),
+            ...options.filter(({ group }) => group != 'recents'),
           ])
         }
 
@@ -68,7 +70,7 @@ export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
               onClick={() => {
                 setTab(tab.slice(0, i + 1))
               }}
-              className="rounded bg-black/5 px-2 py-0.5 text-black dark:bg-white/10 dark:text-white"
+              className="rounded bg-black/5 px-2 py-0.5 text-sm text-zinc-500 dark:bg-white/10 dark:text-white"
             >
               {item}
             </button>
@@ -80,7 +82,7 @@ export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
 
       <Combobox.Options
         static
-        className="flex max-h-80 flex-col overflow-auto py-2"
+        className="flex max-h-72 flex-col overflow-auto pb-2"
       >
         {children}
       </Combobox.Options>

@@ -4,23 +4,33 @@ import { CommandMenuOption } from './CommandMenuOption'
 
 import { useEffect } from 'react'
 import { useAtom } from 'jotai'
-import { commandMenuOpen, commandMenuTab, commandMenuQuery } from './store'
-import { commandMenuOptions, commandMenuHistory } from './store'
+import {
+  commandMenuOpen,
+  commandMenuTab,
+  commandMenuQuery,
+  pageLoaded,
+} from './store'
+import { commandMenuOptions } from './store'
 import { useKeyboardShortcuts } from 'hooks/useKeyboardShortcuts'
 import { useCommandMenuOptions } from './useCommandMenuOptions'
 
 export const CommandMenu: React.VFC = () => {
+  const [loaded, setLoaded] = useAtom(pageLoaded)
   const [open, setOpen] = useAtom(commandMenuOpen)
   const [tab, setTab] = useAtom(commandMenuTab)
   const [query, setQuery] = useAtom(commandMenuQuery)
-  const [history] = useAtom(commandMenuHistory)
   const [options, setOptions] = useAtom(commandMenuOptions)
+
+  console.log(options.toString())
 
   const allOptions = useCommandMenuOptions()
 
   useEffect(() => {
-    setOptions(allOptions)
-  }, [allOptions, setOptions])
+    if (!loaded) {
+      setOptions(allOptions)
+      setLoaded(true)
+    }
+  }, [loaded, setLoaded, allOptions, setOptions])
 
   useKeyboardShortcuts(options)
 
@@ -30,16 +40,6 @@ export const CommandMenu: React.VFC = () => {
           title.toLowerCase().includes(query.toLowerCase())
         )
       : options
-          .find(({ id }) => tab[tab.length - 1] == id)
-          ?.children?.filter(({ title }) =>
-            title.toLowerCase().includes(query.toLowerCase())
-          )
-  const filteredHistory =
-    tab[tab.length - 1] == 'Home'
-      ? history.filter(({ title }) =>
-          title.toLowerCase().includes(query.toLowerCase())
-        )
-      : history
           .find(({ id }) => tab[tab.length - 1] == id)
           ?.children?.filter(({ title }) =>
             title.toLowerCase().includes(query.toLowerCase())
@@ -59,15 +59,7 @@ export const CommandMenu: React.VFC = () => {
       <CommandMenuSearch options={options}>
         {filteredOptions && filteredOptions.length > 0 ? (
           <>
-            {filteredHistory && filteredHistory.length > 0 ? (
-              <>
-                <p className="mx-4 mb-2 mt-4 text-sm">Recents</p>
-                {filteredHistory.map((option) => (
-                  <CommandMenuOption key={option.title} {...option} />
-                ))}
-              </>
-            ) : null}
-            {['general', 'navigation', 'links'].map((group) => {
+            {['recents', 'general', 'navigation', 'links'].map((group) => {
               const filteredTypeOptions = filteredOptions.filter(
                 ({ group: optionGroup }) => optionGroup == group
               )
@@ -76,7 +68,7 @@ export const CommandMenu: React.VFC = () => {
                 <div key={group}>
                   {filteredTypeOptions.length > 0 ? (
                     <>
-                      <p className="mx-4 mb-2 mt-4 text-sm capitalize">
+                      <p className="mx-4 mb-2 mt-4 text-sm capitalize text-zinc-600 dark:text-zinc-400">
                         {group}
                       </p>
                       {filteredTypeOptions.map((option) => (

@@ -12,30 +12,32 @@ export const CommandMenuOption: React.VFC<CommandMenuOptionProps> = (
       {({ active }) => (
         <div
           className={[
-            'mx-2 flex cursor-pointer items-center gap-2 rounded-lg transition',
+            'mx-2 flex cursor-pointer items-center rounded-lg transition',
             active
               ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white'
-              : 'text-zinc-700 dark:text-zinc-300',
+              : 'text-zinc-600 dark:text-zinc-400',
           ].join(' ')}
         >
-          <Icon className="box-content h-6 w-6 p-4" />
-          <span className="flex-grow text-lg">{title}</span>
-          <kbd
-            className={[
-              'p-4 font-sans transition',
-              active
-                ? 'text-zinc-500 dark:text-zinc-400'
-                : 'text-zinc-400 dark:text-zinc-500',
-            ].join(' ')}
-          >
-            {shortcut
-              ?.split('+')
-              .join('')
-              .replace('cmd', '⌘')
-              .replace('alt', '⌥')
-              .replace('ctrl', '^')
-              .toUpperCase()}
-          </kbd>
+          <Icon strokeWidth={1.5} className="box-content h-6 w-6 p-4" />
+          <div className="flex flex-grow items-center justify-between gap-4 p-4 pl-1">
+            <span>{title}</span>
+            <kbd
+              className={[
+                'font-sans transition',
+                active
+                  ? 'text-zinc-500 dark:text-zinc-400'
+                  : 'text-zinc-400 dark:text-zinc-500',
+              ].join(' ')}
+            >
+              {shortcut
+                ?.split('+')
+                .join('')
+                .replace('cmd', '⌘')
+                .replace('alt', '⌥')
+                .replace('ctrl', '^')
+                .toUpperCase()}
+            </kbd>
+          </div>
         </div>
       )}
     </Combobox.Option>
