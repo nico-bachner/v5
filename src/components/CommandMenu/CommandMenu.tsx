@@ -21,8 +21,6 @@ export const CommandMenu: React.VFC = () => {
   const [query, setQuery] = useAtom(commandMenuQuery)
   const [options, setOptions] = useAtom(commandMenuOptions)
 
-  console.log(options.toString())
-
   const allOptions = useCommandMenuOptions()
 
   useEffect(() => {
