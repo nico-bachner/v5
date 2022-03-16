@@ -68,7 +68,7 @@ export const CommandMenu: React.VFC = () => {
                 <div key={group}>
                   {filteredTypeOptions.length > 0 ? (
                     <>
-                      <p className="mx-4 mb-2 mt-4 text-sm capitalize text-zinc-600 dark:text-zinc-400">
+                      <p className="mx-4 mb-1 mt-4 text-sm capitalize text-zinc-600 dark:text-zinc-400">
                         {group}
                       </p>
                       {filteredTypeOptions.map((option) => (

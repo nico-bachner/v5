@@ -12,7 +12,7 @@ export const CommandMenuOption: React.VFC<CommandMenuOptionProps> = (
       {({ active }) => (
         <div
           className={[
-            'mx-2 flex cursor-pointer items-center rounded-lg transition',
+            'mx-2 flex cursor-pointer items-center rounded-lg transition duration-200',
             active
               ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white'
               : 'text-zinc-600 dark:text-zinc-400',
