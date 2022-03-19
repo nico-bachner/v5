@@ -116,7 +116,8 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
 
           {query.length > 0 ? (
             <p className="mt-6 text-center text-zinc-600 dark:text-zinc-400">
-              {filteredArticles.length} result(s) found
+              {filteredArticles.length}{' '}
+              {filteredArticles.length == 1 ? 'result' : 'results'} found
             </p>
           ) : null}
         </div>
