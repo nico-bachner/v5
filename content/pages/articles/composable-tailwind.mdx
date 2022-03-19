@@ -1,0 +1,76 @@
+---
+title: Composable Tailwind
+description: A guide to composing Tailwind CSS classes in JSX
+image: /images/tailwind.png
+published: 2022-03-19
+---
+
+[Tailwind CSS](https://tailwindcss.com) is one of the most popular [Atomic CSS](https://www.smashingmagazine.com/2013/10/challenging-css-best-practices-atomic-approach/) frameworks. The API is excellent, adding minimal mental overhead and no code bloat once set up. Their documentation is extensive, covering their API, as well as nearly all other use cases imaginable.However, there is a relatively common issue that is not mentioned – one that is inherent to all class-based styling solutions in JSX[^1]. This issue is **composing styles**.
+
+Utility classes work great when there is a single source of truth for styling. However, once faced with more complex scenarios such as _conditional styling_ or _prop-based styling_, one can easily end up with a mess of _[template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals):_
+
+```tsx
+<div
+  className={`m-4 p-4 ${condition1 == true ? 'text-white' : 'text-black'} ${
+    condition2 == true ? 'bg-white' : 'bg-black'
+  }`}
+/>
+```
+
+The above can quickly become unreadable.
+
+Fortunately, there are other ways we can approach this. As I have previously proposed in my [guide to CSS Modules](/articles/css-modules), we can instead reach for _string concatenation_ to compose classes. The above example would now look like this:
+
+```tsx
+<div
+  className={[
+    'm-4 p-4',
+    condition1 == true ? 'text-white' : 'text-black',
+    condition2 == true ? 'bg-white' : 'bg-black',
+  ].join(' ')}
+/>
+```
+
+This approach brings a few clear benefits to the table:
+
+- More readable code
+- Grouping by source
+- Clear order of execution[^2]
+
+Let us apply this to a real-world example. We'll have a button with two variants (primary and secondary), with an escape hatch for the possibility of customising the button, should that be necessary (this happens more often than you would expect).
+
+```tsx
+// Button.tsx
+type ButtonProps = {
+  variant: 'primary' | 'secondary'
+  className?: string
+}
+
+export const Button: React.FC<ButtonProps> = ({
+  children,
+  property1,
+  property2,
+  className,
+}) => (
+  <button
+    className={[
+      'rounded border border-black px-8 py-4',
+      variant == 'primary' ? 'bg-black' : 'bg-inherit',
+      className,
+    ].join(' ')}
+  >
+    {children}
+  </button>
+)
+```
+
+Now we can consume this button as expected:
+
+```tsx
+<Button variant="primary" className="mt-4">
+  {children}
+</Button>
+```
+
+[^1]: This is not an issue with CSS-in-JS styling solutions, such as [Stitches](https://stitches.dev). While they compile down to classes at the end of the day, the authoring is done as individual styles (in JS Object format), which are much easier to compose.
+[^2]: What is meant by this is that the styles at the end override the styles at the beginning.
