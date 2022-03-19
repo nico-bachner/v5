@@ -106,7 +106,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
         </Link>
         <MDX content={content.projects} />
 
-        <div className="mt-6 flex flex-col gap-8">
+        <div className="mt-6 flex flex-col gap-6">
           {projects.map((project) => (
             <ProjectCard
               key={project.path[project.path.length - 1]}
@@ -126,7 +126,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
           </a>
         </Link>
         <MDX content={content.writing} />
-        <div className="mt-6 flex flex-col gap-8">
+        <div className="mt-6 flex flex-col gap-6">
           {articles.map((article) => (
             <ArticleCard
               key={article.path[article.path.length - 1]}
