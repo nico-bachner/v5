@@ -4,6 +4,8 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
+      serif: ['"Source Serif Pro"', 'sans-serif'],
+      mono: ['Menlo', 'Monaco', 'monospace'],
     },
     boxShadow: {
       DEFAULT: '0 4px 12px var(--tw-shadow-color, hsla(0deg, 0%, 0%, 0.1))',

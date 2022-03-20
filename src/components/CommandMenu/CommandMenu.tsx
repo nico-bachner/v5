@@ -23,14 +23,16 @@ export const CommandMenu: React.VFC = () => {
 
   const allOptions = useCommandMenuOptions()
 
+  useKeyboardShortcuts(
+    allOptions.map(({ shortcut, action }) => ({ shortcut, action }))
+  )
+
   useEffect(() => {
     if (!loaded) {
       setOptions(allOptions)
       setLoaded(true)
     }
   }, [loaded, setLoaded, allOptions, setOptions])
-
-  useKeyboardShortcuts(options)
 
   const filteredOptions =
     tab[tab.length - 1] == 'Home'
@@ -56,28 +58,26 @@ export const CommandMenu: React.VFC = () => {
     >
       <CommandMenuSearch options={options}>
         {filteredOptions && filteredOptions.length > 0 ? (
-          <>
-            {['recents', 'general', 'navigation', 'links'].map((group) => {
-              const filteredTypeOptions = filteredOptions.filter(
-                ({ group: optionGroup }) => optionGroup == group
-              )
+          ['recents', 'general', 'navigation', 'links'].map((group) => {
+            const filteredTypeOptions = filteredOptions.filter(
+              (option) => option.group == group
+            )
 
-              return (
-                <div key={group}>
-                  {filteredTypeOptions.length > 0 ? (
-                    <>
-                      <p className="mx-4 mb-1 mt-4 text-sm capitalize text-zinc-600 dark:text-zinc-400">
-                        {group}
-                      </p>
-                      {filteredTypeOptions.map((option) => (
-                        <CommandMenuOption key={option.title} {...option} />
-                      ))}
-                    </>
-                  ) : null}
-                </div>
-              )
-            })}
-          </>
+            return (
+              <div key={group}>
+                {filteredTypeOptions.length > 0 ? (
+                  <>
+                    <p className="mx-4 mb-1 mt-4 text-sm capitalize text-zinc-600 dark:text-zinc-400">
+                      {group}
+                    </p>
+                    {filteredTypeOptions.map((option) => (
+                      <CommandMenuOption key={option.title} {...option} />
+                    ))}
+                  </>
+                ) : null}
+              </div>
+            )
+          })
         ) : (
           <p className="mx-4 p-2 text-zinc-500">No results found</p>
         )}

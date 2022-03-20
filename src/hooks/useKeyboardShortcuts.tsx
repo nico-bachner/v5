@@ -10,6 +10,7 @@ export const useKeyboardShortcuts = (
 
         if (
           keys &&
+          event.shiftKey == keys.includes('shift') &&
           event.ctrlKey == keys.includes('ctrl') &&
           event.altKey == keys.includes('alt') &&
           event.metaKey == keys.includes('cmd') &&

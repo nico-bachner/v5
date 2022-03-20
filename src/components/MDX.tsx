@@ -1,6 +1,8 @@
+import Image from 'next/image'
 import { MDXRemote } from 'next-mdx-remote'
 
-import Image from 'next/image'
+import { useAtom } from 'jotai'
+import { storedReaderMode } from 'store'
 
 import type { MDXContent } from 'lib/mdx'
 
@@ -9,19 +11,28 @@ export type MDXProps = {
   components?: Record<string, React.ReactNode>
 }
 
-export const MDX: React.VFC<MDXProps> = ({ content, components }) => (
-  // @ts-ignore
-  <MDXRemote
-    {...content}
-    components={{
-      wrapper: ({ children }) => (
-        <div className="prose prose-zinc prose-headings:scroll-mt-[1.5em] dark:prose-invert md:prose-lg lg:prose-xl">
-          {children}
-        </div>
-      ),
-      Image,
+export const MDX: React.VFC<MDXProps> = ({ content, components }) => {
+  const [readerMode] = useAtom(storedReaderMode)
 
-      ...components,
-    }}
-  />
-)
+  return (
+    // @ts-ignore
+    <MDXRemote
+      {...content}
+      components={{
+        wrapper: ({ children }) => (
+          <div
+            className={[
+              'prose prose-zinc prose-headings:scroll-mt-[1.5em] dark:prose-invert md:prose-lg lg:prose-xl',
+              readerMode ? 'font-serif' : 'font-sans',
+            ].join(' ')}
+          >
+            {children}
+          </div>
+        ),
+        Image,
+
+        ...components,
+      }}
+    />
+  )
+}
