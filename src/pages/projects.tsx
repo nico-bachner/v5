@@ -1,7 +1,6 @@
 import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 import { ProjectCard } from 'components/ProjectCard'
-import { CollectionIcon } from '@heroicons/react/outline'
 
 import { fetchFile } from 'lib/fs'
 import { fetchMDXContent } from 'lib/mdx'
@@ -40,13 +39,10 @@ const Page: NextPage<PageProps> = ({ projects, content }) => (
     <Head title="Projects" />
 
     <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
-      <div className="mx-auto mb-20 max-w-2xl">
-        <div className="mb-12 flex items-center justify-between gap-4">
-          <h1 className="text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
-            Projects
-          </h1>
-          <CollectionIcon className="h-12 w-12 md:h-16 md:w-16" />
-        </div>
+      <div className="mx-auto mb-20 flex max-w-2xl flex-col gap-8">
+        <h1 className="text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
+          Projects
+        </h1>
 
         <MDX content={content} />
       </div>

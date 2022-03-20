@@ -1,9 +1,9 @@
 import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
+import { Search } from 'components/Search'
 import { ArticleCard } from 'components/ArticleCard'
-import { PencilIcon, SearchIcon } from '@heroicons/react/outline'
 
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import { fetchFile } from 'lib/fs'
 import { fetchMDXContent } from 'lib/mdx'
 import { fetchArticlesData } from 'lib/data/articles'
@@ -37,23 +37,6 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
 }
 
 const Page: NextPage<PageProps> = ({ articles, content }) => {
-  const ref = useRef<HTMLInputElement>(null)
-
-  useEffect(() => {
-    const handleKeydown = (event: KeyboardEvent) => {
-      if (event.key == '/') {
-        ref.current?.focus()
-      }
-    }
-
-    window.addEventListener('keyup', handleKeydown)
-
-    return () => {
-      window.removeEventListener('keyup', handleKeydown)
-    }
-  })
-
-  const [focused, setFocused] = useState(false)
   const [query, setQuery] = useState('')
 
   const filteredArticles = articles.filter((article) =>
@@ -68,51 +51,19 @@ const Page: NextPage<PageProps> = ({ articles, content }) => {
       />
 
       <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
-        <div className="mx-auto mb-12 max-w-2xl">
-          <div className="mb-12 flex items-center justify-between gap-4">
-            <h1 className="text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
-              Writing
-            </h1>
-            <PencilIcon className="h-12 w-12 md:h-16 md:w-16" />
-          </div>
+        <div className="mx-auto mb-12 flex max-w-2xl flex-col gap-8">
+          <h1 className="text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
+            Writing
+          </h1>
 
           <MDX content={content} />
 
-          <div
-            className={[
-              'mt-8 flex w-full rounded-lg border',
-              focused
-                ? 'border-zinc-700 dark:border-zinc-300'
-                : 'border-zinc-400 dark:border-zinc-600',
-            ].join(' ')}
-          >
-            <SearchIcon
-              className={[
-                focused
-                  ? 'text-zinc-700 dark:text-zinc-300'
-                  : 'text-zinc-500 dark:text-zinc-500',
-                'box-content h-6 w-6 p-3',
-              ].join(' ')}
-            />
-
-            <input
-              type="search"
-              spellCheck="false"
-              placeholder="Press / to search"
-              value={query}
-              onChange={({ target }) => {
-                setQuery(target.value)
-              }}
-              ref={ref}
-              onFocus={() => {
-                setFocused(true)
-              }}
-              onBlur={() => {
-                setFocused(false)
-              }}
-              className="placeholder:text-zinc-5000 w-full rounded-lg bg-transparent pr-2 text-base text-inherit outline-none"
-            />
-          </div>
+          <Search
+            query={query}
+            onQueryChange={(query) => {
+              setQuery(query)
+            }}
+          />
 
           {query.length > 0 ? (
             <p className="mt-6 text-center text-zinc-600 dark:text-zinc-400">

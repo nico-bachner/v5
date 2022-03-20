@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 import { ProjectCard } from 'components/ProjectCard'
@@ -11,13 +12,6 @@ import { fetchArticlesData } from 'lib/data/articles'
 import type { NextPage, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
 import type { ProjectData, ArticleData } from 'lib/data/types'
-import {
-  AtSymbolIcon,
-  CollectionIcon,
-  PencilIcon,
-  UserIcon,
-} from '@heroicons/react/outline'
-import Link from 'next/link'
 
 type PageProps = {
   content: {
@@ -85,28 +79,22 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
         </p>
       </section>
 
-      <section className="mx-auto flex max-w-2xl flex-col py-20 md:snap-start md:justify-center">
-        <div className="mb-6 flex items-center justify-between gap-4">
-          <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
-            About
-          </h2>
-          <UserIcon className="h-12 w-12 md:h-16 md:w-16" />
-        </div>
+      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-20 md:snap-start md:justify-center">
+        <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
+          About
+        </h2>
+
         <MDX content={content.about} />
       </section>
 
-      <section className="mx-auto flex max-w-2xl flex-col py-20 md:snap-start md:justify-center">
-        <Link href="/projects">
-          <a className="mb-6 flex items-center justify-between gap-4">
-            <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
-              Projects
-            </h2>
-            <CollectionIcon className="h-12 w-12 md:h-16 md:w-16" />
-          </a>
-        </Link>
+      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-20 md:snap-start md:justify-center">
+        <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
+          Projects
+        </h2>
+
         <MDX content={content.projects} />
 
-        <div className="mt-6 flex flex-col gap-6">
+        <div className="flex flex-col gap-6">
           {projects.map((project) => (
             <ProjectCard
               key={project.path[project.path.length - 1]}
@@ -114,18 +102,21 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
             />
           ))}
         </div>
-      </section>
 
-      <section className="mx-auto flex max-w-2xl flex-col py-20 md:snap-start md:justify-center">
-        <Link href="/writing">
-          <a className="mb-6 flex items-center justify-between gap-4">
-            <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
-              Writing
-            </h2>
-            <PencilIcon className="h-12 w-12 md:h-16 md:w-16" />
+        <Link href="/projects">
+          <a className="self-center rounded-lg bg-blue-50 py-3 px-6 text-sm text-blue-500 transition duration-200 hover:bg-blue-100 md:text-base lg:text-lg">
+            View More
           </a>
         </Link>
+      </section>
+
+      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-20 md:snap-start md:justify-center">
+        <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
+          Writing
+        </h2>
+
         <MDX content={content.writing} />
+
         <div className="mt-6 flex flex-col gap-6">
           {articles.map((article) => (
             <ArticleCard
@@ -134,15 +125,19 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
             />
           ))}
         </div>
+
+        <Link href="/writing">
+          <a className="self-center rounded-lg bg-blue-50 py-3 px-6 text-sm text-blue-500 transition duration-200 hover:bg-blue-100 md:text-base lg:text-lg">
+            View More
+          </a>
+        </Link>
       </section>
 
-      <section className="mx-auto flex max-w-2xl flex-col py-20 md:snap-start md:justify-center">
-        <div className="mb-6 flex items-center justify-between gap-4">
-          <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
-            Contact
-          </h2>
-          <AtSymbolIcon className="h-12 w-12 md:h-16 md:w-16" />
-        </div>
+      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-20 md:snap-start md:justify-center">
+        <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
+          Contact
+        </h2>
+
         <MDX content={content.contact} />
       </section>
     </main>
