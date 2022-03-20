@@ -117,7 +117,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
 
         <MDX content={content.writing} />
 
-        <div className="mt-6 flex flex-col gap-6">
+        <div className="flex flex-col gap-6">
           {articles.map((article) => (
             <ArticleCard
               key={article.path[article.path.length - 1]}
