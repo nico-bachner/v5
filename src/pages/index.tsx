@@ -104,7 +104,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
         </div>
 
         <Link href="/projects">
-          <a className="self-center rounded-lg bg-blue-50 py-3 px-6 text-sm text-blue-500 transition duration-200 hover:bg-blue-100 md:text-base lg:text-lg">
+          <a className="self-center rounded-lg bg-blue-500/20 py-3 px-6 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/30 md:text-base lg:text-lg">
             View More
           </a>
         </Link>
@@ -127,7 +127,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
         </div>
 
         <Link href="/writing">
-          <a className="self-center rounded-lg bg-blue-50 py-3 px-6 text-sm text-blue-500 transition duration-200 hover:bg-blue-100 md:text-base lg:text-lg">
+          <a className="self-center rounded-lg bg-blue-500/20 py-3 px-6 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/30 md:text-base lg:text-lg">
             View More
           </a>
         </Link>
