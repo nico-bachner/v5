@@ -14,7 +14,7 @@ export const Nav: React.VFC = () => {
   const [open, setOpen] = useAtom(commandMenuOpen)
 
   return (
-    <nav className="fixed bottom-4 left-0 right-0 z-20 mx-auto flex w-fit items-center gap-2 rounded-xl bg-white/80 px-2 py-1 shadow-xl backdrop-blur dark:border-zinc-600/20 dark:bg-zinc-600/30 md:bottom-8">
+    <nav className="fixed bottom-4 left-0 right-0 z-20 mx-auto flex w-fit items-center gap-2 rounded-xl bg-white/80 px-3 py-1 shadow-xl backdrop-blur dark:bg-zinc-900/80 md:bottom-8">
       <NavItem title="Home" href="/" icon={HomeIcon} />
       <NavItem title="Projects" href="/projects" icon={CollectionIcon} />
       <button
@@ -22,9 +22,9 @@ export const Nav: React.VFC = () => {
         onClick={() => {
           setOpen(!open)
         }}
-        className="transform cursor-pointer rounded-full bg-white/80 p-2 shadow-lg backdrop-blur transition hover:scale-105 dark:border-zinc-600/20 dark:bg-zinc-600/30 md:p-3"
+        className="transform cursor-pointer rounded-full bg-white/80 p-3 shadow-lg backdrop-blur transition hover:scale-105 dark:bg-zinc-800/80"
       >
-        <AdjustmentsIcon strokeWidth={1.6} className="h-10 w-10" />
+        <AdjustmentsIcon strokeWidth={1.5} className="h-10 w-10" />
       </button>
       <NavItem title="Writing" href="/writing" icon={PencilIcon} />
       <NavItem title="Uses" href="/uses" icon={TerminalIcon} />

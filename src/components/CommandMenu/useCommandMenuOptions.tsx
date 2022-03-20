@@ -51,16 +51,6 @@ export const useCommandMenuOptions = () => {
       },
     },
     {
-      id: 'Reader Mode',
-      icon: ViewListIcon,
-      title: 'Toggle Reader Mode',
-      group: 'general',
-      shortcut: 'r',
-      action: () => {
-        setReaderMode(!readerMode)
-      },
-    },
-    {
       id: 'Theme',
       icon: DesktopComputerIcon,
       title: 'Change Theme...',
@@ -99,6 +89,16 @@ export const useCommandMenuOptions = () => {
           },
         },
       ],
+    },
+    {
+      id: 'Reader Mode',
+      icon: ViewListIcon,
+      title: 'Toggle Reader Mode',
+      group: 'general',
+      shortcut: 'r',
+      action: () => {
+        setReaderMode(!readerMode)
+      },
     },
     {
       id: 'Home',
