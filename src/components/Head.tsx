@@ -1,27 +1,58 @@
-import NextHead from 'next/head'
+import { NextSeo } from 'next-seo'
+
+import { useRouter } from 'next/router'
 
 type HeadProps = {
   title?: string
   description?: string
+  image?: string
+  published?: number
+  updated?: number
 }
 
 export const Head: React.FC<HeadProps> = ({
-  title: pageTitle,
-  description: pageDescription,
+  title,
+  description,
+  image,
+  published,
+  updated,
 }) => {
-  const title = pageTitle
-    ? [pageTitle, 'Nico Bachner'].join(' – ')
-    : 'Nico Bachner'
-  const description =
-    pageDescription ??
-    'A University Student, self-taught Web Developer, and Aspiring Open Sourcerer'
+  const { asPath } = useRouter()
 
   return (
-    <NextHead>
-      <title>{title}</title>
-      <meta property="og:title" content={title} />
-      <meta name="description" content={description} />
-      <meta property="og:description" content={description} />
-    </NextHead>
+    <NextSeo
+      title={title ? [title, 'Nico Bachner'].join(' – ') : 'Nico Bachner'}
+      description={
+        description ??
+        'A University Student, self-taught Web Developer, and Aspiring Open Sourcerer'
+      }
+      canonical="https://nicobachner.com"
+      openGraph={{
+        url: 'https://nicobachner.com' + asPath,
+        images: [
+          {
+            url: image
+              ? image.startsWith('/')
+                ? 'https://nicobachner.com' + image
+                : image
+              : 'https://nicobachner.com/images/icon.png',
+          },
+        ],
+        type: published && updated ? 'article' : 'website',
+        article:
+          published && updated
+            ? {
+                publishedTime: new Date(published).toISOString(),
+                modifiedTime: new Date(updated).toISOString(),
+                expirationTime: new Date(updated + 157788000000).toISOString(),
+              }
+            : undefined,
+      }}
+      twitter={{
+        handle: '@nico_bachner',
+        site: '@nico_bachner',
+        cardType: 'summary_large_image',
+      }}
+    />
   )
 }

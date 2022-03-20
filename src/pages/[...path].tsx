@@ -15,7 +15,8 @@ type PageProps = {
   description: string
   image: string | null
   content: MDXContent
-  updated: number | null
+  published: number
+  updated: number
   edit_url: string
 }
 
@@ -62,7 +63,7 @@ const getStaticProps: GetStaticProps<PageProps> = async ({ params }) => {
     extension,
   })
 
-  const { title, description, image = null, url = null } = getMDXData(file)
+  const { title, description, image = null, published } = getMDXData(file)
 
   if (typeof title != 'string') {
     throw new Error(`'title' should be a string (${path})`)
@@ -86,7 +87,8 @@ const getStaticProps: GetStaticProps<PageProps> = async ({ params }) => {
     description,
     image,
     content: await fetchMDXContent(file),
-    updated: updated?.getTime() ?? null,
+    published: new Date(published).getTime(),
+    updated: updated?.getTime() ?? new Date(published).getTime(),
     edit_url: getEditUrl({ ...config.repo, basePath, path, extension }),
   }
 
@@ -98,6 +100,7 @@ const Page: NextPage<PageProps> = ({
   description,
   image,
   content,
+  published,
   updated,
   edit_url,
 }) => {
@@ -109,9 +112,13 @@ const Page: NextPage<PageProps> = ({
 
   return (
     <>
-      <Head title={title} description={description}>
-        {image ? <meta property="og:image" content={image} /> : null}
-      </Head>
+      <Head
+        title={title}
+        description={description}
+        image={image ?? undefined}
+        published={published}
+        updated={updated}
+      />
 
       <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
         <article className="mx-auto max-w-2xl">
