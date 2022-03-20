@@ -14,7 +14,7 @@ export const Nav: React.VFC = () => {
   const [open, setOpen] = useAtom(commandMenuOpen)
 
   return (
-    <nav className="fixed bottom-4 left-0 right-0 z-20 mx-auto flex w-fit items-center gap-2 rounded-xl bg-white/50 px-2 py-1 shadow-xl backdrop-blur-sm dark:border-zinc-600/20 dark:bg-zinc-600/30 md:bottom-8 md:gap-3 md:px-3 md:py-2">
+    <nav className="fixed bottom-4 left-0 right-0 z-20 mx-auto flex w-fit items-center gap-2 rounded-xl bg-white/80 px-2 py-1 shadow-xl backdrop-blur dark:border-zinc-600/20 dark:bg-zinc-600/30 md:bottom-8">
       <NavItem title="Home" href="/" icon={HomeIcon} />
       <NavItem title="Projects" href="/projects" icon={CollectionIcon} />
       <button
