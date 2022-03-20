@@ -14,20 +14,17 @@ import {
   ViewListIcon,
 } from '@heroicons/react/outline'
 
-import { useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useTheme } from 'next-themes'
-import { useAtom } from 'jotai'
+import { useAtom, useSetAtom } from 'jotai'
 import { storedReaderMode } from 'store'
 import { commandMenuOpen, commandMenuTab } from './store'
-
-import type { CommandMenuOption } from './types'
 
 export const useCommandMenuOptions = () => {
   const [readerMode, setReaderMode] = useAtom(storedReaderMode)
   const [open, setOpen] = useAtom(commandMenuOpen)
-  const [tab, setTab] = useAtom(commandMenuTab)
   const { setTheme } = useTheme()
+  const setTab = useSetAtom(commandMenuTab)
   const router = useRouter()
 
   return [
@@ -55,7 +52,6 @@ export const useCommandMenuOptions = () => {
       icon: DesktopComputerIcon,
       title: 'Change Theme...',
       group: 'general',
-      shortcut: 't',
       action: () => {
         setOpen(true)
         setTab(['Home', 'Theme'])
@@ -95,7 +91,6 @@ export const useCommandMenuOptions = () => {
       icon: ViewListIcon,
       title: 'Toggle Reader Mode',
       group: 'general',
-      shortcut: 'r',
       action: () => {
         setReaderMode(!readerMode)
       },
@@ -154,7 +149,6 @@ export const useCommandMenuOptions = () => {
       icon: AtSymbolIcon,
       title: 'Send me an email',
       group: 'links',
-      shortcut: '@',
       action: () => {
         window.open('mailto:mail@nbac.me')
       },
@@ -164,7 +158,6 @@ export const useCommandMenuOptions = () => {
       icon: CodeIcon,
       title: 'View Source Code',
       group: 'links',
-      shortcut: 'alt+cmd+u',
       action: () => {
         window.open('https://github.com/nico-bachner/v5')
       },

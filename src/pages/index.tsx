@@ -69,8 +69,8 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
   <>
     <Head />
 
-    <main className="max-h-screen snap-y snap-proximity overflow-auto px-6">
-      <section className="flex min-h-screen snap-start flex-col justify-center py-24 md:text-center">
+    <main className="px-6 pb-40">
+      <section className="flex flex-col justify-center py-24 md:min-h-screen md:text-center">
         <h1 className="text-6xl font-black tracking-tighter md:text-7xl lg:text-8xl xl:text-9xl">
           Nico Bachner
         </h1>
@@ -79,7 +79,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
         </p>
       </section>
 
-      <section className="mx-auto flex min-h-screen max-w-2xl snap-start flex-col justify-center gap-8 py-24">
+      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
         <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
           About
         </h2>
@@ -87,7 +87,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
         <MDX content={content.about} />
       </section>
 
-      <section className="mx-auto flex max-w-2xl snap-start flex-col justify-center gap-8 py-24">
+      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
         <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
           Projects
         </h2>
@@ -110,7 +110,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
         </Link>
       </section>
 
-      <section className="mx-auto flex max-w-2xl snap-start flex-col gap-8 py-24 md:justify-center">
+      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
         <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
           Writing
         </h2>
@@ -133,7 +133,7 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
         </Link>
       </section>
 
-      <section className="mx-auto flex min-h-screen max-w-2xl snap-start flex-col justify-center gap-8 py-24">
+      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
         <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
           Contact
         </h2>
