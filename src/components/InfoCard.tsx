@@ -20,7 +20,7 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
   <Link href={href}>
     <a>
       <motion.div
-        initial={{ scale: 0.8, opacity: 0.8, y: 50 }}
+        initial={{ scale: 0.5, opacity: 0, y: 100 }}
         whileInView={{ scale: 1, opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.1 }}

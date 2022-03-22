@@ -20,7 +20,7 @@ export const Nav: React.VFC = () => {
     <motion.nav
       initial={{ y: 200, filter: 'opacity(0%)' }}
       animate={{ y: 0, filter: 'opacity(100%)' }}
-      transition={{ delay: pathname == '/' ? 1 : 0.5 }}
+      transition={{ delay: pathname == '/' ? 1.5 : 1 }}
       className="fixed bottom-4 left-0 right-0 z-20 mx-auto flex w-fit items-center gap-2 rounded-xl bg-white/80 px-3 py-1 shadow-xl backdrop-blur dark:bg-zinc-900/80 md:bottom-8"
     >
       <NavItem title="Home" href="/" icon={HomeIcon} />
