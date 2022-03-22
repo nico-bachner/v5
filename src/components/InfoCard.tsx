@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+import { motion } from 'framer-motion'
+
 type InfoCardProps = {
   href: string
   header: string
@@ -16,19 +18,27 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
   info,
 }) => (
   <Link href={href}>
-    <a className="flex flex-col gap-2 rounded-lg bg-white/50 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:shadow-xl dark:bg-zinc-800/50 md:transform md:gap-4 md:p-10 lg:gap-6 lg:p-12">
-      <p className="text-2xl md:text-3xl md:tracking-tight lg:text-4xl">
-        <strong className="font-extrabold">{header}</strong>
-      </p>
-      <p className="prose prose-slate dark:prose-invert md:prose-lg lg:prose-xl">
-        {body}
-      </p>
-      <div className="flex justify-between md:text-lg lg:text-xl">
-        <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text text-transparent">
-          {cta} {'->'}
+    <a>
+      <motion.div
+        initial={{ scale: 0.8, opacity: 0.8, y: 50 }}
+        whileInView={{ scale: 1, opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.1 }}
+        className="flex flex-col gap-2 rounded-lg bg-white/50 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:shadow-xl dark:bg-zinc-800/50 md:transform md:gap-4 md:p-10 lg:gap-6 lg:p-12"
+      >
+        <p className="text-2xl md:text-3xl md:tracking-tight lg:text-4xl">
+          <strong className="font-extrabold">{header}</strong>
         </p>
-        <p className="text-slate-400">{info}</p>
-      </div>
+        <p className="prose prose-slate dark:prose-invert md:prose-lg lg:prose-xl">
+          {body}
+        </p>
+        <div className="flex justify-between md:text-lg lg:text-xl">
+          <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text text-transparent">
+            {cta} {'->'}
+          </p>
+          <p className="text-slate-400">{info}</p>
+        </div>
+      </motion.div>
     </a>
   </Link>
 )
