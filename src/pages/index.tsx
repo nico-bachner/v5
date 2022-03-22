@@ -4,6 +4,7 @@ import { MDX } from 'components/MDX'
 import { ProjectCard } from 'components/ProjectCard'
 import { ArticleCard } from 'components/ArticleCard'
 
+import { motion } from 'framer-motion'
 import { fetchFile } from 'lib/fs'
 import { fetchMDXContent } from 'lib/mdx'
 import { fetchProjectsData } from 'lib/data/projects'
@@ -12,6 +13,8 @@ import { fetchArticlesData } from 'lib/data/articles'
 import type { NextPage, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
 import type { ProjectData, ArticleData } from 'lib/data/types'
+import { useAtomValue } from 'jotai'
+import { storedLoaded } from 'store'
 
 type PageProps = {
   content: {
@@ -65,83 +68,96 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
   }
 }
 
-const Page: NextPage<PageProps> = ({ content, projects, articles }) => (
-  <>
-    <Head />
+const Page: NextPage<PageProps> = ({ content, projects, articles }) => {
+  const loaded = useAtomValue(storedLoaded)
 
-    <main className="px-6 pb-40">
-      <section className="flex flex-col justify-center py-24 md:min-h-screen md:text-center">
-        <h1 className="text-6xl font-black tracking-tighter md:text-7xl lg:text-8xl xl:text-9xl">
-          Nico Bachner
-        </h1>
-        <p className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-5xl font-extrabold tracking-tight text-transparent md:text-6xl md:leading-tight lg:text-7xl lg:leading-tight xl:text-8xl xl:leading-tight">
-          Aspiring Open Sourcerer
-        </p>
-      </section>
+  return (
+    <>
+      <Head />
 
-      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
-        <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
-          About
-        </h2>
+      <main className="px-6 pb-40">
+        <motion.section
+          initial={
+            !loaded
+              ? { scale: 0.5, filter: 'opacity(0%)' }
+              : { scale: 1, filter: 'opacity(100%)' }
+          }
+          animate={{ scale: 1, filter: 'opacity(100%)' }}
+          transition={{ duration: 0.5 }}
+          className="flex flex-col justify-center py-24 md:min-h-screen md:text-center"
+        >
+          <h1 className="text-6xl font-black tracking-tighter md:text-7xl lg:text-8xl xl:text-9xl">
+            Nico Bachner
+          </h1>
+          <p className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-5xl font-extrabold tracking-tight text-transparent md:text-6xl md:leading-tight lg:text-7xl lg:leading-tight xl:text-8xl xl:leading-tight">
+            Aspiring Open Sourcerer
+          </p>
+        </motion.section>
 
-        <MDX content={content.about} />
-      </section>
+        <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
+          <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
+            About
+          </h2>
 
-      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
-        <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
-          Projects
-        </h2>
+          <MDX content={content.about} />
+        </section>
 
-        <MDX content={content.projects} />
+        <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
+          <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
+            Projects
+          </h2>
 
-        <div className="flex flex-col gap-6">
-          {projects.map((project) => (
-            <ProjectCard
-              key={project.path[project.path.length - 1]}
-              {...project}
-            />
-          ))}
-        </div>
+          <MDX content={content.projects} />
 
-        <Link href="/projects">
-          <a className="self-center rounded-lg bg-blue-500/10 py-3 px-5 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/20 md:text-base lg:text-lg">
-            View More
-          </a>
-        </Link>
-      </section>
+          <div className="flex flex-col gap-6">
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.path[project.path.length - 1]}
+                {...project}
+              />
+            ))}
+          </div>
 
-      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
-        <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
-          Writing
-        </h2>
+          <Link href="/projects">
+            <a className="self-center rounded-lg bg-blue-500/10 py-3 px-5 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/20 md:text-base lg:text-lg">
+              View More
+            </a>
+          </Link>
+        </section>
 
-        <MDX content={content.writing} />
+        <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
+          <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
+            Writing
+          </h2>
 
-        <div className="flex flex-col gap-6">
-          {articles.map((article) => (
-            <ArticleCard
-              key={article.path[article.path.length - 1]}
-              {...article}
-            />
-          ))}
-        </div>
+          <MDX content={content.writing} />
 
-        <Link href="/writing">
-          <a className="self-center rounded-lg bg-blue-500/10 py-3 px-5 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/20 md:text-base lg:text-lg">
-            View More
-          </a>
-        </Link>
-      </section>
+          <div className="flex flex-col gap-6">
+            {articles.map((article) => (
+              <ArticleCard
+                key={article.path[article.path.length - 1]}
+                {...article}
+              />
+            ))}
+          </div>
 
-      <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
-        <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
-          Contact
-        </h2>
+          <Link href="/writing">
+            <a className="self-center rounded-lg bg-blue-500/10 py-3 px-5 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/20 md:text-base lg:text-lg">
+              View More
+            </a>
+          </Link>
+        </section>
 
-        <MDX content={content.contact} />
-      </section>
-    </main>
-  </>
-)
+        <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
+          <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
+            Contact
+          </h2>
+
+          <MDX content={content.contact} />
+        </section>
+      </main>
+    </>
+  )
+}
 
 export default Page

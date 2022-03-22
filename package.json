@@ -13,6 +13,7 @@
     "@heroicons/react": "^1.0.6",
     "@react-three/drei": "^8.16.7",
     "@react-three/fiber": "^7.0.26",
+    "framer-motion": "^6.2.8",
     "gray-matter": "^4.0.3",
     "inspx": "^0.0.1-alpha.6",
     "jotai": "^1.6.1",

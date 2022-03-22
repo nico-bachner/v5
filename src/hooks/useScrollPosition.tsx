@@ -1,10 +1,10 @@
 import { useState, useLayoutEffect } from 'react'
 
 export const useScrollPosition = () => {
-  const [position, setScrollPosition] = useState<[number, number]>([
-    typeof window != 'undefined' ? window.pageXOffset : 0,
-    typeof window != 'undefined' ? window.pageYOffset : 0,
-  ])
+  const [position, setScrollPosition] = useState<{ x: number; y: number }>({
+    x: typeof window != 'undefined' ? window.pageXOffset : 0,
+    y: typeof window != 'undefined' ? window.pageYOffset : 0,
+  })
 
   const [request, setRequest] = useState<number | null>(null)
 
@@ -13,7 +13,10 @@ export const useScrollPosition = () => {
       if (!request) {
         setRequest(
           window.requestAnimationFrame(() => {
-            setScrollPosition([window.pageXOffset, window.pageYOffset])
+            setScrollPosition({
+              x: window.pageXOffset,
+              y: window.pageYOffset,
+            })
 
             setRequest(null)
           })

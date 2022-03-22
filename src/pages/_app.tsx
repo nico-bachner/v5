@@ -6,9 +6,21 @@ import { ThemeProvider } from 'next-themes'
 import { Nav } from 'components/Nav'
 import { CommandMenu } from 'components/CommandMenu/CommandMenu'
 
+import { useAtom } from 'jotai'
+import { storedLoaded } from 'store'
+
 import type { AppProps } from 'next/app'
+import { useEffect } from 'react'
 
 const App: React.VFC<AppProps> = ({ Component, pageProps }) => {
+  const [loaded, setLoaded] = useAtom(storedLoaded)
+
+  useEffect(() => {
+    if (!loaded) {
+      setLoaded(true)
+    }
+  }, [loaded, setLoaded])
+
   return (
     <Inspect>
       <ThemeProvider attribute="class">

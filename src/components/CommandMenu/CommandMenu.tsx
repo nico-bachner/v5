@@ -3,19 +3,19 @@ import { CommandMenuSearch } from './CommandMenuSearch'
 import { CommandMenuOption } from './CommandMenuOption'
 
 import { useEffect } from 'react'
-import { useAtom } from 'jotai'
+import { useAtom, useAtomValue } from 'jotai'
 import {
   commandMenuOpen,
   commandMenuTab,
   commandMenuQuery,
-  pageLoaded,
+  commandMenuOptions,
 } from './store'
-import { commandMenuOptions } from './store'
+import { storedLoaded } from 'store'
 import { useKeyboardShortcuts } from 'hooks/useKeyboardShortcuts'
 import { useCommandMenuOptions } from './useCommandMenuOptions'
 
 export const CommandMenu: React.VFC = () => {
-  const [loaded, setLoaded] = useAtom(pageLoaded)
+  const loaded = useAtomValue(storedLoaded)
   const [open, setOpen] = useAtom(commandMenuOpen)
   const [tab, setTab] = useAtom(commandMenuTab)
   const [query, setQuery] = useAtom(commandMenuQuery)
@@ -30,9 +30,8 @@ export const CommandMenu: React.VFC = () => {
   useEffect(() => {
     if (!loaded) {
       setOptions(allOptions)
-      setLoaded(true)
     }
-  }, [loaded, setLoaded, allOptions, setOptions])
+  }, [loaded, allOptions, setOptions])
 
   const filteredOptions =
     tab[tab.length - 1] == 'Home'
