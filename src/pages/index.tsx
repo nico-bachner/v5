@@ -128,8 +128,16 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => {
           </div>
 
           <Link href="/projects">
-            <a className="self-center rounded-lg bg-blue-500/10 py-3 px-5 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/20 md:text-base lg:text-lg">
-              View More
+            <a>
+              <motion.div
+                initial={{ scale: 0.5, opacity: 0, y: 100 }}
+                whileInView={{ scale: 1, opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.1 }}
+                className="mx-auto max-w-max self-center rounded-lg bg-blue-500/10 py-3 px-5 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/20 md:text-base lg:text-lg"
+              >
+                View More
+              </motion.div>
             </a>
           </Link>
         </section>
@@ -151,8 +159,16 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => {
           </div>
 
           <Link href="/writing">
-            <a className="self-center rounded-lg bg-blue-500/10 py-3 px-5 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/20 md:text-base lg:text-lg">
-              View More
+            <a>
+              <motion.div
+                initial={{ scale: 0.5, opacity: 0, y: 100 }}
+                whileInView={{ scale: 1, opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.1 }}
+                className="mx-auto max-w-max self-center rounded-lg bg-blue-500/10 py-3 px-5 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/20 md:text-base lg:text-lg"
+              >
+                View More
+              </motion.div>
             </a>
           </Link>
         </section>
