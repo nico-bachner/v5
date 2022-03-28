@@ -15,7 +15,6 @@ export const MDX: React.VFC<MDXProps> = ({ content, components }) => {
   const [readerMode] = useAtom(storedReaderMode)
 
   return (
-    // @ts-ignore
     <MDXRemote
       {...content}
       components={{
