@@ -41,7 +41,10 @@ const fetchArticleData: Fetch<string[], ArticleData> = async (path) => {
     featured,
     visible: published ? visible : false,
     published: published ? published.getTime() : null,
-    reading_time: Math.round(file.split(' ').length / 220),
+    reading_time: [
+      Math.round(file.split(' ').length / 350),
+      Math.round(file.split(' ').length / 200),
+    ],
   }
 }
 

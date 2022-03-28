@@ -13,6 +13,10 @@ export const ArticleCard: React.VFC<ArticleData> = ({
     header={title}
     body={description}
     cta="Read"
-    info={`${reading_time} min`}
+    info={`${
+      reading_time[0] == reading_time[1]
+        ? reading_time[0]
+        : reading_time.join('-')
+    } min`}
   />
 )

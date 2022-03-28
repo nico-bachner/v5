@@ -13,5 +13,5 @@ export type ProjectData = PageData & {
 
 export type ArticleData = PageData & {
   published: number
-  reading_time: number
+  reading_time: [number, number]
 }
