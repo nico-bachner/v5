@@ -1,9 +1,8 @@
 import { fetchFile, fetchPaths } from 'lib/fs'
 import { getMDXData } from 'lib/mdx'
+import { ideaTypes } from './ideaTypes'
 
 import type { IdeaData } from './types'
-
-export const ideaTypes = ['articles', 'guides']
 
 const fetchIdeaData: Fetch<string[], IdeaData> = async (path) => {
   const file = await fetchFile({
