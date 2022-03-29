@@ -10,10 +10,10 @@ import { NavItem } from './NavItem'
 import { useRouter } from 'next/router'
 import { motion } from 'framer-motion'
 import { useAtom } from 'jotai'
-import { commandMenuOpen } from './CommandMenu/store'
+import { storedCommandMenuOpen } from 'store'
 
 export const Nav: React.VFC = () => {
-  const [open, setOpen] = useAtom(commandMenuOpen)
+  const [open, setOpen] = useAtom(storedCommandMenuOpen)
   const { pathname } = useRouter()
 
   return (

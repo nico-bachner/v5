@@ -22,7 +22,7 @@ export const MDX: React.VFC<MDXProps> = ({ content, components }) => {
           <div
             className={[
               'prose prose-zinc prose-headings:scroll-mt-[1.5em] dark:prose-invert md:prose-lg lg:prose-xl',
-              readerMode ? 'font-serif' : 'font-sans',
+              readerMode == 'serif' ? 'font-serif' : 'font-sans',
             ].join(' ')}
           >
             {children}

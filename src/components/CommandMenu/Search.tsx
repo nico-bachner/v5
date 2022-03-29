@@ -3,23 +3,27 @@ import { SearchIcon } from '@heroicons/react/outline'
 
 import { useState } from 'react'
 import { useAtom } from 'jotai'
-import { commandMenuOpen, commandMenuTab, commandMenuQuery } from './store'
-import { commandMenuOptions } from './store'
+import { storedCommandMenuOpen } from 'store'
+import {
+  storedEventsAfterClose,
+  storedQuery,
+  storedRecents,
+  storedTab,
+} from './store'
 
-import type { CommandMenuOption } from './types'
+import type { Option } from './types'
 
-type CommandMenuSearchProps = {
-  options: CommandMenuOption[]
+type SearchProps = {
+  options: Option[]
 }
 
-export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
-  children,
-}) => {
-  const [options, setOptions] = useAtom(commandMenuOptions)
-  const [open, setOpen] = useAtom(commandMenuOpen)
-  const [tab, setTab] = useAtom(commandMenuTab)
-  const [query, setQuery] = useAtom(commandMenuQuery)
-  const [selectedOption, setSelectedOption] = useState(options[0])
+export const Search: React.FC<SearchProps> = ({ children }) => {
+  const [open, setOpen] = useAtom(storedCommandMenuOpen)
+  const [events, setEvents] = useAtom(storedEventsAfterClose)
+  const [query, setQuery] = useAtom(storedQuery)
+  const [recents, setRecents] = useAtom(storedRecents)
+  const [tab, setTab] = useAtom(storedTab)
+  const [selectedOption, setSelectedOption] = useState<Option | null>(null)
 
   return (
     <Combobox
@@ -28,22 +32,29 @@ export const CommandMenuSearch: React.FC<CommandMenuSearchProps> = ({
       onChange={(option) => {
         setSelectedOption(option)
 
-        if (option.children) {
-          setTab([...tab, option.id])
-        } else {
-          setOpen(false)
+        if (option) {
+          if (option.children) {
+            setTab([...tab, option.id])
+          } else {
+            setOpen(!open)
 
-          setOptions([
-            { ...option, group: 'recents' },
-            ...options
-              .filter(({ group }) => group == 'recents')
-              .filter(({ title }) => title != option.title),
-            ...options.filter(({ group }) => group != 'recents'),
-          ])
-        }
+            setEvents([
+              ...events,
+              () => {
+                setRecents([
+                  { ...option, group: 'recents' },
+                  ...recents
+                    .filter(({ group }) => group == 'recents')
+                    .filter(({ title }) => title != option.title)
+                    .slice(0, 2),
+                ])
+              },
+            ])
+          }
 
-        if (option.action) {
-          option.action()
+          if (option.action) {
+            option.action()
+          }
         }
       }}
       className="relative mx-auto w-full max-w-xl rounded-xl border border-white/20 bg-white/75 shadow-xl backdrop-blur-lg dark:border-zinc-700 dark:bg-black/75"

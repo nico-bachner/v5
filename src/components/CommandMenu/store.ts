@@ -1,8 +1,8 @@
 import { atom } from 'jotai'
 
-import type { CommandMenuOption } from './types'
+import type { Option } from './types'
 
-export const commandMenuOpen = atom(false)
-export const commandMenuTab = atom(['Home'])
-export const commandMenuQuery = atom('')
-export const commandMenuOptions = atom<CommandMenuOption[]>([])
+export const storedEventsAfterClose = atom<(() => void)[]>([])
+export const storedQuery = atom('')
+export const storedRecents = atom<Option[]>([])
+export const storedTab = atom(['Home'])
