@@ -30,6 +30,16 @@ const nextConfig = {
         destination: '/:path*',
         permanent: true,
       },
+      {
+        source: '/articles/css-modules',
+        destination: '/guides/css-modules',
+        permanent: true,
+      },
+      {
+        source: '/articles/sveltekit-theme-switch',
+        destination: '/guides/sveltekit-theme-switch',
+        permanent: true,
+      },
     ]
   },
 }
