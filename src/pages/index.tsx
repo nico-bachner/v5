@@ -2,17 +2,17 @@ import Link from 'next/link'
 import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 import { ProjectCard } from 'components/ProjectCard'
-import { ArticleCard } from 'components/ArticleCard'
+import { IdeaCard } from 'components/IdeaCard'
 
 import { motion } from 'framer-motion'
 import { fetchFile } from 'lib/fs'
 import { fetchMDXContent } from 'lib/mdx'
 import { fetchProjectsData } from 'lib/data/projects'
-import { fetchArticlesData } from 'lib/data/articles'
+import { fetchIdeasData } from 'lib/data/ideas'
 
 import type { NextPage, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
-import type { ProjectData, ArticleData } from 'lib/data/types'
+import type { ProjectData, IdeaData } from 'lib/data/types'
 import { useAtomValue } from 'jotai'
 import { storedLoaded } from 'store'
 
@@ -21,7 +21,7 @@ type PageProps = {
     [key: string]: MDXContent
   }
   projects: ProjectData[]
-  articles: ArticleData[]
+  ideas: IdeaData[]
 }
 
 export const getStaticProps: GetStaticProps<PageProps> = async () => {
@@ -40,10 +40,10 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
         extension: 'mdx',
       })
     ),
-    writing: await fetchMDXContent(
+    ideas: await fetchMDXContent(
       await fetchFile({
         basePath: ['content', 'sections'],
-        path: ['home', 'writing'],
+        path: ['home', 'ideas'],
         extension: 'mdx',
       })
     ),
@@ -56,19 +56,22 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
     ),
   }
 
-  const projects = await fetchProjectsData()
-  const articles = await fetchArticlesData()
+  const allProjects = await fetchProjectsData()
+  const projects = allProjects.filter(({ featured }) => featured)
+
+  const allIdeas = await fetchIdeasData()
+  const ideas = allIdeas.filter(({ featured }) => featured)
 
   return {
     props: {
       content,
-      projects: projects.filter(({ featured }) => featured),
-      articles: articles.filter(({ featured }) => featured),
+      projects,
+      ideas,
     },
   }
 }
 
-const Page: NextPage<PageProps> = ({ content, projects, articles }) => {
+const Page: NextPage<PageProps> = ({ content, projects, ideas }) => {
   const loaded = useAtomValue(storedLoaded)
 
   return (
@@ -144,21 +147,18 @@ const Page: NextPage<PageProps> = ({ content, projects, articles }) => {
 
         <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
           <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
-            Writing
+            Ideas
           </h2>
 
-          <MDX content={content.writing} />
+          <MDX content={content.ideas} />
 
           <div className="flex flex-col gap-6">
-            {articles.map((article) => (
-              <ArticleCard
-                key={article.path[article.path.length - 1]}
-                {...article}
-              />
+            {ideas.map((idea) => (
+              <IdeaCard key={idea.path[idea.path.length - 1]} {...idea} />
             ))}
           </div>
 
-          <Link href="/writing">
+          <Link href="/ideas">
             <a>
               <motion.div
                 initial={{ scale: 0.5, opacity: 0, y: 100 }}

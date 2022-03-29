@@ -48,7 +48,7 @@ const fetchProjectData: Fetch<string[], ProjectData> = async (path) => {
   }
 }
 
-const fetchProjectsData = async () => {
+export const fetchProjectsData = async () => {
   const paths = await fetchPaths({ basePath, path, extension })
 
   const projects = await Promise.all(
@@ -73,5 +73,3 @@ const fetchProjectsData = async () => {
       return b.from - a.from
     })
 }
-
-export { fetchProjectsData }

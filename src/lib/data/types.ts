@@ -11,7 +11,8 @@ export type ProjectData = PageData & {
   to: number | null
 }
 
-export type ArticleData = PageData & {
+export type IdeaData = PageData & {
+  type: string
   published: number
   reading_time: [number, number]
 }

@@ -1,14 +1,16 @@
 import { fetchFile, fetchPaths } from 'lib/fs'
 import { getMDXData } from 'lib/mdx'
 
-import type { ArticleData } from './types'
+import type { IdeaData } from './types'
 
-const basePath = ['content', 'pages']
-const path = ['articles']
-const extension = 'mdx'
+export const ideaTypes = ['articles', 'guides']
 
-const fetchArticleData: Fetch<string[], ArticleData> = async (path) => {
-  const file = await fetchFile({ basePath, path, extension })
+const fetchIdeaData: Fetch<string[], IdeaData> = async (path) => {
+  const file = await fetchFile({
+    basePath: ['content', 'pages'],
+    path,
+    extension: 'mdx',
+  })
 
   const {
     title,
@@ -40,6 +42,7 @@ const fetchArticleData: Fetch<string[], ArticleData> = async (path) => {
     description,
     featured,
     visible: published ? visible : false,
+    type: path[0],
     published: published ? published.getTime() : null,
     reading_time: [
       Math.round(file.split(' ').length / 350),
@@ -48,16 +51,24 @@ const fetchArticleData: Fetch<string[], ArticleData> = async (path) => {
   }
 }
 
-const fetchArticlesData = async () => {
-  const paths = await fetchPaths({ basePath, path, extension })
-
-  const articles = await Promise.all(
-    paths.map(async (path) => await fetchArticleData(path))
+export const fetchIdeasData = async () => {
+  const ideasData = await Promise.all(
+    ideaTypes.map(
+      async (type) =>
+        await Promise.all(
+          (
+            await fetchPaths({
+              basePath: ['content', 'pages'],
+              path: [type],
+              extension: 'mdx',
+            })
+          ).map(async (path) => await fetchIdeaData(path))
+        )
+    )
   )
 
-  return articles
+  return ideasData
+    .flat()
     .filter(({ visible }) => visible)
     .sort((a, b) => b.published - a.published)
 }
-
-export { fetchArticlesData }

@@ -9,6 +9,7 @@ import {
   DocumentTextIcon,
   HomeIcon,
   IdentificationIcon,
+  LightBulbIcon,
   MoonIcon,
   PencilIcon,
   SunIcon,
@@ -131,13 +132,13 @@ export const CommandMenu: React.VFC = () => {
       },
     },
     {
-      id: 'Writing',
-      icon: PencilIcon,
-      title: 'Writing',
+      id: 'Ideas',
+      icon: LightBulbIcon,
+      title: 'Ideas',
       group: 'navigation',
       shortcut: 'ctrl+3',
       action: () => {
-        push('/writing')
+        push('/ideas')
       },
     },
     {
