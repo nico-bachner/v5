@@ -183,12 +183,25 @@ export const CommandMenu: React.VFC = () => {
     options.map(({ shortcut, action }) => ({ shortcut, action }))
   )
 
+  const recentOptions = recents
+    .map((item) => {
+      const option = options.find(({ id }) => id == item.id)
+
+      if (option) {
+        return { ...option, group: 'recents' }
+      }
+
+      return null
+    })
+    .filter((option) => option != null)
+    .slice(0, 2) as Option[]
+
   const filteredOptions =
     tab[tab.length - 1] == 'Home'
-      ? [...recents, ...options].filter(({ title }) =>
+      ? [...recentOptions, ...options].filter(({ title }) =>
           title.toLowerCase().includes(query.toLowerCase())
         )
-      : [...recents, ...options]
+      : [...recentOptions, ...options]
           .find(({ id }) => tab[tab.length - 1] == id)
           ?.children?.filter(({ title }) =>
             title.toLowerCase().includes(query.toLowerCase())

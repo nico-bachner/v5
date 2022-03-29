@@ -42,11 +42,8 @@ export const Search: React.FC<SearchProps> = ({ children }) => {
               ...events,
               () => {
                 setRecents([
-                  { ...option, group: 'recents' },
-                  ...recents
-                    .filter(({ group }) => group == 'recents')
-                    .filter(({ title }) => title != option.title)
-                    .slice(0, 2),
+                  option,
+                  ...recents.filter(({ id }) => id != option.id),
                 ])
               },
             ])
