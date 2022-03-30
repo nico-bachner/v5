@@ -1,6 +1,5 @@
 import { Combobox } from '@headlessui/react'
 import {
-  AdjustmentsIcon,
   AtSymbolIcon,
   ClipboardCopyIcon,
   CodeIcon,
@@ -11,7 +10,6 @@ import {
   IdentificationIcon,
   LightBulbIcon,
   MoonIcon,
-  PencilIcon,
   SunIcon,
   TerminalIcon,
 } from '@heroicons/react/outline'
@@ -44,16 +42,6 @@ export const CommandMenu: React.VFC = () => {
 
   const options: Option[] = [
     {
-      id: 'Command Menu',
-      icon: AdjustmentsIcon,
-      title: 'Open Command Menu',
-      group: 'general',
-      shortcut: 'cmd+k',
-      action: () => {
-        setOpen(!open)
-      },
-    },
-    {
       id: 'Copy URL',
       icon: ClipboardCopyIcon,
       title: 'Copy Current URL',
@@ -67,6 +55,7 @@ export const CommandMenu: React.VFC = () => {
       icon: DesktopComputerIcon,
       title: 'Change Theme...',
       group: 'general',
+      shortcut: 'ctrl+t',
       action: () => {
         setOpen(true)
         setTab(['Home', 'Theme'])
@@ -181,7 +170,21 @@ export const CommandMenu: React.VFC = () => {
   ]
 
   useKeyboardShortcuts(
-    options.map(({ shortcut, action }) => ({ shortcut, action }))
+    [
+      {
+        shortcut: 'cmd+k',
+        action: () => {
+          setOpen(!open)
+        },
+      },
+      {
+        shortcut: 'ctrl+k',
+        action: () => {
+          setOpen(!open)
+        },
+      },
+      ...options,
+    ].map(({ shortcut, action }) => ({ shortcut, action }))
   )
 
   const recentOptions = recents
@@ -225,69 +228,74 @@ export const CommandMenu: React.VFC = () => {
     >
       <Search options={options}>
         {filteredOptions && filteredOptions.length > 0 ? (
-          ['recents', 'general', 'navigation', 'links'].map((group) => {
-            const filteredTypeOptions = filteredOptions.filter(
-              (option) => option.group == group
+          filteredOptions
+            .filter(
+              ({ group }, i) =>
+                filteredOptions.map(({ group }) => group).indexOf(group) == i
             )
+            .map(({ group }) => {
+              const filteredTypeOptions = filteredOptions.filter(
+                (option) => option.group == group
+              )
 
-            return (
-              <div key={group}>
-                {filteredTypeOptions.length > 0 ? (
-                  <>
-                    <p className="mx-4 mb-1 mt-4 text-sm capitalize text-zinc-600 dark:text-zinc-400">
-                      {group}
-                    </p>
-                    {filteredTypeOptions.map((option) => {
-                      const { icon: Icon, title, shortcut } = option
+              return (
+                <div key={group}>
+                  {filteredTypeOptions.length > 0 ? (
+                    <>
+                      <p className="mx-4 mb-1 mt-4 text-sm capitalize text-zinc-600 dark:text-zinc-400">
+                        {group}
+                      </p>
+                      {filteredTypeOptions.map((option) => {
+                        const { icon: Icon, title, shortcut } = option
 
-                      return (
-                        <Combobox.Option
-                          key={title}
-                          value={option}
-                          className="focus:outline-none"
-                        >
-                          {({ active }) => (
-                            <div
-                              className={[
-                                'mx-2 flex cursor-pointer items-center rounded-lg transition duration-200',
-                                active
-                                  ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white'
-                                  : 'text-zinc-600 dark:text-zinc-400',
-                              ].join(' ')}
-                            >
-                              <Icon
-                                strokeWidth={1.5}
-                                className="box-content h-6 w-6 p-4"
-                              />
-                              <div className="flex flex-grow items-center justify-between gap-4 p-4 pl-1">
-                                <span>{title}</span>
-                                <kbd
-                                  className={[
-                                    'font-sans transition',
-                                    active
-                                      ? 'text-zinc-500 dark:text-zinc-400'
-                                      : 'text-zinc-400 dark:text-zinc-500',
-                                  ].join(' ')}
-                                >
-                                  {shortcut
-                                    ?.split('+')
-                                    .join('')
-                                    .replace('cmd', '⌘')
-                                    .replace('alt', '⌥')
-                                    .replace('ctrl', '^')
-                                    .toUpperCase()}
-                                </kbd>
+                        return (
+                          <Combobox.Option
+                            key={title}
+                            value={option}
+                            className="focus:outline-none"
+                          >
+                            {({ active }) => (
+                              <div
+                                className={[
+                                  'mx-2 flex cursor-pointer items-center rounded-lg transition duration-200',
+                                  active
+                                    ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white'
+                                    : 'text-zinc-600 dark:text-zinc-400',
+                                ].join(' ')}
+                              >
+                                <Icon
+                                  strokeWidth={1.5}
+                                  className="box-content h-6 w-6 p-4"
+                                />
+                                <div className="flex flex-grow items-center justify-between gap-4 p-4 pl-1">
+                                  <span>{title}</span>
+                                  <kbd
+                                    className={[
+                                      'font-sans transition',
+                                      active
+                                        ? 'text-zinc-500 dark:text-zinc-400'
+                                        : 'text-zinc-400 dark:text-zinc-500',
+                                    ].join(' ')}
+                                  >
+                                    {shortcut
+                                      ?.split('+')
+                                      .join('')
+                                      .replace('cmd', '⌘')
+                                      .replace('alt', '⌥')
+                                      .replace('ctrl', '^')
+                                      .toUpperCase()}
+                                  </kbd>
+                                </div>
                               </div>
-                            </div>
-                          )}
-                        </Combobox.Option>
-                      )
-                    })}
-                  </>
-                ) : null}
-              </div>
-            )
-          })
+                            )}
+                          </Combobox.Option>
+                        )
+                      })}
+                    </>
+                  ) : null}
+                </div>
+              )
+            })
         ) : (
           <p className="mx-4 p-2 text-zinc-500">No results found</p>
         )}

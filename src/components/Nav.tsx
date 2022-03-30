@@ -31,6 +31,7 @@ export const Nav: React.VFC = () => {
           setOpen(!open)
         }}
         className="transform cursor-pointer rounded-full bg-white/80 p-3 shadow-lg backdrop-blur transition hover:scale-105 dark:bg-zinc-800/80"
+        data-splitbee-event="Open Command Menu"
       >
         <AdjustmentsIcon strokeWidth={1.5} className="h-10 w-10" />
       </button>

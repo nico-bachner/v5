@@ -71,18 +71,23 @@ export const Search: React.FC<SearchProps> = ({ children }) => {
           />
         </div>
 
-        <div className="mx-4 flex gap-2 pt-2">
-          {tab.map((item, i) => (
-            <button
-              key={item}
-              onClick={() => {
-                setTab(tab.slice(0, i + 1))
-              }}
-              className="rounded bg-black/5 px-2 py-0.5 text-sm text-zinc-500 dark:bg-white/10 dark:text-white"
-            >
-              {item}
-            </button>
-          ))}
+        <div className="mx-4 flex items-center justify-between gap-4 pt-2">
+          <div className="flex gap-2">
+            {tab.map((item, i) => (
+              <button
+                key={item}
+                onClick={() => {
+                  setTab(tab.slice(0, i + 1))
+                }}
+                className="rounded bg-black/5 px-2 py-0.5 text-sm text-zinc-500 dark:bg-white/10 dark:text-white"
+              >
+                {item}
+              </button>
+            ))}
+          </div>
+          <kbd className="mx-2 font-sans text-zinc-400 transition dark:text-zinc-500">
+            ⌘K
+          </kbd>
         </div>
       </div>
 
