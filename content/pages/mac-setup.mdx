@@ -5,7 +5,11 @@ description: The procedure I refer to when performing a clean (re)install on an 
 
 This is the procedure I refer to when performing a clean (re)install on an Apple Macintosh
 
-## System Settings
+## Table of Contents
+
+## Settings Adjustments
+
+### System Settings
 
 When the initial setup procedure is done, the first thing I do is to customise the trackpad settings (`System Preferences > View > Trackpad`).
 
@@ -56,7 +60,7 @@ defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
 ```
 
-## Finder Settings
+### Finder Settings
 
 1. Configure _Preferences_ (`Finder > Preferences`):
 
@@ -68,7 +72,7 @@ defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
    - Set _Sort By_ to _Kind_
    - Enable _Show Item Info_
 
-## Safari Settings
+### Safari Settings
 
 1. Adjust _Preferences_ (`Terminal > Preferences`):
 
@@ -79,11 +83,15 @@ defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
 
 ## Command Line Setup
 
+### XCode Command Line Tools
+
 Install the XCode Command Line Tools:
 
 ```bash
 xcode-select --install
 ```
+
+### Homebrew Setup
 
 Install [Homebrew](https://brew.sh):
 
@@ -91,16 +99,7 @@ Install [Homebrew](https://brew.sh):
 curl -fsSL "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh" | bash
 ```
 
-Install Applications:
-
-```bash
-brew tap homebrew/cask
-brew install --cask google-chrome
-brew install --cask firefox
-brew install --cask discord
-```
-
-## Fonts
+### Fonts
 
 Install [Fira Code](https://github.com/tonsky/FiraCode):
 
@@ -111,7 +110,7 @@ brew install --cask font-fira-code
 
 Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
 
-## Terminal Shell
+### Terminal Shell
 
 Install [Fish Shell](https://fishshell.com):
 
@@ -150,7 +149,7 @@ Starship needs to be initialised on shell startup:
 echo "starship init fish | source" > ~/.config/fish/config.fish
 ```
 
-## Setup [Node.js](https://nodejs.org)
+### [Node.js](https://nodejs.org) Setup
 
 ```bash
 brew install node@14
@@ -169,7 +168,7 @@ Install [ni](https://github.com/antfu/ni):
 pnpm add -g @antfu/ni
 ```
 
-## Setup [GitHub](https://github.com)
+### [GitHub CLI](https://github.com) Setup
 
 [Log in](https://github.com/login).
 
@@ -185,7 +184,7 @@ Login:
 gh auth login
 ```
 
-## Setup [Vercel](https://vercel.com)
+### [Vercel CLI](https://vercel.com) Setup
 
 [Log in](https://vercel.com/login).
 
@@ -207,23 +206,7 @@ Fetch environmental variables:
 vercel env pull
 ```
 
-## Setup [VS Code](https://code.visualstudio.org)
-
-Install:
-
-```bash
-brew install --cask visual-studio-code
-```
-
-Install global extensions:
-
-- [Nako](https://marketplace.visualstudio.com/items?itemName=kettanaito.nako)
-- [VSCode Icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
-- [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-
-## Setup Workspace
+### Setup Workspace
 
 Create a `projects/` directory:
 
@@ -231,3 +214,39 @@ Create a `projects/` directory:
 mkdir ~/projects
 echo "cd projects" >> ~/.config/fish/config.fish
 ```
+
+## Applications Setup
+
+### Install Applications
+
+```bash
+brew tap homebrew/cask
+brew install --cask raycast
+brew install --cask visual-studio-code
+brew install --cask google-chrome
+brew install --cask firefox
+brew install --cask discord
+```
+
+### [Raycast](https://code.visualstudio.org) Setup
+
+Disable Spotlight hotkey (`System Preferences > Keyboard > Shortcuts > Spotlight`)
+
+<Image
+  src="/images/keyboard-shortcuts-spotlight.png"
+  alt="Spotlight Keyboard Shortcut Settings"
+  width={1560}
+  height={1416}
+/>
+
+Set Raycast shortcut to `cmd + space`.
+
+### [Visual Studio Code](https://code.visualstudio.org) Setup
+
+Install global extensions:
+
+- [Nako Theme](https://marketplace.visualstudio.com/items?itemName=kettanaito.nako)
+- [VSCode Icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
+- [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
