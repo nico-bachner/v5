@@ -37,7 +37,7 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
         </p>
         <div className="flex justify-between md:text-lg lg:text-xl">
           <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text text-transparent">
-            {cta} {'->'}
+            {cta} <span className="font-sans">{'->'}</span>
           </p>
           <p className="text-slate-400">{info}</p>
         </div>

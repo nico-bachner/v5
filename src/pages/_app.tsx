@@ -1,16 +1,16 @@
 import '../styles/globals.css'
 
-import Script from 'next/script'
 import Inspect from 'inspx'
-import { ThemeProvider } from 'next-themes'
+import { ThemeProvider } from 'components/ThemeProvider'
+import { Analytics } from 'components/Analytics'
 import { Nav } from 'components/Nav'
-import { CommandMenu } from 'components/CommandMenu/CommandMenu'
+import { CommandMenu } from 'components/CommandMenu'
 
+import { useEffect } from 'react'
 import { useAtom } from 'jotai'
 import { storedLoaded } from 'store'
 
 import type { AppProps } from 'next/app'
-import { useEffect } from 'react'
 
 const App: React.VFC<AppProps> = ({ Component, pageProps }) => {
   const [loaded, setLoaded] = useAtom(storedLoaded)
@@ -23,11 +23,8 @@ const App: React.VFC<AppProps> = ({ Component, pageProps }) => {
 
   return (
     <Inspect>
-      <ThemeProvider attribute="class">
-        {typeof window != 'undefined' &&
-        window.location.href.includes('https://nicobachner.com') ? (
-          <Script src="/bee.js" data-api="/_hive" strategy="afterInteractive" />
-        ) : null}
+      <ThemeProvider>
+        <Analytics />
         <Nav />
         <Component {...pageProps} />
         <CommandMenu />
