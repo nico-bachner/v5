@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
-      serif: ['"Source Serif Pro"', 'sans-serif'],
+      serif: ['"Fraunces"', 'sans-serif'],
       mono: ['Menlo', 'Monaco', 'monospace'],
     },
     boxShadow: {
