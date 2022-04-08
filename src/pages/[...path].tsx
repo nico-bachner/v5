@@ -138,7 +138,7 @@ const Page: NextPage<PageProps> = ({
           </p>
           <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text text-transparent md:text-lg lg:text-xl">
             <a href={edit_url} target="_blank" rel="noopener noreferrer">
-              Edit on GitHub {'->'}
+              Edit on GitHub <span className="font-sans">{'->'}</span>
             </a>
           </p>
         </div>

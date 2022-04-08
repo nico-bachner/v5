@@ -90,10 +90,10 @@ const Page: NextPage<PageProps> = ({ ideas, content }) => {
                         )
                       }}
                       className={[
-                        'rounded border border-zinc-400 px-3 py-1 hover:border-zinc-500 dark:border-zinc-600 dark:hover:border-zinc-500',
+                        'rounded px-3 py-1',
                         filters.includes(type)
-                          ? 'bg-zinc-200 dark:bg-zinc-600'
-                          : 'bg-transparent',
+                          ? 'bg-zinc-300 dark:bg-zinc-700'
+                          : 'bg-zinc-100 dark:bg-zinc-800',
                       ].join(' ')}
                     >
                       {type}

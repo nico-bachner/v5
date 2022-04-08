@@ -29,20 +29,13 @@ export const Search: React.VFC<SearchProps> = ({ query, onQueryChange }) => {
   return (
     <div
       className={[
-        'flex w-full rounded-lg border',
+        'flex w-full rounded-lg border-2',
         focused
-          ? 'border-zinc-700 dark:border-zinc-300'
-          : 'border-zinc-400 dark:border-zinc-600',
+          ? 'border-zinc-400 dark:border-zinc-500'
+          : 'border-zinc-300 dark:border-zinc-600',
       ].join(' ')}
     >
-      <SearchIcon
-        className={[
-          focused
-            ? 'text-zinc-700 dark:text-zinc-300'
-            : 'text-zinc-500 dark:text-zinc-500',
-          'box-content h-6 w-6 p-3',
-        ].join(' ')}
-      />
+      <SearchIcon className="box-content h-6 w-6 p-3 text-zinc-400 dark:text-zinc-500" />
 
       <input
         type="search"
@@ -59,7 +52,7 @@ export const Search: React.VFC<SearchProps> = ({ query, onQueryChange }) => {
         onBlur={() => {
           setFocused(false)
         }}
-        className="placeholder:text-zinc-5000 w-full rounded-lg bg-transparent pr-2 text-base text-inherit outline-none"
+        className="w-full rounded-lg bg-transparent pr-2 text-base text-inherit outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-500"
       />
     </div>
   )

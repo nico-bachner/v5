@@ -87,7 +87,7 @@ const Page: NextPage<PageProps> = ({ content, projects, ideas }) => {
           }
           animate={{ scale: 1, filter: 'opacity(100%)' }}
           transition={{ duration: 0.5 }}
-          className="flex min-h-screen flex-col justify-center py-24 md:text-center"
+          className="flex min-h-screen flex-col justify-start py-20 md:justify-center md:py-24 md:text-center"
         >
           <h1 className="text-6xl font-black tracking-tighter md:text-7xl lg:text-8xl xl:text-9xl">
             Nico Bachner
