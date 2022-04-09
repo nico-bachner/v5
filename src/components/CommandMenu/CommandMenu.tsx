@@ -5,10 +5,10 @@ import {
   CodeIcon,
   CollectionIcon,
   DesktopComputerIcon,
+  DocumentSearchIcon,
   DocumentTextIcon,
   HomeIcon,
   IdentificationIcon,
-  LightBulbIcon,
   MoonIcon,
   SunIcon,
   TerminalIcon,
@@ -121,13 +121,13 @@ export const CommandMenu: React.VFC = () => {
       },
     },
     {
-      id: 'Ideas',
-      icon: LightBulbIcon,
-      title: 'Ideas',
+      id: 'Pages',
+      icon: DocumentSearchIcon,
+      title: 'Pages',
       group: 'navigation',
       shortcut: 'ctrl+3',
       action: () => {
-        push('/ideas')
+        push('/pages')
       },
     },
     {

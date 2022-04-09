@@ -1,18 +1,14 @@
-type PageData = {
+export type PageData = {
   path: string[]
   title: string
   description: string
+  category: string
   featured: boolean
-  visible: boolean
+  updated: number | null
+  reading_time: [number, number]
 }
 
 export type ProjectData = PageData & {
   from: number
   to: number | null
-}
-
-export type IdeaData = PageData & {
-  type: string
-  published: number
-  reading_time: [number, number]
 }

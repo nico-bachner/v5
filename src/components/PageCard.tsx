@@ -1,8 +1,8 @@
 import { InfoCard } from 'components/InfoCard'
 
-import type { IdeaData } from 'lib/data/types'
+import type { PageData } from 'lib/data/types'
 
-export const IdeaCard: React.VFC<IdeaData> = ({
+export const PageCard: React.VFC<PageData> = ({
   path,
   title,
   description,

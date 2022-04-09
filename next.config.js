@@ -31,13 +31,18 @@ const nextConfig = {
         permanent: true,
       },
       {
-        source: '/articles/css-modules',
-        destination: '/guides/css-modules',
+        source: '/projects/:path*',
+        destination: '/:path*',
         permanent: true,
       },
       {
-        source: '/articles/sveltekit-theme-switch',
-        destination: '/guides/sveltekit-theme-switch',
+        source: '/guides/:path*',
+        destination: '/:path*',
+        permanent: true,
+      },
+      {
+        source: '/articles/:path*',
+        destination: '/:path*',
         permanent: true,
       },
     ]

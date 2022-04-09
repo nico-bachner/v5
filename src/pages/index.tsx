@@ -2,18 +2,18 @@ import Link from 'next/link'
 import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 import { ProjectCard } from 'components/ProjectCard'
-import { IdeaCard } from 'components/IdeaCard'
+import { PageCard } from 'components/PageCard'
 
 import { motion } from 'framer-motion'
 import { fetchFile } from 'lib/fs'
 import { fetchMDXContent } from 'lib/mdx'
 import { fetchProjectsData } from 'lib/data/projects'
-import { fetchIdeasData } from 'lib/data/ideas'
+import { fetchPagesData } from 'lib/data/pages'
 
 import type { NextPage, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
-import type { ProjectData, IdeaData } from 'lib/data/types'
-import { useAtomValue } from 'jotai'
+import type { PageData, ProjectData } from 'lib/data/types'
+import { useAtom } from 'jotai'
 import { storedLoaded } from 'store'
 
 type PageProps = {
@@ -21,58 +21,48 @@ type PageProps = {
     [key: string]: MDXContent
   }
   projects: ProjectData[]
-  ideas: IdeaData[]
+  pages: PageData[]
 }
 
-export const getStaticProps: GetStaticProps<PageProps> = async () => {
-  const content = {
-    about: await fetchMDXContent(
-      await fetchFile({
-        basePath: ['content', 'sections'],
-        path: ['home', 'about'],
-        extension: 'mdx',
-      })
-    ),
-    projects: await fetchMDXContent(
-      await fetchFile({
-        basePath: ['content', 'sections'],
-        path: ['home', 'projects'],
-        extension: 'mdx',
-      })
-    ),
-    ideas: await fetchMDXContent(
-      await fetchFile({
-        basePath: ['content', 'sections'],
-        path: ['home', 'ideas'],
-        extension: 'mdx',
-      })
-    ),
-    contact: await fetchMDXContent(
-      await fetchFile({
-        basePath: ['content', 'sections'],
-        path: ['home', 'contact'],
-        extension: 'mdx',
-      })
-    ),
-  }
-
-  const allProjects = await fetchProjectsData()
-  const projects = allProjects.filter(({ featured }) => featured)
-
-  const allIdeas = await fetchIdeasData()
-  const ideas = allIdeas.filter(({ featured }) => featured)
-
-  return {
-    props: {
-      content,
-      projects,
-      ideas,
+export const getStaticProps: GetStaticProps<PageProps> = async () => ({
+  props: {
+    content: {
+      about: await fetchMDXContent(
+        await fetchFile({
+          basePath: ['content', 'sections'],
+          path: ['home', 'about'],
+          extension: 'mdx',
+        })
+      ),
+      projects: await fetchMDXContent(
+        await fetchFile({
+          basePath: ['content', 'sections'],
+          path: ['home', 'projects'],
+          extension: 'mdx',
+        })
+      ),
+      pages: await fetchMDXContent(
+        await fetchFile({
+          basePath: ['content', 'sections'],
+          path: ['home', 'pages'],
+          extension: 'mdx',
+        })
+      ),
+      contact: await fetchMDXContent(
+        await fetchFile({
+          basePath: ['content', 'sections'],
+          path: ['home', 'contact'],
+          extension: 'mdx',
+        })
+      ),
     },
-  }
-}
+    projects: (await fetchProjectsData()).filter(({ featured }) => featured),
+    pages: (await fetchPagesData()).filter(({ featured }) => featured),
+  },
+})
 
-const Page: NextPage<PageProps> = ({ content, projects, ideas }) => {
-  const loaded = useAtomValue(storedLoaded)
+const Page: NextPage<PageProps> = ({ content, projects, pages }) => {
+  const [loaded] = useAtom(storedLoaded)
 
   return (
     <>
@@ -146,18 +136,18 @@ const Page: NextPage<PageProps> = ({ content, projects, ideas }) => {
 
         <section className="mx-auto flex max-w-2xl flex-col gap-8 py-24">
           <h2 className="text-5xl font-extrabold tracking-tight md:text-6xl">
-            Ideas
+            Pages
           </h2>
 
-          <MDX content={content.ideas} />
+          <MDX content={content.pages} />
 
           <div className="flex flex-col gap-6">
-            {ideas.map((idea) => (
-              <IdeaCard key={idea.path[idea.path.length - 1]} {...idea} />
+            {pages.map((page) => (
+              <PageCard key={page.path[page.path.length - 1]} {...page} />
             ))}
           </div>
 
-          <Link href="/ideas">
+          <Link href="/pages">
             <a>
               <motion.div
                 initial={{ scale: 0.5, opacity: 0, y: 100 }}

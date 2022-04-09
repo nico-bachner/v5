@@ -3,7 +3,7 @@ import { MDX } from 'components/MDX'
 
 import { useEffect, useState } from 'react'
 import { fetchMDXContent, getMDXData } from 'lib/mdx'
-import { fetchFile, fetchRecursivePaths } from 'lib/fs'
+import { fetchFile, fetchPaths } from 'lib/fs'
 import { fetchDateUpdated, getEditUrl } from 'lib/github'
 import { config } from 'config'
 
@@ -25,7 +25,7 @@ const extension = 'mdx'
 
 const getStaticPaths: GetStaticPaths = async () => {
   const paths = (
-    await fetchRecursivePaths({
+    await fetchPaths({
       basePath,
       path: [],
       extension,

@@ -2,7 +2,7 @@ import {
   HomeIcon,
   CollectionIcon,
   AdjustmentsIcon,
-  LightBulbIcon,
+  DocumentSearchIcon,
   TerminalIcon,
 } from '@heroicons/react/outline'
 import { NavItem } from './NavItem'
@@ -35,7 +35,7 @@ export const Nav: React.VFC = () => {
       >
         <AdjustmentsIcon strokeWidth={1.5} className="h-10 w-10" />
       </button>
-      <NavItem title="Ideas" href="/ideas" icon={LightBulbIcon} />
+      <NavItem title="Pages" href="/pages" icon={DocumentSearchIcon} />
       <NavItem title="Uses" href="/uses" icon={TerminalIcon} />
     </motion.nav>
   )
