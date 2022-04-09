@@ -1,6 +1,6 @@
 import { config } from 'config'
 import { fetchFile, fetchPaths } from 'lib/fs'
-import { fetchDateUpdated } from 'lib/github'
+import { fetchDateUpdated, getEditUrl } from 'lib/github'
 import { getMDXData } from 'lib/mdx'
 
 import type { PageData } from './types'
@@ -30,9 +30,13 @@ export const fetchPageData: Fetch<string[], PageData> = async (path) => {
     extension: 'mdx',
   })
 
-  const category = await fetchPageCategory(path)
-
-  const { title, description, featured = false } = getMDXData(file)
+  const {
+    title,
+    description,
+    image = null,
+    published = null,
+    featured = false,
+  } = getMDXData(file)
 
   if (typeof title != 'string') {
     throw new Error(`'title' should be a string (${path})`)
@@ -43,8 +47,14 @@ export const fetchPageData: Fetch<string[], PageData> = async (path) => {
   if (typeof featured != 'boolean') {
     throw new Error(`'featured', if used, should be a boolean (${path})`)
   }
+  if (image && typeof image != 'string') {
+    throw new Error(`'image', if used, should be a string (${path})`)
+  }
+  if (published && !(published instanceof Date)) {
+    throw new Error(`'published', if used, should be a Date (${path})`)
+  }
 
-  const updated = await fetchDateUpdated({
+  const dateUpdated = await fetchDateUpdated({
     ...config.repo,
     basePath: ['content', 'pages'],
     path,
@@ -52,15 +62,26 @@ export const fetchPageData: Fetch<string[], PageData> = async (path) => {
   })
 
   return {
-    path,
+    category: await fetchPageCategory(path),
     title,
     description,
-    category,
+    image,
+    published: (published as Date | null)
+      ? (published as Date).getTime()
+      : null,
     featured,
-    updated: updated?.getTime() ?? null,
+
+    path,
+    updated: dateUpdated ? dateUpdated.getTime() : null,
+    edit_url: getEditUrl({
+      ...config.repo,
+      basePath: ['content', 'pages'],
+      path,
+      extension: 'mdx',
+    }),
     reading_time: [
-      Math.round(file.split(' ').length / 350),
-      Math.round(file.split(' ').length / 200),
+      Math.ceil(file.split(' ').length / 350),
+      Math.ceil(file.split(' ').length / 200),
     ],
   }
 }

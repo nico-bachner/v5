@@ -9,8 +9,18 @@ const extension = 'mdx'
 const fetchProjectData: Fetch<string[], ProjectData> = async (path) => {
   const file = await fetchFile({ basePath, path, extension })
 
-  const { title, description, category, featured, updated, reading_time } =
-    await fetchPageData(path)
+  const {
+    category,
+    title,
+    description,
+    image,
+    published,
+    featured,
+
+    updated,
+    edit_url,
+    reading_time,
+  } = await fetchPageData(path)
 
   const { from, to = null } = getMDXData(file)
 
@@ -22,12 +32,16 @@ const fetchProjectData: Fetch<string[], ProjectData> = async (path) => {
   }
 
   return {
-    path,
+    category,
     title,
     description,
-    category,
+    image,
+    published,
     featured,
+
+    path,
     updated,
+    edit_url,
     reading_time,
     from: from.getTime(),
     to: to ? to.getTime() : null,

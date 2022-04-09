@@ -35,11 +35,11 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
         <p className="prose prose-slate dark:prose-invert md:prose-lg lg:prose-xl">
           {body}
         </p>
-        <div className="flex justify-between md:text-lg lg:text-xl">
-          <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text text-transparent">
+        <div className="flex items-center justify-between md:text-lg lg:text-xl">
+          <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text font-medium text-transparent">
             {cta} <span className="font-sans">{'->'}</span>
           </p>
-          <p className="text-slate-400">{info}</p>
+          <p className="text-zinc-400 dark:text-zinc-500">{info}</p>
         </div>
       </motion.div>
     </a>
