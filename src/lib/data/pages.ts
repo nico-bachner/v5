@@ -14,7 +14,7 @@ export const fetchPageCategory: Fetch<string[], PageData['category']> = async (
     extension: 'mdx',
   })
 
-  const { category } = getMDXData(file)
+  const { category = 'Other' } = getMDXData(file)
 
   if (typeof category != 'string') {
     throw new Error(`'category' should be a string (${path})`)
@@ -44,14 +44,14 @@ export const fetchPageData: Fetch<string[], PageData> = async (path) => {
   if (typeof description != 'string') {
     throw new Error(`'description' should be a string (${path})`)
   }
-  if (typeof featured != 'boolean') {
-    throw new Error(`'featured', if used, should be a boolean (${path})`)
-  }
   if (image && typeof image != 'string') {
     throw new Error(`'image', if used, should be a string (${path})`)
   }
   if (published && !(published instanceof Date)) {
     throw new Error(`'published', if used, should be a Date (${path})`)
+  }
+  if (typeof featured != 'boolean') {
+    throw new Error(`'featured', if used, should be a boolean (${path})`)
   }
 
   const dateUpdated = await fetchDateUpdated({

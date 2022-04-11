@@ -1,0 +1,35 @@
+---
+category: Snippets
+title: Sort Array by Occurrences (JS/TS)
+description: How to sort the items in an array by the number of their occurrences
+---
+
+Ascending (from the **least frequent** to the **most frequent**):
+
+```ts
+const allCategories: Record<string, number> = {}
+pages.forEach(({ category }) => {
+  allCategories[category] = allCategories[category]
+    ? allCategories[category] + 1
+    : 1
+})
+const sortedCategories = Object.fromEntries(
+  Object.entries(allCategories).sort(([, a], [, b]) => a - b)
+)
+const categories = Object.keys(sortedCategories)
+```
+
+Descending (from the **most frequent** to the **least frequent**):
+
+```ts
+const allCategories: Record<string, number> = {}
+pages.forEach(({ category }) => {
+  allCategories[category] = allCategories[category]
+    ? allCategories[category] + 1
+    : 1
+})
+const sortedCategories = Object.fromEntries(
+  Object.entries(allCategories).sort(([, a], [, b]) => b - a)
+)
+const categories = Object.keys(sortedCategories)
+```

@@ -51,10 +51,16 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
           title.toLowerCase().includes(query.toLowerCase())
         )
 
-  const dupPageCategories = pages.map(({ category }) => category)
-  const pageTypes = dupPageCategories.filter(
-    (type, i) => dupPageCategories.indexOf(type) == i
+  const allCategories: Record<string, number> = {}
+  pages.forEach(({ category }) => {
+    allCategories[category] = allCategories[category]
+      ? allCategories[category] + 1
+      : 1
+  })
+  const sortedCategories = Object.fromEntries(
+    Object.entries(allCategories).sort(([, a], [, b]) => b - a)
   )
+  const categories = Object.keys(sortedCategories)
 
   return (
     <>
@@ -83,24 +89,24 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
               <div className="flex items-center gap-4">
                 <p>Filter:</p>
                 <div className="flex flex-wrap gap-2">
-                  {pageTypes.map((type) => (
+                  {categories.map((category) => (
                     <button
-                      key={type}
+                      key={category}
                       onClick={() => {
                         setFilters(
-                          filters.includes(type)
-                            ? filters.filter((filter) => filter != type)
-                            : [...filters, type]
+                          filters.includes(category)
+                            ? filters.filter((filter) => filter != category)
+                            : [...filters, category]
                         )
                       }}
                       className={[
                         'rounded px-3 py-1',
-                        filters.includes(type)
+                        filters.includes(category)
                           ? 'bg-zinc-300 dark:bg-zinc-700'
                           : 'bg-zinc-100 dark:bg-zinc-800',
                       ].join(' ')}
                     >
-                      {type}
+                      {category}
                     </button>
                   ))}
                 </div>
