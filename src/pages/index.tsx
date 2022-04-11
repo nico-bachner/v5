@@ -142,9 +142,11 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => {
           <MDX content={content.pages} />
 
           <div className="flex flex-col gap-6">
-            {pages.map((page) => (
-              <PageCard key={page.path[page.path.length - 1]} {...page} />
-            ))}
+            {pages
+              .filter(({ category }) => category != 'Projects')
+              .map((page) => (
+                <PageCard key={page.path[page.path.length - 1]} {...page} />
+              ))}
           </div>
 
           <Link href="/pages">
