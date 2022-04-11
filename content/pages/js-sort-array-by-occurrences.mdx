@@ -7,29 +7,39 @@ description: How to sort the items in an array by the number of their occurrence
 Ascending (from the **least frequent** to the **most frequent**):
 
 ```ts
-const allCategories: Record<string, number> = {}
-pages.forEach(({ category }) => {
-  allCategories[category] = allCategories[category]
-    ? allCategories[category] + 1
-    : 1
+const items = ['apple', 'pear', 'apple', 'orange', 'apple', 'pear']
+// 3x apple, 2x pear, 1x orange
+
+const allItems: Record<string, number> = {}
+
+items.forEach((item) => {
+  allItems[item] = allItems[item] ? allItems[item] + 1 : 1
 })
-const sortedCategories = Object.fromEntries(
-  Object.entries(allCategories).sort(([, a], [, b]) => a - b)
+
+const sortedItems = Object.keys(
+  Object.fromEntries(Object.entries(allItems).sort(([, a], [, b]) => a - b))
 )
-const categories = Object.keys(sortedCategories)
+
+console.log(sortedItems)
+// ['orange', 'pear', 'apple']
 ```
 
 Descending (from the **most frequent** to the **least frequent**):
 
 ```ts
-const allCategories: Record<string, number> = {}
-pages.forEach(({ category }) => {
-  allCategories[category] = allCategories[category]
-    ? allCategories[category] + 1
-    : 1
+const items = ['apples', 'bananas', 'bananas', 'bananas', 'oranges', 'oranges']
+// 3x apple, 2x pear, 1x orange
+
+const allItems: Record<string, number> = {}
+
+items.forEach((item) => {
+  allItems[item] = allItems[item] ? allItems[item] + 1 : 1
 })
-const sortedCategories = Object.fromEntries(
-  Object.entries(allCategories).sort(([, a], [, b]) => b - a)
+
+const sortedItems = Object.keys(
+  Object.fromEntries(Object.entries(allItems).sort(([, a], [, b]) => b - a))
 )
-const categories = Object.keys(sortedCategories)
+
+console.log(sortedItems)
+// ['apple', 'pear', 'orange']
 ```
