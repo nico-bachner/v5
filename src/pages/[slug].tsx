@@ -98,8 +98,8 @@ const Page: NextPage<PageProps> = ({
       />
 
       <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
-        <article className="mx-auto max-w-2xl">
-          <div className="flex flex-col gap-4">
+        <article>
+          <div className="mx-auto flex max-w-2xl flex-col gap-4 text-center md:max-w-3xl lg:max-w-4xl xl:max-w-5xl">
             <h1 className="text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
               {title}
             </h1>
@@ -108,34 +108,41 @@ const Page: NextPage<PageProps> = ({
             </p>
           </div>
 
-          <div className="my-12 flex items-center justify-between gap-8 text-sm md:text-base lg:text-lg">
-            <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text font-bold text-transparent">
-              <Link href={`/pages/${category.toLowerCase()}`}>
-                <a>
-                  {category} <span className="font-sans">{'->'}</span>
+          <div className="mx-auto mt-16 max-w-2xl">
+            <div className="my-8 flex items-center justify-between gap-8 text-sm md:text-base lg:text-lg">
+              <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text font-bold tracking-tight text-transparent">
+                <Link href={`/pages/${category.toLowerCase()}`}>
+                  <a>
+                    {category} <span className="font-sans">{'->'}</span>
+                  </a>
+                </Link>
+              </p>
+              <p className="text-zinc-400 dark:text-zinc-500">
+                {reading_time[0] == reading_time[1]
+                  ? reading_time[0]
+                  : reading_time.join('-')}{' '}
+                minute read
+              </p>
+            </div>
+
+            <hr className="rounded border border-zinc-300 dark:border-zinc-600" />
+
+            <div className="my-16">
+              <MDX content={content} />
+            </div>
+
+            <hr className="rounded border border-zinc-300 dark:border-zinc-600" />
+
+            <div className="my-8 flex items-center justify-between text-sm md:text-base lg:text-lg">
+              <p className="text-zinc-500">Last Updated: {lastUpdated}</p>
+              <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text font-bold tracking-tight text-transparent">
+                <a href={edit_url} target="_blank" rel="noopener noreferrer">
+                  Edit on GitHub <span className="font-sans">{'->'}</span>
                 </a>
-              </Link>
-            </p>
-            <p className="text-zinc-400 dark:text-zinc-500">{`${
-              reading_time[0] == reading_time[1]
-                ? reading_time[0]
-                : reading_time.join('-')
-            } minute read`}</p>
+              </p>
+            </div>
           </div>
-
-          <MDX content={content} />
         </article>
-
-        <div className="mx-auto mt-24 flex max-w-2xl justify-between">
-          <p className="text-zinc-500 md:text-lg lg:text-xl">
-            Last Updated: {lastUpdated}
-          </p>
-          <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text text-transparent md:text-lg lg:text-xl">
-            <a href={edit_url} target="_blank" rel="noopener noreferrer">
-              Edit on GitHub <span className="font-sans">{'->'}</span>
-            </a>
-          </p>
-        </div>
       </main>
     </>
   )
