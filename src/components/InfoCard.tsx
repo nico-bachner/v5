@@ -21,11 +21,11 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
         <p className="text-2xl md:text-3xl md:tracking-tight lg:text-4xl">
           <strong className="font-extrabold">{header}</strong>
         </p>
-        <p className="prose prose-slate dark:prose-invert md:prose-lg lg:prose-xl">
+        <p className="prose prose-slate dark:prose-invert sm:prose-lg lg:prose-xl">
           {body}
         </p>
-        <div className="flex items-center justify-between md:text-lg lg:text-xl">
-          <p className="bg-gradient-to-r from-blue-400 to-fuchsia-400 bg-clip-text font-medium text-transparent">
+        <div className="flex items-center justify-between sm:text-lg lg:text-xl">
+          <p className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text font-bold tracking-tight text-transparent">
             {cta} <span className="font-sans">{'->'}</span>
           </p>
           <p className="text-zinc-400 dark:text-zinc-500">{info}</p>

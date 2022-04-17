@@ -64,13 +64,13 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
 
     <section className="mx-auto my-16 flex flex-col justify-start gap-8 sm:my-32 sm:max-w-xl md:max-w-3xl md:justify-center lg:my-48 lg:max-w-5xl">
       <p className="flex flex-col text-[13vw] font-extrabold leading-none tracking-tight text-transparent sm:text-7xl md:text-8xl lg:text-9xl">
-        <span className="bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 bg-clip-text text-center">
+        <span className="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-center">
           Student.
         </span>
-        <span className="bg-gradient-to-r from-blue-500 via-sky-500 to-cyan-500 bg-clip-text text-center sm:text-left">
+        <span className="bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-center sm:text-left">
           Developer.
         </span>
-        <span className="bg-gradient-to-r from-purple-500 via-fuchsia-500 to-pink-500 bg-clip-text text-center sm:text-right">
+        <span className="bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-center sm:text-right">
           Entrepreneur.
         </span>
       </p>
