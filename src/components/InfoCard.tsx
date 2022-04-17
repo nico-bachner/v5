@@ -1,7 +1,5 @@
 import Link from 'next/link'
 
-import { motion } from 'framer-motion'
-
 type InfoCardProps = {
   href: string
   header: string
@@ -19,16 +17,7 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
 }) => (
   <Link href={href}>
     <a>
-      <motion.div
-        initial={{ scale: 0.5, opacity: 0, y: 100 }}
-        whileInView={{ scale: 1, opacity: 1, y: 0 }}
-        whileHover={{
-          scale: 2,
-          transition: { type: 'inertia', velocity: 0.05 },
-        }}
-        transition={{ duration: 0.2 }}
-        className="flex flex-col gap-2 rounded-lg bg-white/50 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:shadow-xl dark:bg-zinc-700/50 md:gap-4 md:p-10 lg:gap-6 lg:p-12"
-      >
+      <div className="flex flex-col gap-2 rounded-lg bg-white/50 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:shadow-xl dark:bg-zinc-700/50 md:gap-4 md:p-10 lg:gap-6 lg:p-12">
         <p className="text-2xl md:text-3xl md:tracking-tight lg:text-4xl">
           <strong className="font-extrabold">{header}</strong>
         </p>
@@ -41,7 +30,7 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
           </p>
           <p className="text-zinc-400 dark:text-zinc-500">{info}</p>
         </div>
-      </motion.div>
+      </div>
     </a>
   </Link>
 )
