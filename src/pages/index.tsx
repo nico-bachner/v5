@@ -81,7 +81,26 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
         About
       </h2>
 
-      <MDX content={content.about} />
+      <MDX
+        content={content.about}
+        components={{
+          Student: () => (
+            <strong className="bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-center text-transparent">
+              Student
+            </strong>
+          ),
+          Developer: () => (
+            <strong className="bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-center text-transparent">
+              Developer
+            </strong>
+          ),
+          Entrepreneur: () => (
+            <strong className="bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-center text-transparent">
+              Entrepreneur
+            </strong>
+          ),
+        }}
+      />
     </section>
 
     <section className="mx-auto my-24 flex max-w-2xl flex-col gap-8 sm:my-40 lg:my-56">
