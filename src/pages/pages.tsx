@@ -78,7 +78,7 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
 
           <MDX content={content} />
 
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4">
             <Search
               query={query}
               onQueryChange={(query) => {
@@ -86,7 +86,7 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
               }}
             />
 
-            <div className="mx-4 flex flex-col flex-wrap items-start justify-between gap-6 md:flex-row md:items-center">
+            <div className="mx-2 flex flex-col flex-wrap items-start justify-between gap-4 sm:mx-4 md:flex-row md:items-center">
               <div className="flex items-center gap-4">
                 <p>Filter:</p>
                 <div className="flex flex-wrap gap-2">

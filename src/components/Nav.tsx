@@ -1,11 +1,4 @@
-import {
-  HomeIcon,
-  CollectionIcon,
-  AdjustmentsIcon,
-  DocumentSearchIcon,
-  TerminalIcon,
-} from '@heroicons/react/outline'
-import { NavItem } from './NavItem'
+import { AdjustmentsIcon } from '@heroicons/react/outline'
 
 import { motion } from 'framer-motion'
 import { useAtom } from 'jotai'
@@ -16,25 +9,21 @@ export const Nav: React.VFC = () => {
 
   return (
     <motion.nav
-      initial={{ y: 200, filter: 'opacity(0%)' }}
-      animate={{ y: 0, filter: 'opacity(100%)' }}
-      transition={{ delay: 1 }}
-      className="fixed bottom-4 left-0 right-0 z-20 mx-auto flex w-fit items-center gap-2 rounded-xl bg-white/80 px-3 py-1 shadow-xl backdrop-blur dark:bg-zinc-900/80 md:bottom-8"
+      initial={{ y: 200, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ delay: 1.5 }}
+      className="fixed bottom-0 left-0 right-0 z-20 flex justify-center p-4 sm:p-6 md:justify-end lg:p-8"
     >
-      <NavItem title="Home" href="/" icon={HomeIcon} />
-      <NavItem title="Projects" href="/projects" icon={CollectionIcon} />
       <button
         title="Command Menu"
         onClick={() => {
           setOpen(!open)
         }}
-        className="transform cursor-pointer rounded-full bg-white/80 p-3 shadow-lg backdrop-blur transition hover:scale-105 dark:bg-zinc-800/80"
+        className="transform cursor-pointer rounded-full bg-white/80 p-3 shadow-xl backdrop-blur transition hover:scale-110 dark:bg-zinc-800/80"
         data-splitbee-event="Open Command Menu"
       >
-        <AdjustmentsIcon strokeWidth={1.5} className="h-10 w-10" />
+        <AdjustmentsIcon strokeWidth={1.8} className="h-10 w-10" />
       </button>
-      <NavItem title="Pages" href="/pages" icon={DocumentSearchIcon} />
-      <NavItem title="Uses" href="/uses" icon={TerminalIcon} />
     </motion.nav>
   )
 }

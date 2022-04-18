@@ -11,7 +11,6 @@ import {
   IdentificationIcon,
   MoonIcon,
   SunIcon,
-  TerminalIcon,
 } from '@heroicons/react/outline'
 import { Dialog } from 'components/Dialog'
 import { Search } from './Search'
@@ -131,16 +130,6 @@ export const CommandMenu: React.VFC = () => {
       },
     },
     {
-      id: 'Uses',
-      icon: TerminalIcon,
-      title: 'Uses',
-      group: 'navigation',
-      shortcut: 'ctrl+4',
-      action: () => {
-        push('/uses')
-      },
-    },
-    {
       id: 'CV',
       icon: IdentificationIcon,
       title: 'Curriculum Vitae',
@@ -152,8 +141,9 @@ export const CommandMenu: React.VFC = () => {
     {
       id: 'Email',
       icon: AtSymbolIcon,
-      title: 'Send me an email',
+      title: 'Send Me an Email',
       group: 'links',
+      shortcut: 'ctrl+m',
       action: () => {
         window.open('mailto:mail@nbac.me')
       },
@@ -163,6 +153,7 @@ export const CommandMenu: React.VFC = () => {
       icon: CodeIcon,
       title: 'View Source Code',
       group: 'links',
+      shortcut: 'ctrl+u',
       action: () => {
         window.open('https://github.com/nico-bachner/v5')
       },
