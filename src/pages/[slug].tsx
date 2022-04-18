@@ -1,15 +1,17 @@
+import Link from 'next/link'
 import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 
 import { useEffect, useState } from 'react'
-import { fetchMDXContent } from 'lib/mdx'
+import { useAtom } from 'jotai'
+import { storedPagesFilters } from 'store'
 import { fetchFile, fetchPaths } from 'lib/fs'
+import { fetchMDXContent } from 'lib/mdx'
+import { fetchPageData } from 'lib/data/pages'
 
 import type { NextPage, GetStaticPaths, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
-import { PageData } from 'lib/data/types'
-import { fetchPageData } from 'lib/data/pages'
-import Link from 'next/link'
+import type { PageData } from 'lib/data/types'
 
 type PageProps = PageData & {
   content: MDXContent
@@ -82,6 +84,7 @@ const Page: NextPage<PageProps> = ({
   reading_time,
 }) => {
   const [lastUpdated, setLastUpdated] = useState<string | undefined>(undefined)
+  const [filters, setFilters] = useAtom(storedPagesFilters)
 
   useEffect(() => {
     setLastUpdated(updated ? new Date(updated).toLocaleDateString() : 'N/A')
@@ -97,9 +100,9 @@ const Page: NextPage<PageProps> = ({
         updated={updated ?? undefined}
       />
 
-      <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
+      <main className="px-6 pb-40">
         <article>
-          <div className="mx-auto flex max-w-2xl flex-col gap-4 text-center sm:max-w-3xl lg:max-w-4xl">
+          <div className="mx-auto my-16 flex max-w-2xl flex-col gap-4 text-center sm:my-20 sm:max-w-3xl lg:my-24 lg:max-w-4xl">
             <h1 className="text-5xl font-black tracking-tight sm:text-6xl lg:text-7xl">
               {title}
             </h1>
@@ -108,11 +111,15 @@ const Page: NextPage<PageProps> = ({
             </p>
           </div>
 
-          <div className="mx-auto mt-16 flex max-w-2xl flex-col gap-12">
-            <div className="flex items-center justify-between gap-4 text-sm md:text-base lg:text-lg">
+          <div className="mx-auto flex max-w-2xl flex-col gap-8 sm:gap-10 lg:gap-12">
+            <div className="flex items-center justify-between gap-4 text-sm sm:text-base lg:text-lg">
               <p className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text font-bold tracking-tight text-transparent">
-                <Link href={`/pages/${category.toLowerCase()}`}>
-                  <a>
+                <Link href="/pages">
+                  <a
+                    onClick={() => {
+                      setFilters([category])
+                    }}
+                  >
                     {category} <span className="font-sans">{'->'}</span>
                   </a>
                 </Link>
@@ -131,7 +138,7 @@ const Page: NextPage<PageProps> = ({
 
             <hr className="rounded border border-zinc-300 dark:border-zinc-600" />
 
-            <div className="flex items-center justify-between gap-4 text-sm md:text-base lg:text-lg">
+            <div className="flex items-center justify-between gap-4 text-sm sm:text-base lg:text-lg">
               <p className="text-zinc-400 dark:text-zinc-500">
                 Last Updated: {lastUpdated}
               </p>

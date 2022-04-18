@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  @apply bg-black text-white dark:bg-white dark:text-black;
+}
+
 body {
   @apply bg-white dark:bg-black;
 }

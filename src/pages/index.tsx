@@ -1,8 +1,8 @@
-import Link from 'next/link'
 import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 import { ProjectCard } from 'components/ProjectCard'
 import { PageCard } from 'components/PageCard'
+import { ViewMore } from 'components/ViewMore'
 
 import { fetchFile } from 'lib/fs'
 import { fetchMDXContent } from 'lib/mdx'
@@ -119,15 +119,7 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
         ))}
       </div>
 
-      <div className="flex flex-col items-center">
-        <Link href="/projects">
-          <a>
-            <button className="mx-auto max-w-max self-center rounded-lg bg-blue-500/10 py-3 px-5 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/20 md:text-base lg:text-lg">
-              View More
-            </button>
-          </a>
-        </Link>
-      </div>
+      <ViewMore href="/projects" />
     </section>
 
     <section className="mx-auto my-24 flex max-w-2xl flex-col gap-8 sm:my-40 lg:my-56">
@@ -145,15 +137,7 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
           ))}
       </div>
 
-      <div className="flex flex-col items-center">
-        <Link href="/pages">
-          <a>
-            <button className="mx-auto max-w-max self-center rounded-lg bg-blue-500/10 py-3 px-5 text-sm text-blue-500 transition duration-200 hover:bg-blue-500/20 md:text-base lg:text-lg">
-              View More
-            </button>
-          </a>
-        </Link>
-      </div>
+      <ViewMore href="/pages" />
     </section>
 
     <section className="mx-auto my-24 flex max-w-2xl flex-col gap-8 sm:my-40 lg:my-56">

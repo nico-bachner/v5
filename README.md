@@ -5,7 +5,7 @@ The fifth iteration of my personal website.
 ## Features
 
 - Light & Dark mode (based on system preferences by default)
-- Internationalisation (i18n)
+- Command Palette (⌘K)
 - [Markdown](https://daringfireball.net/projects/markdown/) content
 
 ## Tech Stack

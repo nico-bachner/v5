@@ -3,7 +3,8 @@ import { MDX } from 'components/MDX'
 import { Search } from 'components/Search'
 import { PageCard } from 'components/PageCard'
 
-import { useState } from 'react'
+import { useAtom } from 'jotai'
+import { storedPagesFilters, storedPagesQuery } from 'store'
 import { fetchFile } from 'lib/fs'
 import { fetchMDXContent } from 'lib/mdx'
 import { fetchPagesData } from 'lib/data/pages'
@@ -37,8 +38,8 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
 }
 
 const Page: NextPage<PageProps> = ({ pages, content }) => {
-  const [query, setQuery] = useState('')
-  const [filters, setFilters] = useState<string[]>([])
+  const [filters, setFilters] = useAtom(storedPagesFilters)
+  const [query, setQuery] = useAtom(storedPagesQuery)
 
   const filteredPages =
     filters.length > 0
