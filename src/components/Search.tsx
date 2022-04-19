@@ -1,4 +1,4 @@
-import { SearchIcon } from '@heroicons/react/outline'
+import { SearchIcon } from 'icons'
 
 import { useEffect, useRef, useState } from 'react'
 
