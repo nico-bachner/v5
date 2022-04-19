@@ -1,19 +1,21 @@
 import { Combobox } from '@headlessui/react'
-import {
-  AtSymbolIcon,
-  ClipboardCopyIcon,
-  CodeIcon,
-  CollectionIcon,
-  DesktopComputerIcon,
-  DocumentSearchIcon,
-  DocumentTextIcon,
-  HomeIcon,
-  IdentificationIcon,
-  MoonIcon,
-  SunIcon,
-} from '@heroicons/react/outline'
 import { Dialog } from 'components/Dialog'
 import { Search } from './Search'
+import {
+  ClipboardCopyIcon,
+  CodeIcon,
+  ContactIcon,
+  FileSearchIcon,
+  GitHubIcon,
+  HomeIcon,
+  LayoutGridIcon,
+  MailIcon,
+  MonitorIcon,
+  MoonIcon,
+  SunIcon,
+  TwitterIcon,
+  TypeIcon,
+} from 'icons'
 
 import { useRouter } from 'next/router'
 import { useAtom } from 'jotai'
@@ -41,17 +43,48 @@ export const CommandMenu: React.VFC = () => {
 
   const options: Option[] = [
     {
+      id: 'Home',
+      icon: HomeIcon,
+      title: 'Go Home',
+      group: 'navigation',
+      shortcut: 'ctrl+1',
+      action: () => {
+        push('/')
+      },
+    },
+    {
+      id: 'Projects',
+      icon: LayoutGridIcon,
+      title: 'View Projects',
+      group: 'navigation',
+      shortcut: 'ctrl+2',
+      action: () => {
+        push('/projects')
+      },
+    },
+    {
+      id: 'Pages',
+      icon: FileSearchIcon,
+      title: 'Search Pages',
+      group: 'navigation',
+      shortcut: 'ctrl+3',
+      action: () => {
+        push('/pages')
+      },
+    },
+    {
       id: 'Copy URL',
       icon: ClipboardCopyIcon,
       title: 'Copy Current URL',
       group: 'general',
+      shortcut: 'ctrl+c',
       action: () => {
         navigator.clipboard.writeText(window.location.href)
       },
     },
     {
       id: 'Theme',
-      icon: DesktopComputerIcon,
+      icon: MonitorIcon,
       title: 'Change Theme...',
       group: 'general',
       shortcut: 'ctrl+t',
@@ -80,7 +113,7 @@ export const CommandMenu: React.VFC = () => {
         },
         {
           id: 'System Theme',
-          icon: DesktopComputerIcon,
+          icon: MonitorIcon,
           title: 'Change Theme to System',
           group: 'general',
           action: () => {
@@ -91,7 +124,7 @@ export const CommandMenu: React.VFC = () => {
     },
     {
       id: 'Reader Mode',
-      icon: DocumentTextIcon,
+      icon: TypeIcon,
       title: 'Toggle Reader Mode',
       group: 'general',
       shortcut: 'ctrl+r',
@@ -100,50 +133,37 @@ export const CommandMenu: React.VFC = () => {
       },
     },
     {
-      id: 'Home',
-      icon: HomeIcon,
-      title: 'Home',
-      group: 'navigation',
-      shortcut: 'ctrl+1',
+      id: 'GitHub',
+      icon: GitHubIcon,
+      title: 'Follow Me on GitHub',
+      group: 'social',
       action: () => {
-        push('/')
+        window.open('https://github.com/nico-bachner')
       },
     },
     {
-      id: 'Projects',
-      icon: CollectionIcon,
-      title: 'Projects',
-      group: 'navigation',
-      shortcut: 'ctrl+2',
+      id: 'Twitter',
+      icon: TwitterIcon,
+      title: 'Follow Me on Twitter',
+      group: 'social',
       action: () => {
-        push('/projects')
-      },
-    },
-    {
-      id: 'Pages',
-      icon: DocumentSearchIcon,
-      title: 'Pages',
-      group: 'navigation',
-      shortcut: 'ctrl+3',
-      action: () => {
-        push('/pages')
+        window.open('https://twitter.com/nico_bachner')
       },
     },
     {
       id: 'CV',
-      icon: IdentificationIcon,
+      icon: ContactIcon,
       title: 'Curriculum Vitae',
-      group: 'links',
+      group: 'miscellaneous',
       action: () => {
         window.open('https://read.cv/nico_bachner')
       },
     },
     {
       id: 'Email',
-      icon: AtSymbolIcon,
+      icon: MailIcon,
       title: 'Send Me an Email',
-      group: 'links',
-      shortcut: 'ctrl+m',
+      group: 'miscellaneous',
       action: () => {
         window.open('mailto:mail@nbac.me')
       },
@@ -152,8 +172,7 @@ export const CommandMenu: React.VFC = () => {
       id: 'Source',
       icon: CodeIcon,
       title: 'View Source Code',
-      group: 'links',
-      shortcut: 'ctrl+u',
+      group: 'miscellaneous',
       action: () => {
         window.open('https://github.com/nico-bachner/v5')
       },
@@ -237,11 +256,11 @@ export const CommandMenu: React.VFC = () => {
                         {group}
                       </p>
                       {filteredTypeOptions.map((option) => {
-                        const { icon: Icon, title, shortcut } = option
+                        const { id, icon: Icon, title, shortcut } = option
 
                         return (
                           <Combobox.Option
-                            key={title}
+                            key={id}
                             value={option}
                             className="focus:outline-none"
                           >
@@ -253,6 +272,7 @@ export const CommandMenu: React.VFC = () => {
                                     ? 'bg-black/5 text-black dark:bg-white/10 dark:text-white'
                                     : 'text-zinc-600 dark:text-zinc-400',
                                 ].join(' ')}
+                                data-splitbee-event={`Select Command Menu Option: ${id}`}
                               >
                                 <Icon
                                   strokeWidth={1.5}

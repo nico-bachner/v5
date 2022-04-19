@@ -1,4 +1,4 @@
-import { AdjustmentsIcon } from '@heroicons/react/outline'
+import { CommandIcon } from 'icons'
 
 import { motion } from 'framer-motion'
 import { useAtom } from 'jotai'
@@ -19,10 +19,10 @@ export const Nav: React.VFC = () => {
         onClick={() => {
           setOpen(!open)
         }}
-        className="transform cursor-pointer rounded-full bg-white/80 p-3 shadow-xl backdrop-blur transition hover:scale-110 dark:bg-zinc-800/80"
+        className="transform cursor-pointer rounded-full bg-white/80 p-4 shadow-xl backdrop-blur transition hover:scale-110 dark:bg-zinc-800/80"
         data-splitbee-event="Open Command Menu"
       >
-        <AdjustmentsIcon strokeWidth={1.8} className="h-10 w-10" />
+        <CommandIcon strokeWidth={1.8} className="h-8 w-8" />
       </button>
     </motion.nav>
   )

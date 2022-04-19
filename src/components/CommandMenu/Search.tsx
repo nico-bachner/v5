@@ -1,5 +1,5 @@
 import { Combobox } from '@headlessui/react'
-import { SearchIcon } from '@heroicons/react/outline'
+import { SearchIcon } from 'icons'
 
 import { useState } from 'react'
 import { useAtom } from 'jotai'
