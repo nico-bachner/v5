@@ -1,0 +1,27 @@
+---
+category: Snippets
+title: Fetch GitHub Commit Date (JS/TS)
+description: How to fetch the date of a commit from the GitHub API
+---
+
+For an entire repository:
+
+```ts
+const response = await fetch(
+  'https://api.github.com/repos/[user]/[repo]/commits'
+)
+const commits = await response.json()
+const latestCommit = commits[0]
+const latestCommitDate = latestCommit.commit.author.date
+```
+
+For a specific file within a repository:
+
+```ts
+const response = await fetch(
+  'https://api.github.com/repos/[user]/[repo]/commits?path=[pathToFile]'
+)
+const commits = await response.json()
+const latestCommit = commits[0]
+const latestCommitDate = latestCommit.commit.author.date
+```
