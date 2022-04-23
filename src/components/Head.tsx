@@ -22,10 +22,7 @@ export const Head: React.FC<HeadProps> = ({
   return (
     <NextSeo
       title={title ? [title, 'Nico Bachner'].join(' – ') : 'Nico Bachner'}
-      description={
-        description ??
-        'A University Student, self-taught Web Developer, and Aspiring Open Sourcerer'
-      }
+      description={description ?? 'Student. Developer. Entrepreneur.'}
       canonical="https://nicobachner.com"
       openGraph={{
         url: 'https://nicobachner.com' + asPath,
@@ -35,7 +32,7 @@ export const Head: React.FC<HeadProps> = ({
               ? image.startsWith('/')
                 ? 'https://nicobachner.com' + image
                 : image
-              : 'https://nicobachner.com/images/icon.png',
+              : 'https://nicobachner.com/images/og-image.png',
           },
         ],
         type: published && updated ? 'article' : 'website',

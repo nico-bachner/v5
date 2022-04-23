@@ -17,7 +17,7 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
 }) => (
   <Link href={href}>
     <a>
-      <div className="flex flex-col gap-2 rounded-lg bg-white/50 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:shadow-xl dark:bg-zinc-700/50 sm:gap-4 sm:p-10 lg:gap-6 lg:p-12">
+      <div className="flex flex-col gap-2 rounded-lg bg-white/50 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:shadow-xl dark:bg-zinc-800/50 sm:gap-4 sm:p-10 lg:gap-6 lg:p-12">
         <p className="text-2xl sm:text-3xl md:tracking-tight lg:text-4xl">
           <strong className="font-extrabold">{header}</strong>
         </p>
