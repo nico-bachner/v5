@@ -80,8 +80,8 @@ export const fetchPageData: Fetch<string[], PageData> = async (path) => {
       extension: 'mdx',
     }),
     reading_time: [
-      Math.ceil(file.split(' ').length / 350),
-      Math.ceil(file.split(' ').length / 200),
+      Math.ceil(file.split(' ').length / 230),
+      Math.ceil(file.split(' ').length / 180),
     ],
   }
 }

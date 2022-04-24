@@ -1,0 +1,79 @@
+---
+category: Guides
+title: Next.js + Splitbee
+description: A concise way of integrating Splitbee Analytics in Next.js
+---
+
+This guide is an extension and update of the [Splitbee Next.js Proxy Documentation](https://splitbee.io/docs/nextjs-proxy). I have added the [Next.js Script Component](https://nextjs.org/docs/basic-features/script) to the guide, along with a few more quality-of-life improvements.
+
+## Table of Contents
+
+## Next.js Config Setup
+
+First, we need to make use of [Next.js Rewrites](https://nextjs.org/docs/api-reference/next.config.js/rewrites) to point the local payload url to the Splitbee server.
+
+```js
+// next.config.js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/bee.js',
+        destination: 'https://cdn.splitbee.io/sb.js',
+      },
+      {
+        source: '/_hive/:slug',
+        destination: 'https://hive.splitbee.io/:slug',
+      },
+    ]
+  },
+}
+
+module.exports = nextConfig
+```
+
+## Creating the Analytics Component
+
+Next, we add a script tag that imports the Splitbee code. As per the [original documentation](https://splitbee.io/docs/nextjs-proxy#2-adapt-the-splitbee-script-tag):
+
+> `data-api` sets the endpoint for all tracking calls. We are using `/_hive` in this example.
+>
+> `src` needs to point to the Splitbee JS file that is proxied through your servers. We are using `/bee.js` in this example. Feel free to adapt those paths & filenames.
+
+We can abstract the logic into an Analytics component.
+
+```tsx
+// components/Analytics.tsx
+import Script from 'next/script'
+
+export const Analytics: React.VFC = () =>
+  typeof window != 'undefined' &&
+  window.location.href.includes('[site_url]') ? (
+    <Script src="/bee.js" data-api="/_hive" strategy="afterInteractive" />
+  ) : null
+```
+
+Replace `[site_url]` in `window.location.href.includes('[site_url]')` with the name of your production deployment domain. This will prevent errors from popping up in the console during development.
+
+You can also adjust the strategy attribute according to your needs (view the [documentation](https://nextjs.org/docs/api-reference/next/script#strategy) for the available options). However, in most cases, you should stick to `"afterInteractive"`.
+
+## Using the Analytics Component
+
+Now all that remains is to import the Analytics component into the application – ideally in `_app.tsx` to avoid duplication.
+
+```tsx
+// pages/_app.tsx
+import { Analytics } from 'components/Analytics'
+
+import type { AppProps } from 'next/app'
+
+const App: React.VFC<AppProps> = ({ Component, pageProps }) => (
+  <>
+    <Analytics />
+    <Component {...pageProps} />
+  </>
+)
+
+export default App
+```
