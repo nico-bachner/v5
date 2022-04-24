@@ -7,13 +7,15 @@ published: 2021-05-19
 featured: true
 ---
 
-When adding **Dark Mode** to my new [SvelteKit](https://kit.svelte.dev) project, there were a few issues I ran into when creating the **theme switch**, but I came up with a solution that I'd like to share.
+When adding **dark mode** to my new [SvelteKit](https://kit.svelte.dev) project, I ran into a few issues when creating the **theme switch**. In this guide, I would like to share the solution I came up with.
 
-Before we begin, I'd like to note that this guide uses [TypeScript](https://www.typescriptlang.org) for any scripting done in the examples. TypeScript is essentially **JavaScript with _types_**[^1], so if you are using regular JavaScript, you can simply **skip the type definitions**.
+Before we begin, I'd like to note that this guide uses [TypeScript](https://www.typescriptlang.org). TypeScript (TS) is **JavaScript with _types_**[^1], so if you are using regular JavaScript (JS), you can **skip the type definitions**.
 
 ## Table of Contents
 
 ## Types
+
+**Note:** this step is not necessary for those using JS instead of TS, and is also optional (but recommended) for those using TS
 
 The first thing we'll do is to define our **themes**. We can do this in the global type definitions (`src/global.d.ts`). That way, we'll have access to the types throughout our project.
 
@@ -22,11 +24,11 @@ The first thing we'll do is to define our **themes**. We can do this in the glob
 type Theme = 'system' | 'light' | 'dark'
 ```
 
-What we're doing here is declaring a _global type_ called `Theme` which we can access from anywhere in our project. This means that if we declare a variables type to be `Theme`, then we can only assign the values `'system'`, `'light'`, or `'dark'` to it.
+What we're doing here is declaring a _global type_ called `Theme`, which we can access from anywhere in our project. This means that if we declare a variables type to be `Theme`, then we can only assign the values `'system'`, `'light'`, or `'dark'` to it.
 
-Apart from `'system'`, you can **choose your theme values freely**. You're also **not limited to just two**, so experiment away!
+Apart from `'system'`, you can **choose your theme values freely**. You're also **not limited to only two**, so experiment away!
 
-The `'system'` value here is important. We want the user to be greeted with their preferred theme, so we want the default theme to correspond to their operating systems color scheme.
+The `'system'` value here is important. We want to greet the user with their preferred theme when they first visit the site. Therefore, we want the theme to [correspond to their operating system's color scheme](#theme-styles) by default.
 
 ## Svelte Store
 
@@ -43,7 +45,7 @@ const theme = writable('system')
 export { theme }
 ```
 
-Here, we're creating a Svelte Store called `theme` and assigning it the default value of `'system'`. Again, it is important that `'system'` is the default so that the user's preferences are respected.
+Here, we're creating a Svelte Store called `theme` and assigning it the default value of `'system'`. Again, it is important that `'system'` is the default so that we respect the user's preferences.
 
 ## Theme Switch Component
 
@@ -62,19 +64,19 @@ We can now use the Svelte Store we created in our theme switch component.
 </select>
 ```
 
-There's a lot going on here, so I think a quick walkthrough is in order.
+There's a lot going on here, so a quick walkthrough is in order.
 
 We first import `theme` from `'$lib/stores'`. `$lib/stores` is a path alias for `src/lib/stores.svelte`, the file in which we created our theme Svelte Store.
 
-We now want to modify the value of `theme`. We could do this by calling `theme.set()` (more info in the [writable stores documentation](https://svelte.dev/tutorial/writable-stores)), but there is **an easier way**: using [auto-subscriptions](https://svelte.dev/tutorial/auto-subscriptions).
+We now want to modify the value of `theme`. We could do this by calling `theme.set()` (more info in the [writable stores documentation](https://svelte.dev/tutorial/writable-stores)). However, there is **an easier way**: using [auto-subscriptions](https://svelte.dev/tutorial/auto-subscriptions).
 
 Since `$theme` is **_mutable_**[^2], we use the Svelte binding `bind:value` to get `theme` to track the changes to the value of the selected option. The browser does most of the heavy lifting in this case, since all we need to do is read the `value` attribute.
 
 ## Style Switcher
 
-We now have a Svelte Store that stores the theme value, as well as a theme switch component that updates the theme value, so all that remains is the functionality for changing the theme based on the theme value.
+We now have a Svelte Store that stores the theme value, and a theme switch component that updates the theme value. All that remains is the functionality for changing the theme based on the theme value.
 
-The way I went about this is swapping stylesheets in the `<head>` of the generated document.
+The way I went about this is swapping stylesheets in the head of the generated document.
 
 ```html
 <!-- src/routes/__layout.svelte -->
@@ -83,14 +85,14 @@ The way I went about this is swapping stylesheets in the `<head>` of the generat
 </script>
 
 <svelte:head>
-  <meta name="color-scheme" content={$theme == 'system' ? 'light dark' : $theme}
-  /> <link rel="stylesheet" href={`/theme/${$theme}.css`} />
+  <meta name="color-scheme" content={$theme == 'system' ? 'light dark' :
+  $theme}/> <link rel="stylesheet" href={`/theme/${$theme}.css`} />
 </svelte:head>
 
 <slot />
 ```
 
-What's happening here is that we are loading a CSS stylesheet dynamically based on the current theme value. For example, on page load, the previous code will generate the following:
+Here, we are dynamically loading a CSS stylesheet based on the current theme value. For example, on page load, the previous code will generate the following:
 
 ```html
 <head>
@@ -110,7 +112,9 @@ And if the user then changes the theme to `'light'`, the head changes accordingl
 
 ## Theme Styles
 
-The only thing that remains now is to define the styles of our project. We can do this anywhere in the `static/` directory, as long as we **remember to adjust the path in the stylesheet link accordingly**.
+The only thing that remains is to define the styles of our project. We can do this anywhere in the `static/` directory, as long as we **remember to adjust the path in the stylesheet link accordingly**.
+
+### Structure
 
 If we follow the path convention I set up, we get the following structure:
 
@@ -121,6 +125,8 @@ static
     ├── light.css
     └── dark.css
 ```
+
+### Example
 
 In `light.css` and `dark.css` (or whatever you choose to call you themes), we style our project accordingly. An example[^3]:
 
@@ -136,7 +142,9 @@ In `light.css` and `dark.css` (or whatever you choose to call you themes), we st
 }
 ```
 
-While these are straightforward, the file `system.css` requires more attention, because we need to think about the user's system preferences. While the `prefers-color-scheme` media query makes accessing the user's preference a straightforward process, we need to keep in mind that there are only two predefined choices, `light` and `dark`. Hence we need to style accordingly:
+### System Preferences
+
+While `light.css` and `dark.css` are straightforward, the file `system.css` requires more attention. This is because we need to think about the user's system preferences. While the `prefers-color-scheme` media query makes accessing the user's preference a straightforward process, we need to keep in mind that the browser provides only two predefined choices, `light` and `dark`. Hence we need to style accordingly:
 
 ```css
 /* system.css */
@@ -163,12 +171,12 @@ While these are straightforward, the file `system.css` requires more attention, 
 }
 ```
 
+## Conclusion
+
 That's it! You now have a working theme switch.
 
-If you want to make your theme switch even cooler, you can store the selected value in `localStorage`. Then, when the user selects a particular theme, the same theme will also be loaded the next time they visit the page.
+If you want to further improve your theme switch, you could store the selected value in `localStorage`. Then, when the user selects a particular theme, the same theme will also be loaded the next time they visit the page.
 
-The source code of the project I was building the theme switch for is available on GitHub: [nico-bachner/v4](https://github.com/nico-bachner/v4)
-
-[^1]: Types in TypeScript are used to explicitly declare the type of a variable. TypeScript also supports the definition of [custom types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases), called _type aliases_, which can be manipulated similarly to JavaScript variables and imported from external files.
+[^1]: Types in TypeScript explicitly declare the type of a variable. TypeScript also supports the definition of [custom types](https://www.typescriptlang.org/docs/handbook/2/everyday-types.html#type-aliases), called _type aliases_. These can be manipulated similarly to JavaScript variables and imported from external files.
 [^2]: If a value is mutable, that means it can be changed by assigning a new value to it. In JavaScript, for example, `let` and `var` create mutable variables, whereas `const` creates immutable ones.
-[^3]: This tutorial uses CSS Custom Properties (a.k.a. CSS Variables) for theming, but the solution works with any theming method, as long as the styles are defined inside the files we are working with.
+[^3]: This guide uses CSS Custom Properties (a.k.a. CSS Variables) for theming, but the solution works with any theming method, as long as the styles are defined inside the files we are working with.
