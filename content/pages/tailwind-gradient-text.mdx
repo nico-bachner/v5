@@ -1,0 +1,21 @@
+---
+category: Snippets
+title: Tailwind CSS Gradient Text
+description: How to make gradient text using Tailwind CSS
+---
+
+5 properties are required:
+
+- Background Gradient Definition (e.g.: `bg-gradient-to-r`)
+- Starting Color (e.g.: `from-purple-50`)
+- Ending Color (e.g.: `to-pink-500`)
+- Clip Text to Background (`bg-clip-text`)
+- Set Text to Transparent (`text-transparent`)
+
+```html
+<div
+  class="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent"
+>
+  Gradient Text
+</div>
+```
