@@ -34,7 +34,12 @@ export const fetchDateUpdated: Fetch<GitHubProps, Date | undefined> = async ({
       user,
       repo,
       `commits?path=${fullFilePath}`,
-    ].join('/')
+    ].join('/'),
+    {
+      headers: {
+        Authorization: ['token', process.env.GITHUB_TOKEN].join(' '),
+      },
+    }
   )
   const history: GitHubHistory[] = await res.json()
   const latest: GitHubHistory | undefined = history[0]
