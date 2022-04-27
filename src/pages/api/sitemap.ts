@@ -5,7 +5,7 @@ import type { NextApiHandler } from 'next'
 export const apiHandler: NextApiHandler = async (req, res) => {
   const pages = await fetchPagesData()
 
-  res.statusCode = 200
+  res.status(200)
   res.setHeader('Content-Type', 'text/xml')
   res.end(`<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -41,7 +41,8 @@ export const apiHandler: NextApiHandler = async (req, res) => {
           `
         )
         .join('')}
-    </urlset>`)
+    </urlset>
+  `)
 }
 
 export default apiHandler
