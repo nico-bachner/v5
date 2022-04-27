@@ -12,7 +12,7 @@ export const Nav: React.VFC = () => {
       initial={{ y: 200, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ delay: 1.5 }}
-      className="fixed bottom-0 left-0 right-0 z-20 flex justify-center p-4 sm:p-6 md:justify-end lg:p-8"
+      className="fixed bottom-4 right-4 z-20 flex sm:bottom-6 sm:right-6 lg:bottom-8 lg:right-8"
     >
       <button
         title="Command Menu"
