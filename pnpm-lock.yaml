@@ -4,6 +4,7 @@ specifiers:
   '@headlessui/react': ^1.5.0
   '@react-three/drei': ^8.20.2
   '@react-three/fiber': ^7.0.27
+  '@tailwindcss/line-clamp': ^0.3.1
   '@tailwindcss/typography': ^0.5.2
   '@types/node': ^14.18.14
   '@types/react': ^17.0.44
@@ -37,6 +38,7 @@ dependencies:
   '@headlessui/react': 1.5.0_react-dom@17.0.2+react@17.0.2
   '@react-three/drei': 8.20.2_f8acf7a203a18765273ae4e34526ee89
   '@react-three/fiber': 7.0.27_6a2478a5b9a0dfe3cc9e1f0de361d624
+  '@tailwindcss/line-clamp': 0.3.1_tailwindcss@3.0.24
   framer-motion: 6.3.1_react-dom@17.0.2+react@17.0.2
   gray-matter: 4.0.3
   inspx: 0.0.1-alpha.6_react@17.0.2
@@ -462,6 +464,14 @@ packages:
   /@rushstack/eslint-patch/1.0.8:
     resolution: {integrity: sha512-ZK5v4bJwgXldAUA8r3q9YKfCwOqoHTK/ZqRjSeRXQrBXWouoPnS4MQtgC4AXGiiBuUu5wxrRgTlv0ktmM4P1Aw==}
     dev: true
+
+  /@tailwindcss/line-clamp/0.3.1_tailwindcss@3.0.24:
+    resolution: {integrity: sha512-pNr0T8LAc3TUx/gxCfQZRe9NB2dPEo/cedPHzUGIPxqDMhgjwNm6jYxww4W5l0zAsAddxr+XfZcqttGiFDgrGg==}
+    peerDependencies:
+      tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
+    dependencies:
+      tailwindcss: 3.0.24
+    dev: false
 
   /@tailwindcss/typography/0.5.2_tailwindcss@3.0.24:
     resolution: {integrity: sha512-coq8DBABRPFcVhVIk6IbKyyHUt7YTEC/C992tatFB+yEx5WGBQrCgsSFjxHUr8AWXphWckadVJbominEduYBqw==}

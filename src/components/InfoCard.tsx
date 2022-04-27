@@ -17,11 +17,11 @@ export const InfoCard: React.VFC<InfoCardProps> = ({
 }) => (
   <Link href={href}>
     <a>
-      <div className="flex flex-col gap-2 rounded-lg bg-white/50 p-6 shadow-lg backdrop-blur-sm transition duration-300 hover:scale-105 hover:shadow-xl dark:bg-zinc-800/50 sm:gap-4 sm:p-10 lg:gap-6 lg:p-12">
-        <p className="text-2xl sm:text-3xl md:tracking-tight lg:text-4xl">
+      <div className="flex h-full flex-col justify-between gap-2 rounded-xl border border-zinc-200 bg-white/50 p-6 backdrop-blur-sm transition duration-300 hover:border-white hover:shadow-lg dark:border-zinc-700 dark:bg-black dark:hover:bg-zinc-800/50 sm:gap-3 sm:p-10 lg:gap-4 lg:p-12">
+        <p className="text-xl sm:text-2xl md:tracking-tight lg:text-3xl">
           <strong className="font-extrabold">{header}</strong>
         </p>
-        <p className="prose prose-slate dark:prose-invert sm:prose-lg lg:prose-xl">
+        <p className="prose prose-slate line-clamp-2 dark:prose-invert sm:prose-lg lg:prose-xl">
           {body}
         </p>
         <div className="flex items-center justify-between sm:text-lg lg:text-xl">

@@ -103,14 +103,14 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
       />
     </section>
 
-    <section className="mx-auto my-24 flex max-w-2xl flex-col gap-8 sm:my-40 lg:my-56">
+    <section className="mx-auto my-24 flex max-w-2xl flex-col gap-6 sm:my-40 sm:gap-8 lg:my-56">
       <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
         Projects
       </h2>
 
       <MDX content={content.projects} />
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4 sm:gap-6">
         {projects.map((project) => (
           <ProjectCard
             key={project.path[project.path.length - 1]}
@@ -122,14 +122,14 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
       <ViewMore href="/projects" />
     </section>
 
-    <section className="mx-auto my-24 flex max-w-2xl flex-col gap-8 sm:my-40 lg:my-56">
+    <section className="mx-auto my-24 flex max-w-2xl flex-col gap-6 sm:my-40 sm:gap-8 lg:my-56">
       <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
         Pages
       </h2>
 
       <MDX content={content.pages} />
 
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4 sm:gap-6">
         {pages
           .filter(({ category }) => category != 'Projects')
           .map((page) => (
