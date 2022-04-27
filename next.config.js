@@ -4,6 +4,10 @@ const nextConfig = {
   async rewrites() {
     return [
       {
+        source: '/sitemap.xml',
+        destination: '/api/sitemap',
+      },
+      {
         source: '/bee.js',
         destination: 'https://cdn.splitbee.io/sb.js',
       },

@@ -1,8 +1,8 @@
 import { fetchPagesData } from 'lib/data/pages'
 
-import type { GetServerSideProps, NextPage } from 'next'
+import type { NextApiHandler } from 'next'
 
-export const getServerSideProps: GetServerSideProps = async ({ res }) => {
+export const apiHandler: NextApiHandler = async (req, res) => {
   const pages = await fetchPagesData()
 
   res.setHeader('Content-Type', 'text/xml')
@@ -43,12 +43,6 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     </urlset>
   `)
   res.end()
-
-  return {
-    props: {},
-  }
 }
 
-const Page: NextPage = () => <></>
-
-export default Page
+export default apiHandler
