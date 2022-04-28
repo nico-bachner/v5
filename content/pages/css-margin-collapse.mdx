@@ -1,0 +1,36 @@
+---
+category: Notes
+title: CSS Margin Collapse
+description: When Margins in CSS Collapse, and When They Don't
+---
+
+## TLDR
+
+- **Do** collapse:
+  1. **Vertical** stacking
+  2. **Flow** layout
+  3. Elements adjacent in the DOM
+  4. Nested elements
+  5. Positive values **or** negative values
+- **Don't** collapse:
+  1. **Horizontal** stacking
+  2. **Flex**, **Grid**, and **Positioned** layout
+  3. Elements **not** adjacent in the DOM
+  4. Nested elements **inside a parent with padding or border**
+  5. Positive values **and** negative values
+
+## General Rule
+
+Margins in CSS overlap when placed next to each other. For example, a 12px margin next to a 12px margin will add up to 12px of space (12px + 12px = 12px), while a 12px margin and a 6px margin will add up to 12px as well (12px + 6px = 12px). This is because the largest margin is used.
+
+## Exceptions
+
+There are notable exceptions to the rule, where margins don't collapse, but rather add up (instead of 12px + 12px = 12px, we get 12px + 12px = 24px)
+
+1. Vertical margins collapse, Horizontal margins don’t.
+2. Margins **only collapse in _flow layout[^1]_**. This means they do not collapse in flex or grid layouts.
+3. Margins **only collapse if the elements are next to each other**. Elements such as a line break (`<br>`) will cause the margins to be counted separately.
+4. Nested elements **will** collapse by default, but don't when the containing element has padding, a border, or an explicit height larger than its contents.
+5. Positive values collapse, negative values collapse, but positive and negative values together do not collapse – they are added together.
+
+[^1]: **Flow Layout**: when `display` is either `inline`, `block`, or `inline-block`.
