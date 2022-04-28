@@ -3,7 +3,7 @@ import { SearchIcon } from 'icons'
 import { useEffect, useRef, useState } from 'react'
 
 type SearchProps = {
-  query: string
+  query: string | undefined
   onQueryChange: (query: string) => void
 }
 

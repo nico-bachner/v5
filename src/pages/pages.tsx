@@ -3,8 +3,9 @@ import { MDX } from 'components/MDX'
 import { Search } from 'components/Search'
 import { PageCard } from 'components/PageCard'
 
-import { useAtom } from 'jotai'
-import { storedPagesFilters, storedPagesQuery } from 'store'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { sortByOccurrences } from 'lib/sortByOccurrences'
 import { fetchFile } from 'lib/fs'
 import { fetchMDXContent } from 'lib/mdx'
 import { fetchPagesData } from 'lib/data/pages'
@@ -38,30 +39,30 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
 }
 
 const Page: NextPage<PageProps> = ({ pages, content }) => {
-  const [filters, setFilters] = useAtom(storedPagesFilters)
-  const [query, setQuery] = useAtom(storedPagesQuery)
+  const [filter, setFilter] = useState<string | undefined>(undefined)
+  const [query, setQuery] = useState<string | undefined>(undefined)
 
-  const filteredPages =
-    filters.length > 0
-      ? pages
-          .filter(({ title }) =>
-            title.toLowerCase().includes(query.toLowerCase())
-          )
-          .filter(({ category }) => filters.includes(category))
-      : pages.filter(({ title }) =>
-          title.toLowerCase().includes(query.toLowerCase())
-        )
+  const router = useRouter()
 
-  const allCategories: Record<string, number> = {}
-  pages.forEach(({ category }) => {
-    allCategories[category] = allCategories[category]
-      ? allCategories[category] + 1
-      : 1
-  })
-  const sortedCategories = Object.fromEntries(
-    Object.entries(allCategories).sort(([, a], [, b]) => b - a)
-  )
-  const categories = Object.keys(sortedCategories)
+  useEffect(() => {
+    const filter = router.query.filter
+
+    if (filter) {
+      setFilter(Array.isArray(filter) ? filter[0] : filter)
+    }
+  }, [router.query])
+
+  const queriedPages = query
+    ? pages.filter(({ title }) =>
+        title.toLowerCase().includes(query.toLowerCase())
+      )
+    : pages
+  const filteredPages = filter
+    ? queriedPages.filter(
+        ({ category }) => category.toLowerCase() == filter.toLowerCase()
+      )
+    : queriedPages
+  const categories = sortByOccurrences(pages.map(({ category }) => category))
 
   return (
     <>
@@ -71,7 +72,7 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
       />
 
       <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
-        <div className="mx-auto mb-12 flex max-w-2xl flex-col gap-8">
+        <div className="mx-auto flex max-w-2xl flex-col gap-8">
           <h1 className="text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
             Pages
           </h1>
@@ -94,15 +95,11 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
                     <button
                       key={category}
                       onClick={() => {
-                        setFilters(
-                          filters.includes(category)
-                            ? filters.filter((filter) => filter != category)
-                            : [...filters, category]
-                        )
+                        setFilter(category == filter ? undefined : category)
                       }}
                       className={[
                         'rounded px-3 py-1',
-                        filters.includes(category)
+                        category == filter
                           ? 'bg-zinc-300 dark:bg-zinc-700'
                           : 'bg-zinc-100 dark:bg-zinc-800',
                       ].join(' ')}
@@ -112,20 +109,20 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
                   ))}
                 </div>
               </div>
-              {query.length > 0 ? (
-                <p className="self-center text-zinc-600 dark:text-zinc-400">
+              {query ? (
+                <p className="self-center py-1 text-zinc-600 dark:text-zinc-400">
                   {filteredPages.length}{' '}
                   {filteredPages.length == 1 ? 'result' : 'results'} found
                 </p>
               ) : null}
             </div>
           </div>
-        </div>
 
-        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-6 lg:gap-x-40">
-          {filteredPages.map((page) => (
-            <PageCard key={page.path[page.path.length - 1]} {...page} />
-          ))}
+          <div className="flex flex-col gap-6">
+            {filteredPages.map((page) => (
+              <PageCard key={page.path[page.path.length - 1]} {...page} />
+            ))}
+          </div>
         </div>
       </main>
     </>

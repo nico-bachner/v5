@@ -7,39 +7,47 @@ description: How to sort the items in an array by the number of their occurrence
 Ascending (from the **least frequent** to the **most frequent**):
 
 ```ts
+const sortByOccurrences = (items: string[]) => {
+  const all: Record<string, number> = {}
+
+  items.forEach((item) => {
+    all[item] = all[item] ? all[item] + 1 : 1
+  })
+
+  const sorted = Object.fromEntries(
+    Object.entries(all).sort(([, a], [, b]) => a - b)
+  )
+
+  return Object.keys(sorted)
+}
+
 const items = ['apple', 'pear', 'apple', 'orange', 'apple', 'pear']
 // 3x apple, 2x pear, 1x orange
 
-const allItems: Record<string, number> = {}
-
-items.forEach((item) => {
-  allItems[item] = allItems[item] ? allItems[item] + 1 : 1
-})
-
-const sortedItems = Object.keys(
-  Object.fromEntries(Object.entries(allItems).sort(([, a], [, b]) => a - b))
-)
-
-console.log(sortedItems)
+console.log(sortByOccurrences(items))
 // ['orange', 'pear', 'apple']
 ```
 
 Descending (from the **most frequent** to the **least frequent**):
 
 ```ts
+const sortByOccurrences = (items: string[]) => {
+  const all: Record<string, number> = {}
+
+  items.forEach((item) => {
+    all[item] = all[item] ? all[item] + 1 : 1
+  })
+
+  const sorted = Object.fromEntries(
+    Object.entries(all).sort(([, a], [, b]) => a - b)
+  )
+
+  return Object.keys(sorted)
+}
+
 const items = ['apples', 'bananas', 'bananas', 'bananas', 'oranges', 'oranges']
 // 3x apple, 2x pear, 1x orange
 
-const allItems: Record<string, number> = {}
-
-items.forEach((item) => {
-  allItems[item] = allItems[item] ? allItems[item] + 1 : 1
-})
-
-const sortedItems = Object.keys(
-  Object.fromEntries(Object.entries(allItems).sort(([, a], [, b]) => b - a))
-)
-
-console.log(sortedItems)
+console.log(sortByOccurrences(items))
 // ['apple', 'pear', 'orange']
 ```
