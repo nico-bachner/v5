@@ -58,9 +58,7 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
       )
     : pages
   const filteredPages = filter
-    ? queriedPages.filter(
-        ({ category }) => category.toLowerCase() == filter.toLowerCase()
-      )
+    ? queriedPages.filter(({ category }) => category.toLowerCase() == filter)
     : queriedPages
   const categories = sortByOccurrences(pages.map(({ category }) => category))
 
@@ -95,11 +93,15 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
                     <button
                       key={category}
                       onClick={() => {
-                        setFilter(category == filter ? undefined : category)
+                        setFilter(
+                          category.toLowerCase() == filter
+                            ? undefined
+                            : category.toLowerCase()
+                        )
                       }}
                       className={[
                         'rounded px-3 py-1',
-                        category == filter
+                        category.toLowerCase() == filter
                           ? 'bg-zinc-300 dark:bg-zinc-700'
                           : 'bg-zinc-100 dark:bg-zinc-800',
                       ].join(' ')}

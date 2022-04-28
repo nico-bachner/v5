@@ -3,8 +3,6 @@ import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 
 import { useEffect, useState } from 'react'
-import { useAtom } from 'jotai'
-import { storedPagesFilters } from 'store'
 import { fetchFile, fetchPaths } from 'lib/fs'
 import { fetchMDXContent } from 'lib/mdx'
 import { fetchPageData } from 'lib/data/pages'
@@ -84,7 +82,6 @@ const Page: NextPage<PageProps> = ({
   reading_time,
 }) => {
   const [lastUpdated, setLastUpdated] = useState<string | undefined>(undefined)
-  const [filters, setFilters] = useAtom(storedPagesFilters)
 
   useEffect(() => {
     setLastUpdated(updated ? new Date(updated).toLocaleDateString() : 'N/A')
@@ -114,12 +111,8 @@ const Page: NextPage<PageProps> = ({
           <div className="mx-auto flex max-w-2xl flex-col gap-8 sm:gap-10 lg:gap-12">
             <div className="flex items-center justify-between gap-4 text-sm sm:text-base lg:text-lg">
               <p className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text font-bold tracking-tight text-transparent">
-                <Link href="/pages">
-                  <a
-                    onClick={() => {
-                      setFilters([category])
-                    }}
-                  >
+                <Link href={`/pages?filter=${category.toLowerCase()}`}>
+                  <a>
                     {category} <span className="font-sans">{'->'}</span>
                   </a>
                 </Link>
