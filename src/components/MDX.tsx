@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote'
 
 import type { MDXContent } from 'lib/mdx'
+import { FullWidth } from './FullWidth'
 
 export type MDXProps = {
   content: MDXContent
@@ -18,7 +19,16 @@ export const MDX: React.VFC<MDXProps> = ({ content, components }) => (
           {children}
         </div>
       ),
-      Image,
+      Image: ({ alt, ...props }) => (
+        <FullWidth>
+          <Image alt={alt} {...props} />
+        </FullWidth>
+      ),
+      pre: ({ children }) => (
+        <FullWidth>
+          <pre className="rounded-none sm:rounded-lg">{children}</pre>
+        </FullWidth>
+      ),
       a: ({ children, href }) =>
         href?.startsWith('/') ? (
           <Link href={href}>
