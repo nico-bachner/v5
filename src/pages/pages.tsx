@@ -2,12 +2,12 @@ import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 import { Search } from 'components/Search'
 import { PageCard } from 'components/PageCard'
+import { Filter } from 'components/Filter'
 
-import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import { sortByOccurrences } from 'lib/sortByOccurrences'
+import { useState } from 'react'
 import { fetchFile } from 'lib/fs'
 import { fetchMDXContent } from 'lib/mdx'
+import { getFilteredPages, getQueriedPages } from 'lib/pages'
 import { fetchPagesData } from 'lib/data/pages'
 
 import type { NextPage, GetStaticProps } from 'next'
@@ -39,28 +39,11 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
 }
 
 const Page: NextPage<PageProps> = ({ pages, content }) => {
-  const [filter, setFilter] = useState<string | undefined>(undefined)
   const [query, setQuery] = useState<string | undefined>(undefined)
+  const [filter, setFilter] = useState<string | undefined>(undefined)
 
-  const router = useRouter()
-
-  useEffect(() => {
-    const filter = router.query.filter
-
-    if (filter) {
-      setFilter(Array.isArray(filter) ? filter[0] : filter)
-    }
-  }, [router.query])
-
-  const queriedPages = query
-    ? pages.filter(({ title }) =>
-        title.toLowerCase().includes(query.toLowerCase())
-      )
-    : pages
-  const filteredPages = filter
-    ? queriedPages.filter(({ category }) => category.toLowerCase() == filter)
-    : queriedPages
-  const categories = sortByOccurrences(pages.map(({ category }) => category))
+  const queriedPages = getQueriedPages(pages, query)
+  const filteredPages = getFilteredPages(queriedPages, filter)
 
   return (
     <>
@@ -86,31 +69,10 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
             />
 
             <div className="mx-2 flex flex-col flex-wrap items-start justify-between gap-4 sm:mx-4 md:flex-row md:items-center">
-              <div className="flex items-center gap-4">
-                <p>Filter:</p>
-                <div className="flex flex-wrap gap-2">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      onClick={() => {
-                        setFilter(
-                          category.toLowerCase() == filter
-                            ? undefined
-                            : category.toLowerCase()
-                        )
-                      }}
-                      className={[
-                        'rounded px-3 py-1',
-                        category.toLowerCase() == filter
-                          ? 'bg-zinc-300 dark:bg-zinc-700'
-                          : 'bg-zinc-100 dark:bg-zinc-800',
-                      ].join(' ')}
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <Filter
+                pages={pages}
+                onFilterChange={(filter) => setFilter(filter)}
+              />
               {query ? (
                 <p className="self-center py-1 text-zinc-600 dark:text-zinc-400">
                   {filteredPages.length}{' '}
