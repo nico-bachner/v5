@@ -11,16 +11,18 @@ type FilterProps = {
 
 export const Filter: React.VFC<FilterProps> = ({ pages, onFilterChange }) => {
   const [filter, setFilter] = useState('')
+  const [loaded, setLoaded] = useState(false)
 
-  const { query } = useRouter()
+  const router = useRouter()
+  const { query } = router
 
   useEffect(() => {
-    const filter = query.filter
+    if (!loaded && query.filter) {
+      setFilter(Array.isArray(query.filter) ? query.filter[0] : query.filter)
 
-    if (filter) {
-      setFilter(Array.isArray(filter) ? filter[0] : filter)
+      setLoaded(true)
     }
-  }, [query])
+  }, [query, loaded])
 
   const categories = sortByOccurrences(pages.map(({ category }) => category))
 
@@ -41,6 +43,11 @@ export const Filter: React.VFC<FilterProps> = ({ pages, onFilterChange }) => {
 
               setFilter(newFilter)
               onFilterChange(newFilter)
+              router.push(
+                { query: newFilter == '' ? {} : { filter: newFilter } },
+                { query: newFilter == '' ? {} : { filter: newFilter } },
+                { shallow: true }
+              )
             }}
             className={[
               'rounded px-2 py-1 text-sm font-medium sm:px-3 sm:py-1.5 sm:text-base',
