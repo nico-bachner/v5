@@ -35,8 +35,8 @@ export type Option = {
 }
 
 export const CommandMenu: React.VFC = () => {
-  const [readerMode, setReaderMode] = useAtom(storedReaderMode)
   const [open, setOpen] = useAtom(storedCommandMenuOpen)
+  const [readerMode, setReaderMode] = useAtom(storedReaderMode)
 
   const [events, setEvents] = useState<(() => void)[]>([])
   const [query, setQuery] = useState('')
@@ -48,36 +48,6 @@ export const CommandMenu: React.VFC = () => {
   const { push } = useRouter()
 
   const options: Option[] = [
-    {
-      id: 'Home',
-      icon: HomeIcon,
-      title: 'Go Home',
-      group: 'navigation',
-      shortcut: 'ctrl+1',
-      action: () => {
-        push('/')
-      },
-    },
-    {
-      id: 'Projects',
-      icon: LayoutGridIcon,
-      title: 'View Projects',
-      group: 'navigation',
-      shortcut: 'ctrl+2',
-      action: () => {
-        push('/projects')
-      },
-    },
-    {
-      id: 'Pages',
-      icon: FileSearchIcon,
-      title: 'Search Pages',
-      group: 'navigation',
-      shortcut: 'ctrl+3',
-      action: () => {
-        push('/pages')
-      },
-    },
     {
       id: 'Copy URL',
       icon: ClipboardCopyIcon,
@@ -136,6 +106,36 @@ export const CommandMenu: React.VFC = () => {
       shortcut: 'ctrl+r',
       action: () => {
         setReaderMode(readerMode == 'sans' ? 'serif' : 'sans')
+      },
+    },
+    {
+      id: 'Home',
+      icon: HomeIcon,
+      title: 'Go Home',
+      group: 'navigation',
+      shortcut: 'ctrl+1',
+      action: () => {
+        push('/')
+      },
+    },
+    {
+      id: 'Projects',
+      icon: LayoutGridIcon,
+      title: 'View Projects',
+      group: 'navigation',
+      shortcut: 'ctrl+2',
+      action: () => {
+        push('/projects')
+      },
+    },
+    {
+      id: 'Pages',
+      icon: FileSearchIcon,
+      title: 'Search Pages',
+      group: 'navigation',
+      shortcut: 'ctrl+3',
+      action: () => {
+        push('/pages')
       },
     },
     {

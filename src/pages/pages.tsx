@@ -39,8 +39,8 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
 }
 
 const Page: NextPage<PageProps> = ({ pages, content }) => {
-  const [query, setQuery] = useState<string | undefined>(undefined)
-  const [filter, setFilter] = useState<string | undefined>(undefined)
+  const [query, setQuery] = useState('')
+  const [filter, setFilter] = useState('')
 
   const queriedPages = getQueriedPages(pages, query)
   const filteredPages = getFilteredPages(queriedPages, filter)
@@ -68,18 +68,18 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
               }}
             />
 
-            <div className="mx-2 flex flex-col flex-wrap items-start justify-between gap-4 sm:mx-4 md:flex-row md:items-center">
+            <div className="mx-2 sm:mx-4">
               <Filter
                 pages={pages}
                 onFilterChange={(filter) => setFilter(filter)}
               />
-              {query ? (
-                <p className="self-center py-1 text-zinc-600 dark:text-zinc-400">
-                  {filteredPages.length}{' '}
-                  {filteredPages.length == 1 ? 'result' : 'results'} found
-                </p>
-              ) : null}
             </div>
+
+            {query || filter ? (
+              <p className="self-center py-1 text-zinc-600 dark:text-zinc-400">
+                Matches: {filteredPages.length}
+              </p>
+            ) : null}
           </div>
 
           <div className="flex flex-col gap-6">
