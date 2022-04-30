@@ -17,7 +17,6 @@ import rehypeSlug from 'rehype-slug'
 
 export type MDXContent = {
   compiledSource: string
-  frontmatter?: Record<string, string>
 }
 
 export const fetchMDXContent: Fetch<string, MDXContent> = async (file) =>
