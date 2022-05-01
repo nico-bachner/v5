@@ -54,7 +54,7 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
 
       <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
         <div className="mx-auto flex max-w-2xl flex-col gap-8">
-          <h1 className="text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
+          <h1 className="text-4xl font-black tracking-tight md:text-5xl lg:text-6xl">
             Pages
           </h1>
 
@@ -82,7 +82,7 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
             ) : null}
           </div>
 
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4">
             {filteredPages.map((page) => (
               <PageCard key={page.path[page.path.length - 1]} {...page} />
             ))}

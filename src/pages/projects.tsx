@@ -40,7 +40,7 @@ const Page: NextPage<PageProps> = ({ projects, content }) => (
 
     <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
       <div className="mx-auto mb-20 flex max-w-2xl flex-col gap-8">
-        <h1 className="text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
+        <h1 className="text-4xl font-black tracking-tight md:text-5xl lg:text-6xl">
           Projects
         </h1>
 

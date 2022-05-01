@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote'
+import { FullWidth } from './FullWidth'
 
 import type { MDXContent } from 'lib/mdx'
-import { FullWidth } from './FullWidth'
 
 export type MDXProps = {
   content: MDXContent

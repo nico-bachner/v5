@@ -97,27 +97,27 @@ const Page: NextPage<PageProps> = ({
         updated={updated ?? undefined}
       />
 
-      <main className="px-6 pb-40">
+      <main className="px-6 pt-16 pb-40 sm:pt-20 lg:pt-24">
         <article>
-          <div className="mx-auto my-16 flex max-w-2xl flex-col gap-4 text-center sm:my-20 sm:max-w-3xl lg:my-24 lg:max-w-4xl">
-            <h1 className="text-5xl font-black tracking-tight sm:text-6xl lg:text-7xl">
+          <div className="mx-auto flex max-w-2xl flex-col gap-4 py-4 text-center">
+            <h1 className="text-4xl font-black tracking-tight sm:text-5xl lg:text-5xl">
               {title}
             </h1>
-            <p className="bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl lg:text-5xl">
+            <p className="text-lg text-zinc-500 sm:text-xl lg:text-2xl">
               {description}
             </p>
           </div>
 
-          <div className="mx-auto flex max-w-2xl flex-col gap-8 sm:gap-10 lg:gap-12">
-            <div className="flex items-center justify-between gap-4 text-sm sm:text-base lg:text-lg">
-              <p className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text font-bold tracking-tight text-transparent">
+          <div className="mx-auto flex max-w-2xl flex-col divide-y divide-zinc-200 dark:divide-zinc-800">
+            <div className="flex items-center justify-between gap-4 py-8 text-sm sm:text-base lg:text-lg">
+              <p className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text font-bold text-transparent">
                 <Link href={`/pages?filter=${category.toLowerCase()}`}>
                   <a>
                     {category} <span className="font-sans">{'->'}</span>
                   </a>
                 </Link>
               </p>
-              <p className="text-zinc-400 dark:text-zinc-500">
+              <p className="text-zinc-500">
                 {reading_time[0] == reading_time[1]
                   ? reading_time[0]
                   : reading_time.join('-')}{' '}
@@ -125,16 +125,12 @@ const Page: NextPage<PageProps> = ({
               </p>
             </div>
 
-            <hr className="rounded border border-zinc-300 dark:border-zinc-600" />
+            <div className="py-8">
+              <MDX content={content} />
+            </div>
 
-            <MDX content={content} />
-
-            <hr className="rounded border border-zinc-300 dark:border-zinc-600" />
-
-            <div className="flex items-center justify-between gap-4 text-sm sm:text-base lg:text-lg">
-              <p className="text-zinc-400 dark:text-zinc-500">
-                Last Updated: {lastUpdated}
-              </p>
+            <div className="flex items-center justify-between gap-4 py-8 text-sm sm:text-base lg:text-lg">
+              <p className="text-zinc-500">Last Updated: {lastUpdated}</p>
               <p className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text font-bold tracking-tight text-transparent">
                 <a href={edit_url} target="_blank" rel="noopener noreferrer">
                   Edit on GitHub <span className="font-sans">{'->'}</span>

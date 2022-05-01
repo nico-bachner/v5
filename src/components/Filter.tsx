@@ -24,6 +24,17 @@ export const Filter: React.VFC<FilterProps> = ({ pages, onFilterChange }) => {
     }
   }, [query, loaded])
 
+  useEffect(() => {
+    onFilterChange(filter)
+
+    router.push(
+      { query: filter == '' ? {} : { filter } },
+      { query: filter == '' ? {} : { filter } },
+      { shallow: true }
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filter])
+
   const categories = sortByOccurrences(pages.map(({ category }) => category))
 
   return (
@@ -38,15 +49,8 @@ export const Filter: React.VFC<FilterProps> = ({ pages, onFilterChange }) => {
           <button
             key={category}
             onClick={() => {
-              const newFilter =
+              setFilter(
                 category.toLowerCase() == filter ? '' : category.toLowerCase()
-
-              setFilter(newFilter)
-              onFilterChange(newFilter)
-              router.push(
-                { query: newFilter == '' ? {} : { filter: newFilter } },
-                { query: newFilter == '' ? {} : { filter: newFilter } },
-                { shallow: true }
               )
             }}
             className={[

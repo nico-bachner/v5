@@ -77,7 +77,7 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
     </section>
 
     <section className="mx-auto my-24 flex max-w-2xl flex-col gap-8 sm:my-40 lg:my-56">
-      <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+      <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
         About
       </h2>
 
@@ -103,14 +103,14 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
       />
     </section>
 
-    <section className="mx-auto my-24 flex max-w-2xl flex-col gap-6 sm:my-40 sm:gap-8 lg:my-56">
-      <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+    <section className="mx-auto my-24 flex max-w-2xl flex-col gap-4 sm:my-40 sm:gap-6 lg:my-56 lg:gap-8">
+      <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
         Projects
       </h2>
 
       <MDX content={content.projects} />
 
-      <div className="flex flex-col gap-4 sm:gap-6">
+      <div className="flex flex-col gap-4 py-4">
         {projects.map((project) => (
           <ProjectCard
             key={project.path[project.path.length - 1]}
@@ -122,14 +122,14 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
       <ViewMore href="/projects" />
     </section>
 
-    <section className="mx-auto my-24 flex max-w-2xl flex-col gap-6 sm:my-40 sm:gap-8 lg:my-56">
-      <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+    <section className="mx-auto my-24 flex max-w-2xl flex-col gap-4 sm:my-40 sm:gap-6 lg:my-56 lg:gap-8">
+      <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
         Pages
       </h2>
 
       <MDX content={content.pages} />
 
-      <div className="flex flex-col gap-4 sm:gap-6">
+      <div className="flex flex-col gap-4">
         {pages
           .filter(({ category }) => category != 'Projects')
           .map((page) => (
@@ -141,7 +141,7 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
     </section>
 
     <section className="mx-auto my-24 flex max-w-2xl flex-col gap-8 sm:my-40 lg:my-56">
-      <h2 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+      <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
         Contact
       </h2>
 
