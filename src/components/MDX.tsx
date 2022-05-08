@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote'
 import { FullWidth } from './FullWidth'
+import { Embed } from './Embed'
 
 import type { MDXContent } from 'lib/mdx'
 
@@ -18,11 +19,6 @@ export const MDX: React.VFC<MDXProps> = ({ content, components }) => (
         <div className="prose prose-zinc prose-headings:scroll-mt-6 prose-a:text-blue-500 dark:prose-invert sm:prose-lg lg:prose-xl">
           {children}
         </div>
-      ),
-      Image: ({ alt, ...props }) => (
-        <FullWidth>
-          <Image alt={alt} {...props} />
-        </FullWidth>
       ),
       pre: ({ children }) => (
         <FullWidth>
@@ -41,6 +37,12 @@ export const MDX: React.VFC<MDXProps> = ({ content, components }) => (
             {children}
           </a>
         ),
+      Image: ({ alt, ...props }) => (
+        <FullWidth>
+          <Image alt={alt} {...props} />
+        </FullWidth>
+      ),
+      Embed: ({ src, height }) => <Embed src={src} height={height} />,
 
       ...components,
     }}

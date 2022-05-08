@@ -100,7 +100,7 @@ const Page: NextPage<PageProps> = ({
       <main className="px-6 pt-16 pb-40 sm:pt-20 lg:pt-24">
         <article>
           <div className="mx-auto flex max-w-2xl flex-col gap-4 py-4 text-center">
-            <h1 className="text-4xl font-black tracking-tight sm:text-5xl lg:text-5xl">
+            <h1 className="text-4xl font-black tracking-tight sm:text-5xl lg:text-6xl">
               {title}
             </h1>
             <p className="text-lg text-zinc-500 sm:text-xl lg:text-2xl">
