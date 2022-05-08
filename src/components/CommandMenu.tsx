@@ -275,7 +275,7 @@ export const CommandMenu: React.VFC = () => {
             }
           }
         }}
-        className="relative mx-auto w-full max-w-xl rounded-xl border border-white/20 bg-white/75 shadow-xl backdrop-blur-lg dark:border-zinc-700 dark:bg-black/75"
+        className="relative rounded-xl border border-white/20 bg-white/75 shadow-xl backdrop-blur-lg dark:border-zinc-700 dark:bg-black/75"
       >
         <div className="flex flex-col-reverse">
           <div className="mx-2 flex items-center gap-2 text-zinc-700 dark:text-zinc-300">

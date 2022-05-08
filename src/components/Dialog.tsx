@@ -16,7 +16,7 @@ export const Dialog: React.FC<DialogProps> = ({
   <Transition show={open} as={Fragment} afterLeave={afterClose}>
     <DialogPrimitive
       onClose={onClose}
-      className="fixed inset-0 z-50 flex h-screen w-screen flex-col justify-center p-6"
+      className="fixed inset-0 z-50 mx-auto flex h-screen max-w-xl flex-col justify-center p-6"
     >
       <Transition.Child
         enter="duration-200 ease-out"
