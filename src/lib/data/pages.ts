@@ -97,16 +97,28 @@ export const fetchPagesData = async () => {
   )
 
   return data.flat().sort((a, b) => {
+    if (a.published && b.published) {
+      return b.published - a.published
+    }
+
+    if (a.published) {
+      return 0 - a.published
+    }
+
+    if (b.published) {
+      return b.published - 0
+    }
+
     if (a.updated && b.updated) {
       return b.updated - a.updated
     }
 
     if (a.updated) {
-      return 1
+      return 0 - a.updated
     }
 
     if (b.updated) {
-      return -1
+      return b.updated - 0
     }
 
     return 0

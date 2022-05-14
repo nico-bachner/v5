@@ -22,7 +22,7 @@ export const MDX: React.VFC<MDXProps> = ({ content, components }) => (
       ),
       pre: ({ children }) => (
         <FullWidth>
-          <pre className="rounded-none sm:rounded-lg">{children}</pre>
+          <pre>{children}</pre>
         </FullWidth>
       ),
       a: ({ children, href }) =>
