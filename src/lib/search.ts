@@ -7,11 +7,15 @@ type Key = {
 
 type SearchInput = {
   items: any[]
-  query: string
+  query?: string
   keys: Key[]
 }
 
 export const search = ({ items, query, keys }: SearchInput) => {
+  if (!query) {
+    return items
+  }
+
   const options = {
     keys,
   }

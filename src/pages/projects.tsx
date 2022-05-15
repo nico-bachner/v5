@@ -8,10 +8,10 @@ import { fetchProjectsData } from 'lib/data/projects'
 
 import type { NextPage, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
-import type { ProjectData } from 'lib/data/types'
+import type { JSONProjectData } from 'lib/data/types'
 
 type PageProps = {
-  projects: ProjectData[]
+  projects: JSONProjectData[]
   content: MDXContent
 }
 
@@ -38,8 +38,8 @@ const Page: NextPage<PageProps> = ({ projects, content }) => (
   <>
     <Head title="Projects" />
 
-    <main className="px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
-      <div className="mx-auto mb-20 flex max-w-2xl flex-col gap-8">
+    <main className="flex flex-col gap-12 px-6 pb-36 pt-20 md:pt-24 lg:pt-28">
+      <div className="mx-auto flex max-w-2xl flex-col gap-8">
         <h1 className="text-4xl font-black tracking-tight md:text-5xl lg:text-6xl">
           Projects
         </h1>

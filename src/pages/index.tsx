@@ -11,14 +11,14 @@ import { fetchPagesData } from 'lib/data/pages'
 
 import type { NextPage, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
-import type { PageData, ProjectData } from 'lib/data/types'
+import type { JSONPageData, JSONProjectData } from 'lib/data/types'
 
 type PageProps = {
   content: {
     [key: string]: MDXContent
   }
-  projects: ProjectData[]
-  pages: PageData[]
+  projects: JSONProjectData[]
+  pages: JSONPageData[]
 }
 
 export const getStaticProps: GetStaticProps<PageProps> = async () => ({
@@ -110,7 +110,7 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
 
       <MDX content={content.projects} />
 
-      <div className="flex flex-col gap-4 py-4">
+      <div className="flex flex-col gap-4 pt-2">
         {projects.map((project) => (
           <ProjectCard
             key={project.path[project.path.length - 1]}
@@ -129,7 +129,7 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
 
       <MDX content={content.pages} />
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 pt-2">
         {pages
           .filter(({ category }) => category != 'Projects')
           .map((page) => (

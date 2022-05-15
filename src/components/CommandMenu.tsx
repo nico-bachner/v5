@@ -23,6 +23,8 @@ import { useAtom } from 'jotai'
 import { useTheme } from 'next-themes'
 import { useKeyboardShortcuts } from 'hooks/useKeyboardShortcuts'
 import { storedCommandMenuOpen, storedReaderMode } from 'store'
+import { KeyboardInput } from './KeyboardInput'
+import { search } from 'lib/search'
 
 export type Option = {
   id: string
@@ -216,21 +218,25 @@ export const CommandMenu: React.VFC = () => {
     .filter((option) => option != null)
     .slice(0, 2) as Option[]
 
-  const getFilteredOptions = () => {
-    if (tab[tab.length - 1] == 'Home') {
-      return [...recentOptions, ...options].filter(({ title }) =>
-        title.toLowerCase().includes(query.toLowerCase())
-      )
-    }
+  const allOptions = [...recentOptions, ...options]
 
-    return [...recentOptions, ...options]
-      .find(({ id }) => tab[tab.length - 1] == id)
-      ?.children?.filter(({ title }) =>
-        title.toLowerCase().includes(query.toLowerCase())
-      )
-  }
+  const currentTabOptions =
+    options.find(({ id }) => tab[tab.length - 1] == id)?.children ?? allOptions
 
-  const filteredOptions = getFilteredOptions()
+  const queriedOptions = search({
+    items: currentTabOptions,
+    query,
+    keys: [
+      {
+        name: 'title',
+        weight: 0.8,
+      },
+      {
+        name: 'description',
+        weight: 0.2,
+      },
+    ],
+  })
 
   return (
     <Dialog
@@ -306,9 +312,9 @@ export const CommandMenu: React.VFC = () => {
                 </button>
               ))}
             </div>
-            <kbd className="mx-2 font-sans text-zinc-400 transition dark:text-zinc-500">
-              ⌘K
-            </kbd>
+            <div className="mx-2">
+              <KeyboardInput meta>K</KeyboardInput>
+            </div>
           </div>
         </div>
 
@@ -318,14 +324,14 @@ export const CommandMenu: React.VFC = () => {
           static
           className="flex max-h-72 flex-col overflow-auto pb-2"
         >
-          {filteredOptions && filteredOptions.length > 0 ? (
-            filteredOptions
+          {queriedOptions && queriedOptions.length > 0 ? (
+            queriedOptions
               .filter(
                 ({ group }, i) =>
-                  filteredOptions.map(({ group }) => group).indexOf(group) == i
+                  queriedOptions.map(({ group }) => group).indexOf(group) == i
               )
               .map(({ group }) => {
-                const filteredTypeOptions = filteredOptions.filter(
+                const filteredTypeOptions = queriedOptions.filter(
                   (option) => option.group == group
                 )
 
@@ -361,22 +367,16 @@ export const CommandMenu: React.VFC = () => {
                                   />
                                   <div className="flex flex-grow items-center justify-between gap-4 p-4 pl-1">
                                     <span>{title}</span>
-                                    <kbd
-                                      className={[
-                                        'font-sans transition',
-                                        active
-                                          ? 'text-zinc-500 dark:text-zinc-400'
-                                          : 'text-zinc-400 dark:text-zinc-500',
-                                      ].join(' ')}
-                                    >
-                                      {shortcut
-                                        ?.split('+')
-                                        .join('')
-                                        .replace('cmd', '⌘')
-                                        .replace('alt', '⌥')
-                                        .replace('ctrl', '^')
-                                        .toUpperCase()}
-                                    </kbd>
+                                    {shortcut ? (
+                                      <KeyboardInput
+                                        shift={shortcut?.includes('shift')}
+                                        ctrl={shortcut?.includes('ctrl')}
+                                        alt={shortcut?.includes('alt')}
+                                        meta={shortcut?.includes('cmd')}
+                                      >
+                                        {shortcut?.split('+').pop()}
+                                      </KeyboardInput>
+                                    ) : null}
                                   </div>
                                 </div>
                               )}
@@ -389,7 +389,7 @@ export const CommandMenu: React.VFC = () => {
                 )
               })
           ) : (
-            <p className="mx-4 p-2 text-zinc-500">No results found</p>
+            <p className="mx-4 mt-2 p-2 text-zinc-500">No results found</p>
           )}
         </Combobox.Options>
       </Combobox>

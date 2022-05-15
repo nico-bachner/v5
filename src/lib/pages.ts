@@ -1,11 +1,7 @@
 import { search } from './search'
 
-export const getQueriedPages = (pages: any[], query?: string) => {
-  if (!query) {
-    return pages
-  }
-
-  return search({
+export const getQueriedPages = (pages: any[], query?: string) =>
+  search({
     items: pages,
     query,
     keys: [
@@ -19,7 +15,6 @@ export const getQueriedPages = (pages: any[], query?: string) => {
       },
     ],
   })
-}
 
 export const getFilteredPages = (pages: any[], filter?: string) => {
   if (!filter) {

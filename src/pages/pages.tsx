@@ -12,10 +12,10 @@ import { fetchPagesData } from 'lib/data/pages'
 
 import type { NextPage, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
-import type { PageData } from 'lib/data/types'
+import type { JSONPageData } from 'lib/data/types'
 
 type PageProps = {
-  pages: PageData[]
+  pages: JSONPageData[]
   content: MDXContent
 }
 

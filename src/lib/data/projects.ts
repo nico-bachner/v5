@@ -1,12 +1,12 @@
 import { fetchFile, fetchPaths } from 'lib/fs'
 import { getMDXData } from 'lib/mdx'
-import { fetchPageData, fetchPageCategory } from './pages'
+import { fetchPageData } from './pages'
 
-import type { ProjectData } from './types'
+import type { JSONPageData, JSONProjectData } from './types'
 const basePath = ['content', 'pages']
 const extension = 'mdx'
 
-const fetchProjectData: Fetch<string[], ProjectData> = async (path) => {
+const fetchProjectData: Fetch<string[], JSONProjectData> = async (path) => {
   const file = await fetchFile({ basePath, path, extension })
 
   const {
@@ -14,10 +14,10 @@ const fetchProjectData: Fetch<string[], ProjectData> = async (path) => {
     title,
     description,
     image,
-    published,
     featured,
 
-    updated,
+    firstUpdated,
+    lastUpdated,
     edit_url,
     reading_time,
   } = await fetchPageData(path)
@@ -25,10 +25,10 @@ const fetchProjectData: Fetch<string[], ProjectData> = async (path) => {
   const { from, to = null } = getMDXData(file)
 
   if (!(from instanceof Date)) {
-    throw new Error(`'from' should be a Date (${path})`)
+    throw new TypeError(`'from' should be a Date (${path})`)
   }
   if (to != null && !(to instanceof Date)) {
-    throw new Error(`'to', if used, should be a Date (${path})`)
+    throw new TypeError(`'to', if used, should be a Date (${path})`)
   }
 
   return {
@@ -36,13 +36,14 @@ const fetchProjectData: Fetch<string[], ProjectData> = async (path) => {
     title,
     description,
     image,
-    published,
     featured,
 
     path,
-    updated,
+    firstUpdated,
+    lastUpdated,
     edit_url,
     reading_time,
+
     from: from.getTime(),
     to: to ? to.getTime() : null,
   }
@@ -55,6 +56,24 @@ export const fetchProjectsData = async () => {
     extension,
   })
 
+  const fetchPageCategory: Fetch<string[], JSONPageData['category']> = async (
+    path
+  ) => {
+    const file = await fetchFile({
+      basePath: ['content', 'pages'],
+      path,
+      extension: 'mdx',
+    })
+
+    const { category = 'Other' } = getMDXData(file)
+
+    if (typeof category != 'string') {
+      throw new Error(`'category' should be a string (${path})`)
+    }
+
+    return category
+  }
+
   const pathsCategories = await Promise.all(
     paths.map(async (path) => ({
       path,
@@ -66,7 +85,7 @@ export const fetchProjectsData = async () => {
     ({ category }) => category == 'Projects'
   )
 
-  const projects: ProjectData[] = await Promise.all(
+  const projects: JSONProjectData[] = await Promise.all(
     projectPaths.map(async ({ path }) => await fetchProjectData(path))
   )
 

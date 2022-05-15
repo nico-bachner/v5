@@ -1,21 +1,32 @@
+export type MDXPageData = {
+  category: string
+  title: string
+  description: string
+  image: string | null
+  published: Date | null
+  from: Date | null
+  to: Date | null
+  featured: boolean
+}
+
 // number and null are used instead of Date and undefined because JSON compatibility is needed
-export type PageData = {
+export type JSONPageData = {
   // MDX Frontmatter
   category: string
   title: string
   description: string
   image: string | null
-  published: number | null
   featured: boolean
 
   // Extra computed data
   path: string[]
-  updated: number | null
+  firstUpdated: number | null
+  lastUpdated: number | null
   edit_url: string
   reading_time: [number, number]
 }
 
-export type ProjectData = PageData & {
+export type JSONProjectData = JSONPageData & {
   from: number
   to: number | null
 }

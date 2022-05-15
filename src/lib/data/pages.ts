@@ -1,29 +1,12 @@
+import assert from 'assert'
 import { config } from 'config'
 import { fetchFile, fetchPaths } from 'lib/fs'
 import { fetchDateUpdated, getEditUrl } from 'lib/github'
 import { getMDXData } from 'lib/mdx'
 
-import type { PageData } from './types'
+import type { MDXPageData, JSONPageData } from './types'
 
-export const fetchPageCategory: Fetch<string[], PageData['category']> = async (
-  path
-) => {
-  const file = await fetchFile({
-    basePath: ['content', 'pages'],
-    path,
-    extension: 'mdx',
-  })
-
-  const { category = 'Other' } = getMDXData(file)
-
-  if (typeof category != 'string') {
-    throw new Error(`'category' should be a string (${path})`)
-  }
-
-  return category
-}
-
-export const fetchPageData: Fetch<string[], PageData> = async (path) => {
+export const fetchPageData: Fetch<string[], JSONPageData> = async (path) => {
   const file = await fetchFile({
     basePath: ['content', 'pages'],
     path,
@@ -31,27 +14,32 @@ export const fetchPageData: Fetch<string[], PageData> = async (path) => {
   })
 
   const {
+    category = 'Other',
     title,
     description,
     image = null,
     published = null,
+    from = null,
     featured = false,
-  } = getMDXData(file)
+  } = getMDXData(file) as MDXPageData
 
   if (typeof title != 'string') {
-    throw new Error(`'title' should be a string (${path})`)
+    throw new TypeError(`'title' should be a string (${path})`)
   }
   if (typeof description != 'string') {
-    throw new Error(`'description' should be a string (${path})`)
+    throw new TypeError(`'description' should be a string (${path})`)
   }
   if (image && typeof image != 'string') {
-    throw new Error(`'image', if used, should be a string (${path})`)
+    throw new TypeError(`'image', if used, should be a string (${path})`)
   }
   if (published && !(published instanceof Date)) {
-    throw new Error(`'published', if used, should be a Date (${path})`)
+    throw new TypeError(`'published', if used, should be a Date (${path})`)
+  }
+  if (from && !(from instanceof Date)) {
+    throw new TypeError(`'from', if used, should be a Date (${path})`)
   }
   if (typeof featured != 'boolean') {
-    throw new Error(`'featured', if used, should be a boolean (${path})`)
+    throw new TypeError(`'featured', if used, should be a boolean (${path})`)
   }
 
   const dateUpdated = await fetchDateUpdated({
@@ -62,17 +50,17 @@ export const fetchPageData: Fetch<string[], PageData> = async (path) => {
   })
 
   return {
-    category: await fetchPageCategory(path),
+    category,
     title,
     description,
     image,
-    published: (published as Date | null)
-      ? (published as Date).getTime()
-      : null,
     featured,
 
     path,
-    updated: dateUpdated ? dateUpdated.getTime() : null,
+    firstUpdated: (published as Date | null)
+      ? (published as Date).getTime()
+      : null,
+    lastUpdated: dateUpdated ? dateUpdated.getTime() : null,
     edit_url: getEditUrl({
       ...config.repo,
       basePath: ['content', 'pages'],
@@ -97,28 +85,28 @@ export const fetchPagesData = async () => {
   )
 
   return data.flat().sort((a, b) => {
-    if (a.published && b.published) {
-      return b.published - a.published
+    if (a.firstUpdated && b.firstUpdated) {
+      return b.firstUpdated - a.firstUpdated
     }
 
-    if (a.published) {
-      return 0 - a.published
+    if (a.firstUpdated) {
+      return 0 - a.firstUpdated
     }
 
-    if (b.published) {
-      return b.published - 0
+    if (b.firstUpdated) {
+      return b.firstUpdated - 0
     }
 
-    if (a.updated && b.updated) {
-      return b.updated - a.updated
+    if (a.lastUpdated && b.lastUpdated) {
+      return b.lastUpdated - a.lastUpdated
     }
 
-    if (a.updated) {
-      return 0 - a.updated
+    if (a.lastUpdated) {
+      return 0 - a.lastUpdated
     }
 
-    if (b.updated) {
-      return b.updated - 0
+    if (b.lastUpdated) {
+      return b.lastUpdated - 0
     }
 
     return 0
