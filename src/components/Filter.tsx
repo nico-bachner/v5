@@ -39,7 +39,7 @@ export const Filter: React.VFC<FilterProps> = ({ pages, onFilterChange }) => {
 
   return (
     <div className="flex w-full items-center gap-4">
-      <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
+      <div className="flex items-center gap-1 text-zinc-500">
         <FilterIcon strokeWidth={1.5} className="h-4 w-4 sm:h-6 sm:w-6" />
         <p className="text-sm sm:text-base">Filter</p>
       </div>
@@ -56,8 +56,8 @@ export const Filter: React.VFC<FilterProps> = ({ pages, onFilterChange }) => {
             className={[
               'rounded px-2 py-1 text-sm font-medium sm:px-3 sm:py-1.5 sm:text-base',
               category.toLowerCase() == filter
-                ? 'bg-zinc-300 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-200'
-                : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400',
+                ? 'bg-zinc-300 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-400'
+                : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800',
             ].join(' ')}
           >
             {category}
