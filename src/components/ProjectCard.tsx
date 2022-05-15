@@ -1,6 +1,6 @@
 import { InfoCard } from 'components/InfoCard'
 
-import type { ProjectData } from 'lib/data/types'
+import type { JSONProjectData } from 'lib/data/types'
 
 const getPeriod = (from: number, to: number | null) => {
   const from_year = new Date(from).getFullYear()
@@ -22,7 +22,7 @@ const getPeriod = (from: number, to: number | null) => {
   return `${from_year} – Now`
 }
 
-export const ProjectCard: React.VFC<ProjectData> = ({
+export const ProjectCard: React.VFC<JSONProjectData> = ({
   path,
   title,
   description,

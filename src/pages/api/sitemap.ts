@@ -28,11 +28,11 @@ const apiHandler: NextApiHandler = async (req, res) => {
   </url>
   ${pages
     .map(
-      ({ path, updated }) => `
+      ({ path, lastUpdated }) => `
   <url>
     <loc>https://nicobachner.com/${path.join('/')}</loc>
     <lastmod>${
-      updated ? new Date(updated).toISOString().slice(0, 10) : 'N/A'
+      lastUpdated ? new Date(lastUpdated).toISOString().slice(0, 10) : 'N/A'
     }</lastmod>
   </url>
   `

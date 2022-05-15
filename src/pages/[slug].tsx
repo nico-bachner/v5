@@ -9,9 +9,9 @@ import { fetchPageData } from 'lib/data/pages'
 
 import type { NextPage, GetStaticPaths, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
-import type { PageData } from 'lib/data/types'
+import type { JSONPageData } from 'lib/data/types'
 
-type PageProps = PageData & {
+type PageProps = JSONPageData & {
   content: MDXContent
 }
 
@@ -73,19 +73,23 @@ const Page: NextPage<PageProps> = ({
   title,
   description,
   image,
-  published,
   featured,
 
   path,
-  updated,
+  firstUpdated,
+  lastUpdated,
   edit_url,
   reading_time,
 }) => {
-  const [lastUpdated, setLastUpdated] = useState<string | undefined>(undefined)
+  const [lastDateUpdated, setLastDateUpdated] = useState<string | undefined>(
+    undefined
+  )
 
   useEffect(() => {
-    setLastUpdated(updated ? new Date(updated).toLocaleDateString() : 'N/A')
-  }, [updated])
+    setLastDateUpdated(
+      lastUpdated ? new Date(lastUpdated).toLocaleDateString() : 'N/A'
+    )
+  }, [lastUpdated])
 
   return (
     <>
@@ -93,8 +97,8 @@ const Page: NextPage<PageProps> = ({
         title={title}
         description={description}
         image={image ?? undefined}
-        published={published ?? undefined}
-        updated={updated ?? undefined}
+        published={firstUpdated ?? undefined}
+        modified={lastUpdated ?? undefined}
       />
 
       <main className="px-6 pt-16 pb-40 sm:pt-20 lg:pt-24">

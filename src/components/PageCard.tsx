@@ -1,8 +1,8 @@
 import { InfoCard } from 'components/InfoCard'
 
-import type { PageData } from 'lib/data/types'
+import type { JSONPageData } from 'lib/data/types'
 
-export const PageCard: React.VFC<PageData> = ({
+export const PageCard: React.VFC<JSONPageData> = ({
   category,
   title,
   description,

@@ -7,7 +7,7 @@ type HeadProps = {
   description?: string
   image?: string
   published?: number
-  updated?: number
+  modified?: number
 }
 
 export const Head: React.FC<HeadProps> = ({
@@ -15,7 +15,7 @@ export const Head: React.FC<HeadProps> = ({
   description,
   image,
   published,
-  updated,
+  modified,
 }) => {
   const { asPath } = useRouter()
 
@@ -35,13 +35,13 @@ export const Head: React.FC<HeadProps> = ({
               : 'https://nicobachner.com/images/og-image.png',
           },
         ],
-        type: published && updated ? 'article' : 'website',
+        type: published && modified ? 'article' : 'website',
         article:
-          published && updated
+          published && modified
             ? {
                 publishedTime: new Date(published).toISOString(),
-                modifiedTime: new Date(updated).toISOString(),
-                expirationTime: new Date(updated + 157788000000).toISOString(),
+                modifiedTime: new Date(modified).toISOString(),
+                expirationTime: new Date(modified + 157788000000).toISOString(),
               }
             : undefined,
       }}
