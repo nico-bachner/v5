@@ -2,7 +2,7 @@ import { FilterIcon } from 'icons'
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { sortByOccurrences } from 'lib/sortByOccurrences'
+import { sortByOccurrences } from 'lib/utils/sortByOccurrences'
 
 type FilterProps = {
   pages: any[]

@@ -1,6 +1,7 @@
 import { fetchJSON } from './fetchJSON'
 import { config } from 'config'
 
+import type { Fetch } from 'lib/types'
 import type { FilePath } from 'lib/fs/types'
 import type { CommitHistory } from 'lib/github/types/commits'
 

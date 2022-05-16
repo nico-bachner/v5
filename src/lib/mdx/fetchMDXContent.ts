@@ -15,9 +15,8 @@ import rehypeHighlight from 'rehype-highlight'
 // @ts-ignore
 import rehypeSlug from 'rehype-slug'
 
-export type MDXContent = {
-  compiledSource: string
-}
+import type { Fetch } from 'lib/types'
+import type { MDXContent } from './types'
 
 export const fetchMDXContent: Fetch<string, MDXContent> = async (file) =>
   await serialize(matter(file).content, {
@@ -30,13 +29,3 @@ export const fetchMDXContent: Fetch<string, MDXContent> = async (file) =>
       rehypePlugins: [[rehypeHighlight], [rehypeSlug]],
     },
   })
-
-type MDXData = {
-  [key: string]: any
-}
-
-export const getMDXData: Get<string, MDXData> = (file) => {
-  const { data } = matter(file)
-
-  return data
-}

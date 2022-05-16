@@ -1,5 +1,6 @@
 import { config } from 'config'
 
+import type { Get } from 'lib/types'
 import type { FilePath } from 'lib/fs/types'
 
 export const getNewUrl: Get<Pick<FilePath, 'basePath'>, string> = ({

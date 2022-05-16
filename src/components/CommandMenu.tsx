@@ -24,7 +24,7 @@ import { useTheme } from 'next-themes'
 import { useKeyboardShortcuts } from 'hooks/useKeyboardShortcuts'
 import { storedCommandMenuOpen, storedReaderMode } from 'store'
 import { KeyboardInput } from './KeyboardInput'
-import { search } from 'lib/search'
+import { getQueriedItems } from 'lib/search'
 
 export type Option = {
   id: string
@@ -223,7 +223,7 @@ export const CommandMenu: React.VFC = () => {
   const currentTabOptions =
     options.find(({ id }) => tab[tab.length - 1] == id)?.children ?? allOptions
 
-  const queriedOptions = search({
+  const queriedOptions = getQueriedItems({
     items: currentTabOptions,
     query,
     keys: [

@@ -1,7 +1,7 @@
-import { search } from './search'
+import { getQueriedItems } from 'lib/search'
 
 export const getQueriedPages = (pages: any[], query?: string) =>
-  search({
+  getQueriedItems({
     items: pages,
     query,
     keys: [
@@ -15,11 +15,3 @@ export const getQueriedPages = (pages: any[], query?: string) =>
       },
     ],
   })
-
-export const getFilteredPages = (pages: any[], filter?: string) => {
-  if (!filter) {
-    return pages
-  }
-
-  return pages.filter(({ category }) => category.toLowerCase() == filter)
-}

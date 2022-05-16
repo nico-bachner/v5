@@ -1,17 +1,13 @@
 import Fuse from 'fuse.js'
 
-type Key = {
-  name: string
-  weight: number
-}
+import type { Get } from 'lib/types'
+import type { SearchInput } from './types'
 
-type SearchInput = {
-  items: any[]
-  query?: string
-  keys: Key[]
-}
-
-export const search = ({ items, query, keys }: SearchInput) => {
+export const getQueriedItems: Get<SearchInput, any[]> = ({
+  items,
+  query,
+  keys,
+}) => {
   if (!query) {
     return items
   }

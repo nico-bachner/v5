@@ -1,3 +1,5 @@
+import type { Fetch } from 'lib/types'
+
 export const fetchJSON: Fetch<RequestInfo, any> = async (info) => {
   const res = await fetch(info, {
     headers: {
