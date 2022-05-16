@@ -1,17 +1,37 @@
-import assert from 'assert'
 import { config } from 'config'
-import { fetchFile, fetchPaths } from 'lib/fs'
-import { fetchDateUpdated, getEditUrl } from 'lib/github'
+import { fetchFile as fetchLocalFile } from 'lib/fs/fetchFile'
+import { fetchFile as fetchRemoteFile } from 'lib/github/fetchFile'
+import { fetchPaths as fetchLocalPaths } from 'lib/fs/fetchPaths'
+import { fetchPaths as fetchRemotePaths } from 'lib/github/fetchPaths'
+import { fetchDateUpdated } from 'lib/github/fetchDateUpdated'
+import { getEditUrl } from 'lib/github/getEditUrl'
 import { getMDXData } from 'lib/mdx'
 
 import type { MDXPageData, JSONPageData } from './types'
 
-export const fetchPageData: Fetch<string[], JSONPageData> = async (path) => {
-  const file = await fetchFile({
+export const fetchPage: Fetch<string[], string> = async (path) => {
+  const file = await fetchLocalFile({
     basePath: ['content', 'pages'],
     path,
     extension: 'mdx',
   })
+
+  return file
+}
+
+export const fetchPageData: Fetch<string[], JSONPageData> = async (path) => {
+  const file =
+    process.env.NODE_ENV == 'development'
+      ? await fetchLocalFile({
+          basePath: ['content', 'pages'],
+          path,
+          extension: 'mdx',
+        })
+      : await fetchRemoteFile({
+          basePath: ['content', 'pages'],
+          path,
+          extension: 'mdx',
+        })
 
   const {
     category = 'Other',
@@ -75,11 +95,19 @@ export const fetchPageData: Fetch<string[], JSONPageData> = async (path) => {
 }
 
 export const fetchPagesData = async () => {
-  const paths = await fetchPaths({
-    basePath: ['content', 'pages'],
-    path: [],
-    extension: 'mdx',
-  })
+  const paths =
+    process.env.NODE_ENV == 'development'
+      ? await fetchLocalPaths({
+          basePath: ['content', 'pages'],
+          path: [],
+          extension: 'mdx',
+        })
+      : await fetchRemotePaths({
+          basePath: ['content', 'pages'],
+          path: [],
+          extension: 'mdx',
+        })
+
   const data = await Promise.all(
     paths.map(async (path) => await fetchPageData(path))
   )

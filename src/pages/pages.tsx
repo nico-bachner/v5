@@ -5,7 +5,7 @@ import { PageCard } from 'components/PageCard'
 import { Filter } from 'components/Filter'
 
 import { useState } from 'react'
-import { fetchFile } from 'lib/fs'
+import { fetchFile } from 'lib/fs/fetchFile'
 import { fetchMDXContent } from 'lib/mdx'
 import { getFilteredPages, getQueriedPages } from 'lib/pages'
 import { fetchPagesData } from 'lib/data/pages'

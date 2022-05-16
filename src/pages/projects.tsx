@@ -2,7 +2,7 @@ import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 import { ProjectCard } from 'components/ProjectCard'
 
-import { fetchFile } from 'lib/fs'
+import { fetchFile } from 'lib/fs/fetchFile'
 import { fetchMDXContent } from 'lib/mdx'
 import { fetchProjectsData } from 'lib/data/projects'
 

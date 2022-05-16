@@ -1,4 +1,5 @@
-import { fetchFile, fetchPaths } from 'lib/fs'
+import { fetchFile } from 'lib/fs/fetchFile'
+import { fetchPaths } from 'lib/fs/fetchPaths'
 import { getMDXData } from 'lib/mdx'
 import { fetchPageData } from './pages'
 

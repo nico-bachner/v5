@@ -4,7 +4,7 @@ import { ProjectCard } from 'components/ProjectCard'
 import { PageCard } from 'components/PageCard'
 import { ViewMore } from 'components/ViewMore'
 
-import { fetchFile } from 'lib/fs'
+import { fetchFile } from 'lib/fs/fetchFile'
 import { fetchMDXContent } from 'lib/mdx'
 import { fetchProjectsData } from 'lib/data/projects'
 import { fetchPagesData } from 'lib/data/pages'

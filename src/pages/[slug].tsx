@@ -3,7 +3,10 @@ import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 
 import { useEffect, useState } from 'react'
-import { fetchFile, fetchPaths } from 'lib/fs'
+import { fetchFile as fetchLocalFile } from 'lib/fs/fetchFile'
+import { fetchFile as fetchRemoteFile } from 'lib/github/fetchFile'
+import { fetchPaths as fetchLocalPaths } from 'lib/fs/fetchPaths'
+import { fetchPaths as fetchRemotePaths } from 'lib/github/fetchPaths'
 import { fetchMDXContent } from 'lib/mdx'
 import { fetchPageData } from 'lib/data/pages'
 
@@ -19,12 +22,17 @@ const basePath = ['content', 'pages']
 const extension = 'mdx'
 
 const getStaticPaths: GetStaticPaths = async () => ({
-  paths: (
-    await fetchPaths({
-      basePath,
-      path: [],
-      extension,
-    })
+  paths: (process.env.NODE_ENV == 'development'
+    ? await fetchLocalPaths({
+        basePath,
+        path: [],
+        extension,
+      })
+    : await fetchRemotePaths({
+        basePath,
+        path: [],
+        extension,
+      })
   ).map((path) => ({
     params: {
       slug: path.pop(),
@@ -50,11 +58,18 @@ const getStaticProps: GetStaticProps<PageProps> = async ({ params }) => {
 
   const path = [slug]
 
-  const file = await fetchFile({
-    basePath,
-    path,
-    extension,
-  })
+  const file =
+    process.env.NODE_ENV == 'development'
+      ? await fetchLocalFile({
+          basePath,
+          path,
+          extension,
+        })
+      : await fetchRemoteFile({
+          basePath,
+          path,
+          extension,
+        })
 
   const pageData = await fetchPageData(path)
 

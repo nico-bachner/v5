@@ -1,21 +1,17 @@
 import { Head } from 'components/Head'
 import { MDX } from 'components/MDX'
 
-import { fetchFile } from 'lib/fs'
+import { fetchFile } from 'lib/fs/fetchFile'
 import { fetchMDXContent } from 'lib/mdx'
-import { getNewUrl } from 'lib/github'
+import { getNewUrl } from 'lib/github/getNewUrl'
 import { config } from 'config'
 
 import type { NextPage, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
-import { useRouter } from 'next/router'
 
 type PageProps = {
   content: MDXContent
 }
-
-const basePath = ['content', 'pages']
-const extension = 'mdx'
 
 export const getStaticProps: GetStaticProps<PageProps> = async () => {
   const content = await fetchMDXContent(
@@ -34,12 +30,10 @@ export const getStaticProps: GetStaticProps<PageProps> = async () => {
 }
 
 const Page: NextPage<PageProps> = ({ content }) => {
-  const { asPath } = useRouter()
-  const [pathNoQuery] = asPath.split('?')
-  const [pathNoAnchor] = pathNoQuery.split('#')
-  const [_, ...path] = pathNoAnchor.split('/')
-
-  const newUrl = getNewUrl({ ...config.repo, basePath, path, extension })
+  const newUrl = getNewUrl({
+    ...config.repo,
+    basePath: ['content', 'pages'],
+  })
 
   return (
     <main>
