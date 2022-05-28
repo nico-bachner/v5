@@ -8,7 +8,7 @@ export const fetchFile: Fetch<FilePath, string> = async ({
   path,
   extension,
 }) => {
-  const fullPath = [...basePath, ...path].join('/')
+  const fullPath = [process.cwd(), ...basePath, ...path].join('/')
 
   const fullFilePath = [fullPath, extension].join('.')
 
