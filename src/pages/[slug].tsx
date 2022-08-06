@@ -84,7 +84,7 @@ const getStaticProps: GetStaticProps<PageProps> = async ({ params }) => {
 const Page: NextPage<PageProps> = ({
   content,
 
-  category,
+  type,
   title,
   description,
   image,
@@ -110,7 +110,7 @@ const Page: NextPage<PageProps> = ({
     <>
       <Head
         title={title}
-        description={description}
+        description={description ?? undefined}
         image={image ?? undefined}
         published={firstUpdated ?? undefined}
         modified={lastUpdated ?? undefined}
@@ -128,20 +128,23 @@ const Page: NextPage<PageProps> = ({
           </div>
 
           <div className="mx-auto flex max-w-2xl flex-col divide-y divide-zinc-200 dark:divide-zinc-800">
-            <div className="flex items-center justify-between gap-4 py-8 text-sm sm:text-base lg:text-lg">
-              <p className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text font-bold text-transparent">
-                <Link href={`/pages?filter=${category.toLowerCase()}`}>
-                  <a>
-                    {category} <span className="font-sans">{'->'}</span>
-                  </a>
-                </Link>
-              </p>
+            <div className="flex flex-row-reverse items-center justify-between gap-4 py-8 text-sm sm:text-base lg:text-lg">
               <p className="text-zinc-500">
                 {reading_time[0] == reading_time[1]
                   ? reading_time[0]
                   : reading_time.join('-')}{' '}
                 minute read
               </p>
+
+              {type ? (
+                <p className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text font-bold text-transparent">
+                  <Link href={`/pages?filter=${type.toLowerCase()}`}>
+                    <a>
+                      {type} <span className="font-sans">{'->'}</span>
+                    </a>
+                  </Link>
+                </p>
+              ) : null}
             </div>
 
             <div className="py-8">
@@ -149,7 +152,7 @@ const Page: NextPage<PageProps> = ({
             </div>
 
             <div className="flex items-center justify-between gap-4 py-8 text-sm sm:text-base lg:text-lg">
-              <p className="text-zinc-500">Last Updated: {lastUpdated}</p>
+              <p className="text-zinc-500">Last Updated: {lastDateUpdated}</p>
               <p className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text font-bold tracking-tight text-transparent">
                 <a href={edit_url} target="_blank" rel="noopener noreferrer">
                   Edit on GitHub <span className="font-sans">{'->'}</span>

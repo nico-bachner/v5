@@ -1,3 +1,4 @@
+import { fetchTreeRecursively } from './fetchTreeRecursively'
 import { fetchJSON } from './fetchJSON'
 import { config } from 'config'
 
@@ -16,27 +17,13 @@ export const fetchPaths: Fetch<FilePath, string[][]> = async ({
   const [latestCommit]: CommitHistory = await fetchJSON(
     ['https://api.github.com/repos', user, repo, 'commits'].join('/')
   )
-  const treeUrl = latestCommit.commit.tree.url
+  const parentTreeUrl = latestCommit.commit.tree.url
 
-  const { tree }: Tree = await fetchJSON(treeUrl)
+  const parentTree: Tree = await fetchJSON(parentTreeUrl)
 
-  const contentTreeUrl = tree.find(({ path }) => path == 'content')?.url
+  const { tree } = await fetchTreeRecursively({ basePath, parentTree })
 
-  if (!contentTreeUrl) {
-    throw new Error('content tree not found')
-  }
-
-  const { tree: contentTree }: Tree = await fetchJSON(contentTreeUrl)
-
-  const pagesTreeUrl = contentTree.find(({ path }) => path == 'pages')?.url
-
-  if (!pagesTreeUrl) {
-    throw new Error('pages tree not found')
-  }
-
-  const { tree: pagesTree }: Tree = await fetchJSON(pagesTreeUrl)
-
-  const files = pagesTree.map(({ path }) => path)
+  const files = tree.map(({ path }) => path)
 
   if (extension) {
     return files

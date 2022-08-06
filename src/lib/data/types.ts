@@ -1,7 +1,7 @@
 export type MDXPageData = {
-  category: string
+  type: string | null
   title: string
-  description: string
+  description: string | null
   image: string | null
   published: Date | null
   from: Date | null
@@ -12,9 +12,9 @@ export type MDXPageData = {
 // number and null are used instead of Date and undefined because JSON compatibility is needed
 export type JSONPageData = {
   // MDX Frontmatter
-  category: string
+  type: string | null
   title: string
-  description: string
+  description: string | null
   image: string | null
   featured: boolean
 

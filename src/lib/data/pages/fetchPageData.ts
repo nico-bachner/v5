@@ -10,19 +10,22 @@ export const fetchPageData: Fetch<string[], JSONPageData> = async (path) => {
   const file = await fetchPage(path)
 
   const {
-    category = 'Other',
+    type = null,
     title,
-    description,
+    description = null,
     image = null,
     published = null,
     from = null,
     featured = false,
   } = getMDXData(file) as MDXPageData
 
+  if (type && typeof type != 'string') {
+    throw new TypeError(`'type', if used, should be a string (${path})`)
+  }
   if (typeof title != 'string') {
     throw new TypeError(`'title' should be a string (${path})`)
   }
-  if (typeof description != 'string') {
+  if (description && typeof description != 'string') {
     throw new TypeError(`'description' should be a string (${path})`)
   }
   if (image && typeof image != 'string') {
@@ -45,7 +48,7 @@ export const fetchPageData: Fetch<string[], JSONPageData> = async (path) => {
   })
 
   return {
-    category,
+    type,
     title,
     description,
     image,

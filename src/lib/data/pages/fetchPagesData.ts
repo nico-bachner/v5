@@ -8,7 +8,7 @@ export const fetchPagesData = async () => {
     paths.map(async (path) => await fetchPageData(path))
   )
 
-  return data.flat().sort((a, b) => {
+  return data.sort((a, b) => {
     if (a.firstUpdated && b.firstUpdated) {
       return b.firstUpdated - a.firstUpdated
     }

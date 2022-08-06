@@ -11,7 +11,7 @@ export const fetchProjectData: Fetch<string[], JSONProjectData> = async (
   const file = await fetchPage(path)
 
   const {
-    category,
+    type,
     title,
     description,
     image,
@@ -33,7 +33,7 @@ export const fetchProjectData: Fetch<string[], JSONProjectData> = async (
   }
 
   return {
-    category,
+    type,
     title,
     description,
     image,

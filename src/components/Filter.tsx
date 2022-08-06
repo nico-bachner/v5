@@ -2,27 +2,28 @@ import { FilterIcon } from 'icons'
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { sortByOccurrences } from 'lib/utils/sortByOccurrences'
 
 type FilterProps = {
-  pages: any[]
+  filters: string[]
+  filter: string
   onFilterChange: (filter: string) => void
 }
 
-export const Filter: React.VFC<FilterProps> = ({ pages, onFilterChange }) => {
-  const [filter, setFilter] = useState('')
-  const [loaded, setLoaded] = useState(false)
-
+export const Filter: React.VFC<FilterProps> = ({
+  filters,
+  filter,
+  onFilterChange,
+}) => {
   const router = useRouter()
   const { query } = router
 
   useEffect(() => {
-    if (!loaded && query.filter) {
-      setFilter(Array.isArray(query.filter) ? query.filter[0] : query.filter)
-
-      setLoaded(true)
+    if (query.filter) {
+      onFilterChange(
+        Array.isArray(query.filter) ? query.filter[0] : query.filter
+      )
     }
-  }, [query, loaded])
+  }, [])
 
   useEffect(() => {
     onFilterChange(filter)
@@ -32,10 +33,7 @@ export const Filter: React.VFC<FilterProps> = ({ pages, onFilterChange }) => {
       { query: filter == '' ? {} : { filter } },
       { shallow: true }
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter])
-
-  const categories = sortByOccurrences(pages.map(({ category }) => category))
 
   return (
     <div className="flex w-full items-center gap-4">
@@ -44,23 +42,23 @@ export const Filter: React.VFC<FilterProps> = ({ pages, onFilterChange }) => {
         <p className="text-sm sm:text-base">Filter</p>
       </div>
 
-      <div className="flex w-full gap-1 overflow-scroll sm:gap-2">
-        {categories.map((category) => (
+      <div className="flex w-max gap-1 overflow-scroll sm:gap-2">
+        {filters.map((filter) => (
           <button
-            key={category}
+            key={filter}
             onClick={() => {
-              setFilter(
-                category.toLowerCase() == filter ? '' : category.toLowerCase()
+              onFilterChange(
+                filter.toLowerCase() == filter ? '' : filter.toLowerCase()
               )
             }}
             className={[
-              'rounded px-2 py-1 text-sm font-medium sm:px-3 sm:py-1.5 sm:text-base',
-              category.toLowerCase() == filter
+              'w-max rounded px-2 py-1 text-sm font-medium sm:px-3 sm:py-1.5 sm:text-base',
+              filter.toLowerCase() == filter
                 ? 'bg-zinc-300 text-zinc-600 dark:bg-zinc-700 dark:text-zinc-400'
                 : 'bg-zinc-100 text-zinc-500 dark:bg-zinc-800',
             ].join(' ')}
           >
-            {category}
+            {filter}
           </button>
         ))}
       </div>

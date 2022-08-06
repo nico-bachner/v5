@@ -9,6 +9,7 @@ import { fetchFile } from 'lib/fs/fetchFile'
 import { fetchMDXContent } from 'lib/mdx'
 import { getFilteredPages, getQueriedPages } from 'lib/pages'
 import { fetchPagesData } from 'lib/data/pages'
+import { sortByOccurrences } from 'lib/utils/sortByOccurrences'
 
 import type { NextPage, GetStaticProps } from 'next'
 import type { MDXContent } from 'lib/mdx'
@@ -70,8 +71,13 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
 
             <div className="mx-2 sm:mx-4">
               <Filter
-                pages={pages}
-                onFilterChange={(filter) => setFilter(filter)}
+                filters={sortByOccurrences(
+                  pages.map(({ type }) => type).filter((type) => type != null)
+                )}
+                filter={filter}
+                onFilterChange={(filter) => {
+                  setFilter(filter)
+                }}
               />
             </div>
 

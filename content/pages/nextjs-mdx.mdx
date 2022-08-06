@@ -1,5 +1,5 @@
 ---
-category: Guides
+type: Guide
 title: Next.js + MDX
 description: A guide to using Next.js and MDX to render markdown content with custom components from a remote source
 image: /images/nextjs-mdx.png
@@ -42,7 +42,7 @@ There are two main methods of using MDX in a Next.js project:
 1. [`@next/mdx`](https://github.com/vercel/next.js/tree/canary/packages/next-mdx), the official MDX plugin for Next.js
 2. [`next-mdx-remote`](https://github.com/hashicorp/next-mdx-remote), a community package maintained by [Hashicorp](https://www.hashicorp.com) that allows you to use MDX from outside your project.
 
-While `@next/mdx` is a wonderful package, this guide uses `next-mdx-remote` for more flexibility.
+While `@next/mdx` is a wonderful package perfect for simple use cases, it lacks some advanced features. For example, it doesn't have an adequate solution for dealing with frontmatter. Therefore, this guide uses `next-mdx-remote` for more flexibility.
 
 ```
 ni next-mdx-remote
@@ -78,33 +78,9 @@ src/
     └── [...path].tsx
 ```
 
-In `MDX.ts`, we wrap the existing MDXRemote component so that we can add custom components globally. This is not necessary depending on your requirements, so feel free to skip this step if you don't need it.
+In `fs.ts`, we will work closely with the [Node.js standard library file system module](https://nodejs.org/dist/latest-v16.x/docs/api/fs.html).
 
-```tsx
-// components/MDX.tsx
-import { MDXRemote } from 'next-mdx-remote'
-
-import type { MDXContent } from 'lib/mdx'
-
-export type MDXProps = {
-  content: MDXContent
-  components?: Record<string, React.ReactNode>
-}
-
-export const MDX: React.VFC<MDXProps> = ({ content, components }) => (
-  <MDXRemote
-    {...content}
-    components={{
-      // add global custom components above this line
-      ...components,
-    }}
-  />
-)
-```
-
-In `fs.ts`, we will work closely with the [Node.js standard library file system module](https://nodejs.org/dist/latest-v16.x/docs/api/fs.html)
-
-We will fetch the file paths using the `readdir` function and fetch the contents of each file using the `readFile` function.
+We fetch the file paths using the `readdir` function and fetch the contents of each file using the `readFile` function.
 
 _Note: `basePath` and `path` are arrays because that makes them a lot easier to work with when adding and removing elements._
 
@@ -162,7 +138,7 @@ export const fetchPaths = async ({
 }
 ```
 
-With `mdx.ts`, we are creating a wrapper function around next-mdx-remote's `serialize` function, where we can add [remark](https://github.com/remarkjs) and [rehype](https://github.com/rehypejs) plugins if we want. We will also provide more transparent typing.
+In `mdx.ts`, we create a wrapper function around next-mdx-remote's `serialize` function, where we can add [remark](https://github.com/remarkjs) and [rehype](https://github.com/rehypejs) plugins if we want. We will also provide more transparent typing.
 
 ```ts
 // lib/mdx.ts
@@ -184,6 +160,30 @@ export const fetchMDXContent = async (file: string): Promise<MDXContent> =>
       ],
     },
   })
+```
+
+In `MDX.ts`, we wrap the existing MDXRemote component so that we can add custom components globally. This is not necessary depending on your requirements, so feel free to skip this step if you don't need it.
+
+```tsx
+// components/MDX.tsx
+import { MDXRemote } from 'next-mdx-remote'
+
+import type { MDXContent } from 'lib/mdx'
+
+export type MDXProps = {
+  content: MDXContent
+  components?: Record<string, React.ReactNode>
+}
+
+export const MDX: React.VFC<MDXProps> = ({ content, components }) => (
+  <MDXRemote
+    {...content}
+    components={{
+      // add global custom components above this line
+      ...components,
+    }}
+  />
+)
 ```
 
 Lastly, in `[path].tsx`, it all comes together. We pull in all the modules we have created so far, and use them here.

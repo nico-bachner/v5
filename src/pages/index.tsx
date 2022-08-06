@@ -131,7 +131,7 @@ const Page: NextPage<PageProps> = ({ content, projects, pages }) => (
 
       <div className="flex flex-col gap-4 pt-2">
         {pages
-          .filter(({ category }) => category != 'Projects')
+          .filter(({ type }) => type != 'Project')
           .map((page) => (
             <PageCard key={page.path[page.path.length - 1]} {...page} />
           ))}
