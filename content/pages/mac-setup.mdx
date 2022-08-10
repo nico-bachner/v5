@@ -140,7 +140,7 @@ Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
 4. When opening a new terminal window, fish shows a welcome message. To disable this, run the following:
 
    ```bash
-   set -U fish_greeting ""
+   set fish_greeting ""
    ```
 
 5. To make the terminal more interactive, install [Starship](https://starship.rs):
@@ -172,7 +172,11 @@ Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
 3. Install [pnpm](https://pnpm.io):
 
    ```bash
-   npm install -g pnpm
+   # Install
+   npm install --location=global pnpm
+   
+   # Setup
+   pnpm setup
    ```
 
 4. Install [ni](https://github.com/antfu/ni):
@@ -265,8 +269,9 @@ brew tap homebrew/cask
 
 2. Install global extensions:
 
-   - [Nako Theme](https://marketplace.visualstudio.com/items?itemName=kettanaito.nako)
+   - [GitHub Theme](https://marketplace.visualstudio.com/items?itemName=GitHub.github-vscode-theme)
    - [VSCode Icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
    - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
    - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
    - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+   - [MDX](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx)
