@@ -51,15 +51,7 @@ Now move on to the Dock settings (`View > Dock & Menu Bar`):
   height={1300}
 />
 
-Then there are some things that require the command line:
-
-```bash
-# Don't create .DS_Store files
-defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
-
-# Disable auto-correct
-defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
-```
+Lastly, go to the Desktop & Screen Saver settings (`System Preferences > View > Desktop & Screen Saver`) and click on _Hot Corners_, then deactivate all shortcuts.
 
 ### Finder Settings
 
@@ -83,6 +75,16 @@ defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
 2. Show Status Bar: `View > Show Status Bar`
 
 ## Command Line Setup
+
+### System Settings
+
+```bash
+# Don't create .DS_Store files
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+
+# Disable auto-correct
+defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
+```
 
 ### XCode Command Line Tools
 
