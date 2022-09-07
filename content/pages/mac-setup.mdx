@@ -99,7 +99,7 @@ defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
 1. Install [Homebrew](https://brew.sh)
 
    ```bash
-   curl -fsSL "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh" | bash
+   sudo curl -fsSL "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh" | bash
    ```
 
 ### Fonts
@@ -129,8 +129,8 @@ Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
 2. Set Fish as default shell:
 
    ```bash
-   echo $(brew --prefix)/bin/fish | sudo tee -a /etc/shells
-   chsh -s $(brew --prefix)/bin/fish
+   echo /opt/homebrew/bin/fish | sudo tee -a /etc/shells
+   chsh -s /opt/homebrew/bin/fish
    ```
 
 3. Since it is a new shell, Homebrew is no longer in `$PATH`, so it needs to be re-added:
@@ -157,6 +157,30 @@ Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
    echo "starship init fish | source" > ~/.config/fish/config.fish
    ```
 
+### Git
+
+1. Change Git credentials:
+
+   ```bash
+   git config --global --edit
+   ```
+
+### GitHub CLI
+
+1. [Log in to GitHub](https://github.com/login).
+
+2. Install the [GitHub CLI](https://cli.github.com)
+
+   ```bash
+   brew install gh
+   ```
+
+3. Login to the GitHub CLI
+
+   ```bash
+   gh auth login
+   ```
+
 ### Node.js
 
 1. Install [Node.js](https://nodejs.org):
@@ -174,37 +198,25 @@ Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
 3. Install [pnpm](https://pnpm.io):
 
    ```bash
-   # Install
-   npm install --location=global pnpm
-   
-   # Setup
+   brew install pnpm
+   ```
+
+4. Run the automatic setup script:
+
+   ```bash
    pnpm setup
    ```
 
-4. Install [ni](https://github.com/antfu/ni):
+5. Install [ni](https://github.com/antfu/ni):
 
    ```bash
    pnpm add -g @antfu/ni
    ```
 
-### GitHub CLI
-
-1. [Log in to GitHub](https://github.com/login)
-2. Install the [GitHub CLI](https://cli.github.com)
-
-   ```bash
-   brew install gh
-   ```
-
-3. Login to the GitHub CLI
-
-   ```bash
-   gh auth login
-   ```
-
 ### Vercel CLI
 
 1. [Log in to Vercel](https://vercel.com/login)
+
 2. Install the [Vercel CLI](https://vercel.com/cli)
 
    ```bash
