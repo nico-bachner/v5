@@ -3,7 +3,7 @@ import Link from 'next/link'
 type InfoCardProps = {
   href: string
   header: string
-  body: string
+  body?: string
   cta: string
   info?: string
 }

@@ -72,7 +72,9 @@ const Page: NextPage<PageProps> = ({ pages, content }) => {
             <div className="mx-2 sm:mx-4">
               <Filter
                 filters={sortByOccurrences(
-                  pages.map(({ type }) => type).filter((type) => type != null)
+                  pages
+                    .map(({ type }) => type)
+                    .filter((type) => type) as string[]
                 )}
                 filter={filter}
                 onFilterChange={(filter) => {

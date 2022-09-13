@@ -3,7 +3,7 @@ import { InfoCard } from 'components/InfoCard'
 import type { JSONPageData } from 'lib/data/types'
 
 export const PageCard: React.VFC<JSONPageData> = ({
-  category,
+  type,
   title,
   description,
 
@@ -12,8 +12,8 @@ export const PageCard: React.VFC<JSONPageData> = ({
   <InfoCard
     href={`/${path.join('/')}`}
     header={title}
-    body={description}
+    body={description ?? undefined}
     cta="Read"
-    info={category}
+    info={type ?? undefined}
   />
 )

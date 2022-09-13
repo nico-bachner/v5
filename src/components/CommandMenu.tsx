@@ -256,7 +256,7 @@ export const CommandMenu: React.VFC = () => {
       <Combobox
         as="div"
         value={selectedOption}
-        onChange={(option) => {
+        onChange={(option: Option) => {
           setSelectedOption(option)
 
           if (option) {

@@ -33,7 +33,7 @@ export const ProjectCard: React.VFC<JSONProjectData> = ({
     <InfoCard
       href={'/' + path.join('/')}
       header={title}
-      body={description}
+      body={description ?? undefined}
       cta="More Information"
       info={getPeriod(from, to)}
     />
