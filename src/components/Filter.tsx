@@ -23,7 +23,7 @@ export const Filter: React.VFC<FilterProps> = ({
         Array.isArray(query.filter) ? query.filter[0] : query.filter
       )
     }
-  }, [])
+  }, [query.filter])
 
   useEffect(() => {
     onFilterChange(filter)
