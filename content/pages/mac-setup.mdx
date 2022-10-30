@@ -4,7 +4,7 @@ title: Mac Setup
 description: The procedure I refer to when performing a clean (re)install on an Apple Macintosh
 ---
 
-This is the procedure I refer to when performing a clean (re)install on an Apple Macintosh
+This is the procedure I refer to when performing a clean (re)install on an Apple Macintosh, recently updated for MacOS Ventura.
 
 ## Table of Contents
 
@@ -12,50 +12,25 @@ This is the procedure I refer to when performing a clean (re)install on an Apple
 
 ### System Settings
 
-Once the initial setup procedure is done, customise the trackpad settings (`System Preferences > View > Trackpad`).
+Once the initial setup procedure is done, customise the trackpad settings (`System Settings > View > Trackpad`).
 
 In the _Point & Click_ tab
 
 1. Turn on _tap to click_
-2. Set _click strength_ to light
+2. Set _click strength_ to **light**
 3. Set _tracking speed_ to the maximum value
 4. Turn on _silent clicking_
 
-<Image
-  src="/images/macos-trackpad-settings-1.png"
-  alt="Trackpad Settings"
-  width={1560}
-  height={1248}
-/>
-
-In the _More Gestures_ tab
-
-1. Disable the _swipe between pages_ functionality.
-
-<Image
-  src="/images/macos-trackpad-settings-2.png"
-  alt="Trackpad Settings"
-  width={1560}
-  height={1248}
-/>
-
-Now move on to the Dock settings (`View > Dock & Menu Bar`):
+Now move on to the Dock settings (`View > Desktop & Dock`):
 
 1. Automatically hide & show the Dock
 2. Do not show recent applications in Dock
 
-<Image
-  src="/images/macos-dock-settings.png"
-  alt="Dock Settings"
-  width={1560}
-  height={1300}
-/>
-
-Lastly, go to the Desktop & Screen Saver settings (`System Preferences > View > Desktop & Screen Saver`) and click on _Hot Corners_, then deactivate all shortcuts.
+Lastly, go to the Desktop & Screen Saver settings (`System Settings > View > Desktop & Screen Saver`) and click on _Hot Corners_, then deactivate all shortcuts.
 
 ### Finder Settings
 
-1. Configure _Preferences_ (`Finder > Preferences`):
+1. Configure _Settings_ (`Finder > Settings`):
 
    - In _Sidebar_, show the _Home_ folder and hide the _Recents_ folder
    - In Advanced, enable _Show all filename extensions_
@@ -67,7 +42,7 @@ Lastly, go to the Desktop & Screen Saver settings (`System Preferences > View > 
 
 ### Safari Settings
 
-1. Adjust _Preferences_ (`Terminal > Preferences`):
+1. Adjust _Settings_ (`Safari > Settings`):
 
    - In _Search_, switch the default search engine.
    - In _Advanced_, turn on _Show full website address_ and _Show Develop menu in menu bar_
@@ -102,28 +77,12 @@ defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
    sudo curl -fsSL "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh" | bash
    ```
 
-### Fonts
-
-1. Open the Homebrew Cask Fonts tap
-
-   ```bash
-   brew tap homebrew/cask-fonts
-   ```
-
-1. Install [Fira Code](https://github.com/tonsky/FiraCode)
-
-   ```bash
-   brew install --cask font-fira-code
-   ```
-
-Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
-
 ### Terminal Shell
 
 1. Install [Fish Shell](https://fishshell.com):
 
    ```bash
-   brew install fish
+   /opt/homebrew/bin/brew install fish
    ```
 
 2. Set Fish as default shell:
@@ -142,7 +101,7 @@ Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
 4. When opening a new terminal window, fish shows a welcome message. To disable this, run the following:
 
    ```bash
-   set fish_greeting ""
+   set -g fish_greeting ""
    ```
 
 5. To make the terminal more interactive, install [Starship](https://starship.rs):
@@ -156,6 +115,22 @@ Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
    ```bash
    echo "starship init fish | source" > ~/.config/fish/config.fish
    ```
+
+### Fonts
+
+1. Open the Homebrew Cask Fonts tap
+
+   ```bash
+   brew tap homebrew/cask-fonts
+   ```
+
+1. Install [Fira Code](https://github.com/tonsky/FiraCode)
+
+   ```bash
+   brew install --cask font-fira-code
+   ```
+
+Go to _Terminal > Settings_ and change the font to **Fira Code**.
 
 ### Git
 
@@ -213,6 +188,19 @@ Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
    pnpm add -g @antfu/ni
    ```
 
+### Setup Workspace
+
+1. Create a `projects/` directory
+
+   ```bash
+   mkdir ~/projects
+   ```
+
+2. Set the directory as the starting point when opening a new shell
+   ```bash
+   echo "cd ~/projects" >> ~/.config/fish/config.fish
+   ```
+
 ### Vercel CLI
 
 1. [Log in to Vercel](https://vercel.com/login)
@@ -235,19 +223,6 @@ Go to _Terminal > Preferences_ and change the font to **Fira Code Retina 11**.
    vercel pull
    ```
 
-### Setup Workspace
-
-1. Create a `projects/` directory
-
-   ```bash
-   mkdir ~/projects
-   ```
-
-2. Set the directory as the starting point when opening a new shell
-   ```bash
-   echo "cd ~/projects" >> ~/.config/fish/config.fish
-   ```
-
 ## Applications Setup
 
 ```bash
@@ -262,16 +237,18 @@ brew tap homebrew/cask
    brew install --cask raycast
    ```
 
-2. Disable Spotlight hotkey (`System Preferences > Keyboard > Shortcuts > Spotlight`)
+2. Open Raycast
 
-<Image
-  src="/images/keyboard-shortcuts-spotlight.png"
-  alt="Spotlight Keyboard Shortcut Settings"
-  width={1560}
-  height={1416}
-/>
+3. Disable Spotlight hotkey (`System Settings > View > Keyboard > Keyboard Shortcuts > Spotlight > Show Spotlight search`)
 
-3. Set Raycast shortcut to `cmd + space`.
+4. Set Raycast shortcut to `cmd + space`.
+
+5. In Raycast, go to **Store** and install the following extensions:
+
+   - Brew
+   - Kill Process
+   - Lorem Ipsum
+   - Speedtest
 
 ### Visual Studio Code
 
@@ -284,8 +261,9 @@ brew tap homebrew/cask
 2. Install global extensions:
 
    - [GitHub Theme](https://marketplace.visualstudio.com/items?itemName=GitHub.github-vscode-theme)
-   - [VSCode Icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
+   - [GitHub Copilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
    - [GitLens](https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens)
+   - [VSCode Icons](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons)
    - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
    - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
    - [MDX](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx)
