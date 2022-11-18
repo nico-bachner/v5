@@ -1,0 +1,93 @@
+---
+type: Guide
+title: Next.js + Vercel Analytics
+description: How to set up Vercel Analytics in Next.js 13
+image: /images/vercel-analytics.png
+published: 2022-10-19
+---
+
+[Vercel](https://vercel.com) has recently acquired [Splitbee](https://splitbee.io).[^1]
+
+<Image
+  src="/images/vercel-splitbee.png"
+  alt="Vercel + Splitbee"
+  width={2000}
+  height={1000}
+/>
+
+Splitbee is a lightweight, privacy-focused analytics tool for websites. It's a great alternative to Google Analytics and other analytics tools. I have used Splitbee for a while now and have been very happy with it. I have also written about [how to set up Splitbee in Next.js](/nextjs-splitbee).
+
+In this guide, I'll go through the process of how to set up Vercel Analytics in Next.js 13.
+
+Since Splitbee has been integrated into Vercel, you can now use Splitbee without having to write any configuration code. You can just enable it in your Vercel project settings and import the `<Analytics />` component from `@vercel/analytics/react`.[^2]
+
+```tsx
+// pages/_app.tsx
+import { Analytics } from '@vercel/analytics/react'
+import type { AppProps } from 'next/app'
+
+const App: React.FC<AppProps> = ({ Component, pageProps }) => (
+  <>
+    <Component {...pageProps} />
+    <Analytics />
+  </>
+)
+
+export default App
+```
+
+That is, assuming you're still using the `pages/` directory.
+
+Next.js 13 has introduced the a `app/` directory, which will replace `pages/` a few major versions down the road. Sadly, you can't use Vercel Analytics out of the box with the `app/` directory yet. However, there is a workaround, and it's super easy.
+
+The issue with the `<Analytics />` component exported by `@vercel/analytics/react` is that it's a Client Component. This is a problem because pages inside the `app/` directory, including the components they import, are by default assumed to be Server Components.[^3]
+
+To fix this, we can re-export the `<Analytics />` component explicitly labelled as a Client Component. This way, Next.js will no longer attempt to render it on the server.
+
+First, create a new file called `Analytics.tsx`[^4]. Then, copy the following code into it:
+
+```tsx
+// components/Analytics.tsx
+'use client'
+
+import { Analytics as VercelAnalytics } from '@vercel/analytics/react'
+import type { ComponentProps } from 'react'
+
+type AnalyticsProps = ComponentProps<typeof VercelAnalytics>
+
+export const Analytics: React.FC<AnalyticsProps> = (props) => (
+  <VercelAnalytics {...props} />
+)
+```
+
+What we're doing here is importing the `<Analytics />` component from `@vercel/analytics/react` and re-exporting it explicitly as a Client Component by adding the `'use client'` pragma at the top of the file.
+
+Now, we can import the `<Analytics />` component from `Analytics.tsx` instead of `@vercel/analytics/react` in our `app/` directory.
+
+```tsx
+// app/layout.tsx
+import { Analytics } from '../components/Analytics'
+
+type LayoutProps = {
+  children: React.ReactNode
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => (
+  <html lang="en">
+    <head></head>
+    <body>
+      {children}
+      <AnalyticsWrapper />
+    </body>
+  </html>
+)
+
+export default Layout
+```
+
+That's it! You can now use Vercel Analytics in your Next.js 13 app.
+
+[^1]: [Vercel Acquires Splitbee](https://vercel.com/blog/vercel-acquires-splitbee)
+[^2]: [@vercel/analytics Package Documentation](https://vercel.com/docs/concepts/analytics/audiences/package)
+[^3]: [Next.js Server and Client Components Documentation](https://beta.nextjs.org/docs/rendering/server-and-client-components)
+[^4]: You can name the file whatever you want, but I recommend sticking to a file naming convention such as the one outlined in [Airbnb's React/JSX Style Guide](https://github.com/airbnb/javascript/tree/master/react#naming).

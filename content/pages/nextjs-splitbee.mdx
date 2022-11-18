@@ -1,16 +1,14 @@
 ---
 type: Guide
 title: Next.js + Splitbee
-description: A concise way of integrating Splitbee Analytics in Next.js
+description: How to set up Splitbee Analytics in Next.js 11
 image: /images/splitbee.png
 published: 2022-04-24
 ---
 
+[Splitbee](https://splitbee.io) is a free and open-source analytics tool that helps you understand your users and improve your website. It's a great alternative to Google Analytics and other paid analytics tools. I have been using it for a while now and I am really happy with it.
+
 This guide is an extension and update of the [Splitbee Next.js Proxy Documentation](https://splitbee.io/docs/nextjs-proxy). I have added the [Next.js Script Component](https://nextjs.org/docs/basic-features/script) to the guide, along with a few more quality-of-life improvements.
-
-## Table of Contents
-
-## Next.js Config Setup
 
 First, we need to make use of [Next.js Rewrites](https://nextjs.org/docs/api-reference/next.config.js/rewrites) to point the local payload url to the Splitbee server.
 
@@ -35,8 +33,6 @@ const nextConfig = {
 module.exports = nextConfig
 ```
 
-## Creating the Analytics Component
-
 Next, we add a script tag that imports the Splitbee code. As per the [original documentation](https://splitbee.io/docs/nextjs-proxy#2-adapt-the-splitbee-script-tag):
 
 > `data-api` sets the endpoint for all tracking calls. We are using `/_hive` in this example.
@@ -49,7 +45,7 @@ We can abstract the logic into an Analytics component.
 // components/Analytics.tsx
 import Script from 'next/script'
 
-export const Analytics: React.VFC = () =>
+export const Analytics: React.FC = () =>
   typeof window != 'undefined' &&
   window.location.href.includes('[site_url]') ? (
     <Script src="/bee.js" data-api="/_hive" strategy="afterInteractive" />
@@ -60,8 +56,6 @@ Replace `[site_url]` in `window.location.href.includes('[site_url]')` with the n
 
 You can also adjust the strategy attribute according to your needs (view the [documentation](https://nextjs.org/docs/api-reference/next/script#strategy) for the available options). However, in most cases, you should stick to `"afterInteractive"`.
 
-## Using the Analytics Component
-
 Now all that remains is to import the Analytics component into the application – ideally in `_app.tsx` to avoid duplication.
 
 ```tsx
@@ -70,7 +64,7 @@ import { Analytics } from 'components/Analytics'
 
 import type { AppProps } from 'next/app'
 
-const App: React.VFC<AppProps> = ({ Component, pageProps }) => (
+const App: React.FC<AppProps> = ({ Component, pageProps }) => (
   <>
     <Analytics />
     <Component {...pageProps} />
